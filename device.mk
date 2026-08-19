@@ -9,16 +9,26 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # API levels
 PRODUCT_SHIPPING_API_LEVEL := 30
 
+# Page size compatibility (4KB native MT6765 kernel)
+PRODUCT_MAX_PAGE_SIZE_SUPPORTED := 4096
+
 # fastbootd
 PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl-mock \
+    android.hardware.fastboot-service.lineage \
     fastbootd
 
-# Health
+# Health (AIDL)
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-impl.recovery \
-    android.hardware.health@2.1-service
+    android.hardware.health-service.lineage \
+    android.hardware.health-service.lineage_recovery
+
+# Lights (AIDL)
+PRODUCT_PACKAGES += \
+    android.hardware.lights-service.lineage
+
+# Power (AIDL)
+PRODUCT_PACKAGES += \
+    android.hardware.power-service.example
 
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
