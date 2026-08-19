@@ -1,0 +1,49 @@
+# Audio
+ro.audio.silent=0
+
+# Display
+ro.opengles.version=196610
+
+# Wi-Fi
+ro.wifi.channels=
+wifi.direct.interface=p2p0
+wifi.interface=wlan0
+wifi.tethering.interface=ap0
+
+# Miscellaneous
+Build.BRAND=MTK
+com.mediatek.log.gps.ui.enabled=0
+mediatek.wlan.ctia=0
+net.bt.name=Android
+persist.qiku.operators.isabroad=1
+persist.vendor.fp.enroll.times=15
+persist.vendor.fp.enroll_dupl_arae=50
+persist.vendor.pms_removable=1
+qemu.hw.mainkeys=0
+ro.camera.micro_camera_id=2
+ro.camera.sound.forced=0
+ro.config.alarm_alert=Alarm_Classic.ogg
+ro.config.notification_sound=pixiedust.ogg
+ro.config.ringtone=Ring_Synth_04.ogg
+ro.config.ringtone_sim2=Ring_Synth_04.ogg
+ro.iorapd.enable=false
+ro.kernel.zio=38,108,105,16
+ro.mediatek.wlan.p2p=1
+ro.mediatek.wlan.wsc=1
+ro.mtk_perf_fast_start_win=1
+ro.mtk_perf_response_time=1
+ro.mtk_perf_simple_start_win=1
+ro.product.bt_name=P50
+ro.product.property_source_order=odm,vendor,product,system
+ro.setupwizard.enable_bypass=true
+ro.sys.usb.bicr=no
+ro.sys.usb.charging.only=yes
+ro.sys.usb.mtp.whql.enable=0
+ro.sys.usb.storage.type=mtp
+ro.vz_hall_support=0
+ro.zygote.preload.enable=0
+sys.ipo.disable=1
+sys.ipo.pwrdncap=2
+vendor.rild.libargs=-d /dev/ttyC0
+vendor.rild.libpath=mtk-ril.so
+

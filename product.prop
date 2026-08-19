@@ -1,0 +1,9 @@
+# Miscellaneous
+Build.BRAND=MTK
+persist.device_config.runtime_native.usap_pool_enabled=false
+persist.vendor.pms_removable=1
+ro.com.google.acsa=true
+ro.com.google.gmsversion=11_202203
+ro.opa.eligible_device=true
+ro.setupwizard.rotation_locked=true
+
