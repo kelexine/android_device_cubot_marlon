@@ -3,7 +3,44 @@
 <!-- Author: kelexine (https://github.com/kelexine) -->
 <resources>
     <string name="app_name">Device Settings</string>
-    <string name="gestures_category_title">Gestures</string>
+
+    <string name="gestures_category_wake_title">Wake gestures</string>
     <string name="double_tap_to_wake_title">Double-tap to wake</string>
     <string name="double_tap_to_wake_summary">Double-tap the screen while it\'s off to wake the device</string>
+
+    <string name="gestures_category_swipes_title">Swipe gestures</string>
+    <string name="gesture_swipe_up_title">Swipe up</string>
+    <string name="gesture_swipe_down_title">Swipe down</string>
+    <string name="gesture_swipe_left_title">Swipe left</string>
+    <string name="gesture_swipe_right_title">Swipe right</string>
+
+    <string name="gestures_category_media_title">Media gestures</string>
+    <string name="gesture_double_swipe_media_title">Two-finger media gestures</string>
+    <string name="gesture_double_swipe_media_summary">Swipe down to play/pause, left for previous, right for next track</string>
+
+    <string name="gestures_category_letters_title">Letter gestures</string>
+    <string name="gesture_letter_c_title">Draw \'C\'</string>
+    <string name="gesture_letter_e_title">Draw \'E\'</string>
+    <string name="gesture_letter_m_title">Draw \'M\'</string>
+    <string name="gesture_letter_o_title">Draw \'O\'</string>
+    <string name="gesture_letter_s_title">Draw \'S\'</string>
+    <string name="gesture_letter_v_title">Draw \'V\'</string>
+    <string name="gesture_letter_w_title">Draw \'W\'</string>
+    <string name="gesture_letter_z_title">Draw \'Z\'</string>
+
+    <string name="gesture_action_title">Action</string>
+    <string-array name="gesture_action_entries">
+        <item>None</item>
+        <item>Open camera</item>
+        <item>Toggle flashlight</item>
+        <item>Open browser</item>
+        <item>Voice assist</item>
+    </string-array>
+    <string-array name="gesture_action_values" translatable="false">
+        <item>NONE</item>
+        <item>CAMERA</item>
+        <item>FLASHLIGHT</item>
+        <item>BROWSER</item>
+        <item>VOICE_ASSIST</item>
+    </string-array>
 </resources>

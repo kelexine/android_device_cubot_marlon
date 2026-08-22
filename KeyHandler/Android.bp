@@ -1,0 +1,14 @@
+// Authored for device/cubot/marlon.
+// Author: kelexine (https://github.com/kelexine)
+//
+// Consumed via TARGET_KEY_HANDLER_LIBS/TARGET_KEY_HANDLER_CLASS in
+// BoardConfig.mk -- PhoneWindowManager loads TARGET_KEY_HANDLER_CLASS via
+// reflection from whatever TARGET_KEY_HANDLER_LIBS statically links into
+// services.jar. installable: false because this is never installed as its
+// own artifact, only merged into the platform build.
+java_library {
+    name: "MarlonKeyHandler",
+    srcs: ["src/**/*.java"],
+    installable: false,
+    sdk_version: "core_platform",
+}

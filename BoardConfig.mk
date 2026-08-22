@@ -67,9 +67,27 @@ BOARD_USES_MTK_HARDWARE := true
 # SELinux
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
+# Precompiled vendor sepolicy (from device)
+BOARD_VENDOR_SEPOLICY_CIL_FILE := $(DEVICE_PATH)/sepolicy/vendor/vendor_sepolicy.cil
+BOARD_VENDOR_SEPOLICY_VERS := $(shell cat $(DEVICE_PATH)/sepolicy/vendor/plat_sepolicy_vers.txt)
+BOARD_SEPOLICY_M4DEFS += vendor_sepolicy_vers=$(BOARD_VENDOR_SEPOLICY_VERS)
+
+# Vendor file contexts, property contexts, hwservice contexts
+BOARD_VENDOR_FILE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_file_contexts
+BOARD_VENDOR_PROPERTY_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_property_contexts
+BOARD_VENDOR_HWSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_hwservice_contexts
+BOARD_VENDOR_NDSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vndservice_contexts
+BOARD_VENDOR_SEAPP_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_seapp_contexts
+BOARD_VENDOR_MAC_PERMISSIONS := $(DEVICE_PATH)/sepolicy/vendor/vendor_mac_permissions.xml
+
 # Ported-by: kelexine (https://github.com/kelexine)
 BOARD_HARDWARE_CLASS += \
     $(DEVICE_PATH)/lineagehw
+
+# Authored for device/cubot/marlon. Author: kelexine (https://github.com/kelexine)
+# Off-screen gesture (letters/swipes) key interception -- see KeyHandler/.
+TARGET_KEY_HANDLER_LIBS := MarlonKeyHandler
+TARGET_KEY_HANDLER_CLASS := org.lineageos.settings.device.KeyHandler
 
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop

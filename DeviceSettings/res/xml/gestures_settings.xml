@@ -4,15 +4,107 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        android:title="@string/gestures_category_title">
-
+    <PreferenceCategory android:title="@string/gestures_category_wake_title">
         <SwitchPreferenceCompat
             android:key="double_tap_to_wake"
             android:title="@string/double_tap_to_wake_title"
             android:summary="@string/double_tap_to_wake_summary"
             android:defaultValue="false"
             app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/gestures_category_swipes_title">
+        <SwitchPreferenceCompat
+            android:key="gesture_swipe_up"
+            android:title="@string/gesture_swipe_up_title"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:key="marlon_gesture_swipe_up_action"
+            android:title="@string/gesture_action_title"
+            android:entries="@array/gesture_action_entries"
+            android:entryValues="@array/gesture_action_values"
+            android:defaultValue="NONE"
+            app:iconSpaceReserved="false"
+            android:dependency="gesture_swipe_up" />
+
+        <SwitchPreferenceCompat
+            android:key="gesture_swipe_down"
+            android:title="@string/gesture_swipe_down_title"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:key="marlon_gesture_swipe_down_action"
+            android:title="@string/gesture_action_title"
+            android:entries="@array/gesture_action_entries"
+            android:entryValues="@array/gesture_action_values"
+            android:defaultValue="NONE"
+            app:iconSpaceReserved="false"
+            android:dependency="gesture_swipe_down" />
+
+        <SwitchPreferenceCompat
+            android:key="gesture_swipe_left"
+            android:title="@string/gesture_swipe_left_title"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:key="marlon_gesture_swipe_left_action"
+            android:title="@string/gesture_action_title"
+            android:entries="@array/gesture_action_entries"
+            android:entryValues="@array/gesture_action_values"
+            android:defaultValue="NONE"
+            app:iconSpaceReserved="false"
+            android:dependency="gesture_swipe_left" />
+
+        <SwitchPreferenceCompat
+            android:key="gesture_swipe_right"
+            android:title="@string/gesture_swipe_right_title"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:key="marlon_gesture_swipe_right_action"
+            android:title="@string/gesture_action_title"
+            android:entries="@array/gesture_action_entries"
+            android:entryValues="@array/gesture_action_values"
+            android:defaultValue="NONE"
+            app:iconSpaceReserved="false"
+            android:dependency="gesture_swipe_right" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/gestures_category_media_title">
+        <SwitchPreferenceCompat
+            android:key="gesture_double_swipe_media"
+            android:title="@string/gesture_double_swipe_media_title"
+            android:summary="@string/gesture_double_swipe_media_summary"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/gestures_category_letters_title">
+
+        <SwitchPreferenceCompat android:key="gesture_letter_c" android:title="@string/gesture_letter_c_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_c_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_c" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_e" android:title="@string/gesture_letter_e_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_e_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_e" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_m" android:title="@string/gesture_letter_m_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_m_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_m" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_o" android:title="@string/gesture_letter_o_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_o_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_o" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_s" android:title="@string/gesture_letter_s_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_s_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_s" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_v" android:title="@string/gesture_letter_v_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_v_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_v" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_w" android:title="@string/gesture_letter_w_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_w_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_w" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_z" android:title="@string/gesture_letter_z_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_z_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_z" />
 
     </PreferenceCategory>
 
