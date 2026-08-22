@@ -14,8 +14,6 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
-<!-- Ported-by: kelexine (https://github.com/kelexine) -->
 <resources>
     <bool name="call_recording_enabled">true</bool>
     <integer name="call_recording_audio_source">4</integer>

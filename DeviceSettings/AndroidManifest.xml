@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Authored for device/cubot/marlon. -->
-<!-- Author: kelexine (https://github.com/kelexine) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.lineageos.settings.device">
 
     <uses-sdk android:minSdkVersion="34" android:targetSdkVersion="34" />
 
-    <!-- For GestureActionSettingsStore (Settings.System-backed action
-         picker values, readable cross-process by KeyHandler in
-         system_server). If the platform build warns this needs explicit
-         privapp-permissions allowlisting, add it there -- WRITE_SETTINGS'
-         protection level historically doesn't require that, but confirm
-         against your actual build output rather than trusting this comment. -->
+    <!-- For GestureActionSettingsStore (Settings.System-backed action values for KeyHandler) -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application

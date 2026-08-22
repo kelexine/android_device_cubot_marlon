@@ -1,23 +1,15 @@
 /*
- * Authored for device/cubot/marlon.
- * Author: kelexine (https://github.com/kelexine)
- *
- * Wraps the three known-equivalent DT2W control paths reported for the
- * ILITEK driver on this kernel (ilitek_node.c:2498):
- *   /proc/touchpanel/double_tap_enable
- *   /proc/ilitek/double_tap_enable
- *   /sys/android_touch/double_tap_enable
- *
- * All three are attempted in order since which one is actually present can
- * vary by kernel/driver build; the first one that exists AND is writable
- * under the current SELinux policy is used and cached for the process
- * lifetime. See sepolicy/vendor/{file.te,genfs_contexts,platform_app.te}
- * for the matching sysfs_touchpanel label + write grant this depends on.
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.settings.device.gestures;
 
 import org.lineageos.settings.device.utils.FileUtils;
 
+/**
+ * Controller for Double-Tap-To-Wake sysfs/procfs nodes.
+ */
 public final class DoubleTapToWakeController {
 
     private static final String[] CANDIDATE_NODES = {

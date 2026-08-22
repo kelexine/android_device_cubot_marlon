@@ -2,13 +2,6 @@
 <!--
 * Copyright (C) 2015 The Android Open Source Project
 -->
-<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
-<!-- Ported-by: kelexine (https://github.com/kelexine) -->
-<!-- NOTE: 11dp is the value inherited from certus (Redmi 6). Neither certus
-     nor marlon (P50) have a display with physical rounded corners per their
-     spec sheets, so this is a cosmetic software-rounding default, not a
-     hardware-derived value. Verify visually on-device and set to 0dp if it
-     produces any unwanted corner clipping/artifacts on the P50 panel. -->
 <resources>
     <!-- Rounded display corners-->
     <dimen name="rounded_corner_radius">11dp</dimen>

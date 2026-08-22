@@ -1,18 +1,8 @@
-# Ported-by: kelexine (https://github.com/kelexine)
-#
-# Paired with file.te (sysfs_fps, sysfs_batteryinfo) and the app-domain
-# read grants in system_app.te / platform_app.te. These paths are exposed
-# by MediaTek's generic display driver and the mainline power_supply
-# framework respectively, shared across the MT65xx/MT67xx family -- not
-# certus-specific -- but confirm both nodes actually exist on marlon
-# (adb shell cat) before relying on FpsInfoOverlay / BatteryHealthOverlay
-# in production.
+# Battery info and FPS sysfs nodes
 genfscon sysfs /devices/platform/battery/power_supply/battery u:object_r:sysfs_batteryinfo:s0
 genfscon sysfs /module/primary_display/parameters u:object_r:sysfs_fps:s0
 
-# DT2W control nodes (ilitek_node.c:2498) -- paired with sysfs_touchpanel in
-# file.te and the platform_app write grant in platform_app.te. All three are
-# labeled the same; DeviceSettings tries each in order until one exists.
+# Touchpanel / gesture control nodes
 genfscon proc /touchpanel u:object_r:sysfs_touchpanel:s0
 genfscon proc /ilitek u:object_r:sysfs_touchpanel:s0
 genfscon sysfs /android_touch u:object_r:sysfs_touchpanel:s0

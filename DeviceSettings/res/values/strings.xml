@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Authored for device/cubot/marlon. -->
-<!-- Author: kelexine (https://github.com/kelexine) -->
 <resources>
     <string name="app_name">Device Settings</string>
 
@@ -27,6 +25,7 @@
     <string name="gesture_letter_v_title">Draw \'V\'</string>
     <string name="gesture_letter_w_title">Draw \'W\'</string>
     <string name="gesture_letter_z_title">Draw \'Z\'</string>
+    <string name="gesture_letter_f_title">Draw \'F\'</string>
 
     <string name="gesture_action_title">Action</string>
     <string-array name="gesture_action_entries">

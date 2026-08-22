@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # ACCDET.kl - MediaTek accessory-detect (headset/jack) input device keylayout.
-# Ported-by: kelexine (https://github.com/kelexine)
+#
 
 key 122   ENDCALL
 key 163   MEDIA_NEXT

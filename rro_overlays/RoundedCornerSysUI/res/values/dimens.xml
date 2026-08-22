@@ -14,10 +14,6 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
--->
-<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
-<!-- Ported-by: kelexine (https://github.com/kelexine) -->
-<!-- NOTE: see RoundedCornerFW/res/values/dimens.xml re: rounded_corner_radius -->
 <resources>
     <dimen name="nav_content_padding">0dp</dimen>
     <dimen name="rounded_corner_radius">11dp</dimen>

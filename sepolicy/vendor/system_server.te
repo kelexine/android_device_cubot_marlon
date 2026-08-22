@@ -1,12 +1,3 @@
-# Authored for device/cubot/marlon.
-# Author: kelexine (https://github.com/kelexine)
-#
-# KeyHandler (loaded into system_server per TARGET_KEY_HANDLER_LIBS) checks
-# each gesture's enable state via GestureNodeController before dispatching
-# an action -- that read happens in the system_server domain, distinct from
-# the platform_app domain the DeviceSettings app itself uses to toggle these
-# nodes. Without this, KeyHandler's enable-state checks silently fail closed
-# (isEnabled() catches the denial and returns false), so every gesture would
-# appear permanently disabled regardless of what the user set in Settings.
+# Touchpanel / gesture node read access for KeyHandler in system_server
 allow system_server sysfs_touchpanel:dir r_dir_perms;
 allow system_server sysfs_touchpanel:file r_file_perms;

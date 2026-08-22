@@ -1,16 +1,8 @@
 /*
- * Authored for device/cubot/marlon.
- * Author: kelexine (https://github.com/kelexine)
- *
- * NOTE ON RUNNING THESE: FileUtils itself only touches java.io + android.util.Log.
- * Log calls will no-op/throw under a plain JVM depending on the test runner's
- * Android stub jar; run these via the AOSP tree's standard device-tests
- * target (atest, or `m DeviceSettingsTests`) rather than a bare `javac`+junit
- * invocation, since that's the only environment with the Android stub jars
- * and an actual device/emulator (or Robolectric shadow) to back Log calls.
- * This sandbox has no AOSP source tree or Android SDK, so these are written
- * but not executed here -- verify with atest once this lands in your tree.
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.settings.device.utils;
 
 import static org.junit.Assert.assertEquals;

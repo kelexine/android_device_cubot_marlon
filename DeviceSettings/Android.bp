@@ -1,5 +1,3 @@
-// Authored for device/cubot/marlon.
-// Author: kelexine (https://github.com/kelexine)
 android_app {
     name: "DeviceSettings",
     manifest: "AndroidManifest.xml",

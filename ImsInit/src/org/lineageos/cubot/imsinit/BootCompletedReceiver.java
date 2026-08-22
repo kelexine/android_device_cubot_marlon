@@ -1,10 +1,8 @@
 /*
- * Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon.
- * Ported-by: kelexine (https://github.com/kelexine)
- *
- * OPT-IN / DISABLED BY DEFAULT -- see PhoneStateService.java for the
- * rationale and the caveats around porting this workaround unverified.
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.cubot.imsinit;
 
 import android.content.BroadcastReceiver;

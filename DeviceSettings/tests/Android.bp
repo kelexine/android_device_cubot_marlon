@@ -1,11 +1,4 @@
-// Authored for device/cubot/marlon.
-// Author: kelexine (https://github.com/kelexine)
-//
-// Device-side test target -- run with:
-//   atest DeviceSettingsTests
-// (requires a connected device/emulator; android.util.Log calls in
-// FileUtils are real Android runtime calls, not stubs, so this must run
-// as an instrumented test, not a bare host-side JVM test.)
+// Device-side test target: atest DeviceSettingsTests
 android_test {
     name: "DeviceSettingsTests",
     manifest: "AndroidManifest.xml",

@@ -1,31 +1,7 @@
-# Ported-by: kelexine (https://github.com/kelexine)
-#
-# ============================================================================
-# IMPORTANT CAVEAT -- READ BEFORE BUILDING
-# ============================================================================
-# certus sets TARGET_USES_PREBUILT_VENDOR_SEPOLICY := true and layers this
-# small sepolicy/private tree ON TOP of a prebuilt vendor sepolicy blob
-# (almost certainly extracted from Xiaomi's stock firmware) that supplies
-# the base HAL domain skeletons -- these fragments were only ever meant to
-# be incremental patches on that base, not a complete/standalone policy.
-#
-# marlon's BoardConfig.mk does NOT set TARGET_USES_PREBUILT_VENDOR_SEPOLICY
-# and has no prebuilt vendor sepolicy blob (confirmed by inspection of both
-# android_device_cubot_marlon and android_vendor_cubot_marlon). That means
-# these fragments alone may be INSUFFICIENT to fully define working domains
-# for these binaries on marlon -- treat this file as a starting point, not
-# a guaranteed-working port. Build with `mmm device/cubot/marlon` (or a full
-# sepolicy check) and use the resulting checkpolicy/neverallow errors, plus
-# `adb shell dmesg | grep avc: denied` on first boot, to iterate from here.
-# Do not ship this to users without confirming enforcing-mode boots clean.
-# ============================================================================
-
-# --- MTK power HAL (confirmed present: vendor.mediatek.hardware.mtkpower@1.1
-#     in manifest.xml, libged.so in proprietary-files.txt) ---
+# MTK power HAL
 type mtk_hal_power, domain;
 
-# --- MTK MMS HAL (confirmed present: vendor.mediatek.hardware.mms@1.5 in
-#     manifest.xml + proprietary-files.txt) ---
+# MTK MMS HAL
 type mtk_hal_mms_hwservice, hwservice_manager_type;
 allow appdomain mtk_hal_mms_hwservice:hwservice_manager find;
 
@@ -33,12 +9,7 @@ type hal_mms_server, domain;
 binder_call(hal_mms_server, hwservicemanager)
 binder_call(hwservicemanager, hal_mms_server)
 
-# --- MTK videotelephony / vtservice (confirmed present:
-#     vendor/bin/hw/vtservice_hidl + init.vtservice_hidl.rc). Path differs
-#     from certus (/system/bin/vtservice, coredomain) -- marlon's binary is
-#     a vendor-partition HIDL daemon, so this is declared as a vendor daemon
-#     domain instead of blindly copying certus's coredomain declaration.
-#     See file_contexts in this directory for the exec label. ---
+# MTK videotelephony / vtservice
 type vtservice_hidl, domain;
 type vtservice_hidl_exec, exec_type, vendor_file_type, file_type;
 init_daemon_domain(vtservice_hidl)

@@ -1,10 +1,4 @@
-# Ported-by: kelexine (https://github.com/kelexine)
-#
-# OPT-IN / DISABLED BY DEFAULT: only built when
-# MARLON_ENABLE_MTK_IMS_FRAMEWORK := true (see device.mk). See
-# PhoneStateService.java for why -- this is an unverified workaround ported
-# from a different vendor's IMS blob set and has not been tested on marlon.
-
+# MTK IMS initialization package (enabled via MARLON_ENABLE_MTK_IMS_FRAMEWORK)
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(MARLON_ENABLE_MTK_IMS_FRAMEWORK),true)

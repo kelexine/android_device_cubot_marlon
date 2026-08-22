@@ -13,14 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon.
- * The sysfs node (mtk_disp_mgr.0/rgb) is exposed by MediaTek's generic
- * display manager driver and is not certus-specific; isSupported() gates
- * this feature off entirely on any board whose kernel doesn't expose it,
- * so this is safe to carry across the MT67xx family without modification.
- *
- * Ported-by: kelexine (https://github.com/kelexine)
  */
 
 package org.lineageos.hardware;

@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # mtk-kpd.kl - MediaTek keypad driver keylayout (full QWERTY + nav map).
-# Ported-by: kelexine (https://github.com/kelexine)
+#
 
 key 399   GRAVE
 key 2     1

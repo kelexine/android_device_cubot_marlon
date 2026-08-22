@@ -1,23 +1,8 @@
 /*
- * Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon.
- * Ported-by: kelexine (https://github.com/kelexine)
- *
- * OPT-IN / DISABLED BY DEFAULT.
- *
- * WARNING: DIRTY HACK AHEAD (inherited from certus, unverified on marlon)
- * certus's own comment on this service: the author never diagnosed why
- * MTK's IMS stack failed to re-register after reboot under SELinux
- * enforcing on their exact vendor blobs -- global permissive "fixed" it,
- * as did manually re-toggling Enhanced 4G, so this service automates that
- * toggle on every boot after the first as a workaround.
- *
- * marlon's vendor blobs (vendor/cubot/marlon) ship a different, native
- * volte_* IMS stack (not confirmed to exhibit the same symptom). Do not
- * enable this in a shipped build until you've confirmed on real P50
- * hardware that IMS/VoLTE registration actually breaks after reboot and
- * that this workaround fixes it there too -- otherwise it's needlessly
- * toggling Enhanced 4G LTE mode on every boot for no benefit.
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.cubot.imsinit;
 
 import android.app.Service;

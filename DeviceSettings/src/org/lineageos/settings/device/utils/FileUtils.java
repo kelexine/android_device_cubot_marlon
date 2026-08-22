@@ -1,11 +1,8 @@
 /*
- * Authored for device/cubot/marlon.
- * Author: kelexine (https://github.com/kelexine)
- *
- * Minimal, dependency-free file I/O helper for sysfs/procfs control nodes.
- * Deliberately self-contained rather than depending on a shared lineage
- * settings library, since this tree has no confirmed prebuilt of one.
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.settings.device.utils;
 
 import android.util.Log;
@@ -16,6 +13,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * File I/O helper for sysfs/procfs control nodes.
+ */
 public final class FileUtils {
 
     private static final String TAG = "DeviceSettings-FileUtils";

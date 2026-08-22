@@ -1,12 +1,4 @@
-# Ported-by: kelexine (https://github.com/kelexine)
-#
-# See mtk_hal_extras.te for the caveat re: certus's prebuilt-vendor-sepolicy
-# assumption. These four service names (mwis, mtkIms, wfo, media.VTS) are
-# certus's own naming and NOT independently confirmed to be what marlon's
-# vendor blobs register under service_manager -- verify against
-# `adb shell dmesg | grep avc: denied.*service_manager` on first boot and
-# adjust names here (and in service_contexts) to match what's actually
-# denied, rather than assuming these are correct as-is.
+# Telephony and IMS service types
 type mwis_service, service_manager_type;
 type mtk_ims_service, service_manager_type;
 type wfo_service, service_manager_type;

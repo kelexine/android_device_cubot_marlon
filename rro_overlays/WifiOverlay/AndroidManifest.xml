@@ -10,12 +10,6 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
-<!-- Ported-by: kelexine (https://github.com/kelexine) -->
-<!-- NOTE: certus's own copy of this overlay left its package id as
-     "com.android.wifi.resources.oneplus" (a leftover from whatever tree it
-     was originally sourced from upstream) -- renamed here to avoid carrying
-     that copy-paste artifact into marlon. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.wifi.resources.marlon"
     android:versionCode="1"

@@ -1,5 +1,3 @@
-// Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon.
-// Ported-by: kelexine (https://github.com/kelexine)
 runtime_resource_overlay {
     name: "WifiOverlay",
     theme: "WifiOverlay",

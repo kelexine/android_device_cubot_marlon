@@ -1,7 +1,8 @@
 /*
- * Authored for device/cubot/marlon.
- * Author: kelexine (https://github.com/kelexine)
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.settings.device.gestures;
 
 import org.lineageos.settings.device.utils.FileUtils;

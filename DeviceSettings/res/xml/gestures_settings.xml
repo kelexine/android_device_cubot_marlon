@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Authored for device/cubot/marlon. -->
-<!-- Author: kelexine (https://github.com/kelexine) -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -105,6 +103,9 @@
 
         <SwitchPreferenceCompat android:key="gesture_letter_z" android:title="@string/gesture_letter_z_title" android:defaultValue="false" app:iconSpaceReserved="false" />
         <ListPreference android:key="marlon_gesture_letter_z_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_z" />
+
+        <SwitchPreferenceCompat android:key="gesture_letter_f" android:title="@string/gesture_letter_f_title" android:defaultValue="false" app:iconSpaceReserved="false" />
+        <ListPreference android:key="marlon_gesture_letter_f_action" android:title="@string/gesture_action_title" android:entries="@array/gesture_action_entries" android:entryValues="@array/gesture_action_values" android:defaultValue="NONE" app:iconSpaceReserved="false" android:dependency="gesture_letter_f" />
 
     </PreferenceCategory>
 

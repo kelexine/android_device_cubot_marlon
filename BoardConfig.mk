@@ -80,12 +80,11 @@ BOARD_VENDOR_NDSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vndservice_con
 BOARD_VENDOR_SEAPP_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_seapp_contexts
 BOARD_VENDOR_MAC_PERMISSIONS := $(DEVICE_PATH)/sepolicy/vendor/vendor_mac_permissions.xml
 
-# Ported-by: kelexine (https://github.com/kelexine)
+# Lineage Hardware
 BOARD_HARDWARE_CLASS += \
     $(DEVICE_PATH)/lineagehw
 
-# Authored for device/cubot/marlon. Author: kelexine (https://github.com/kelexine)
-# Off-screen gesture (letters/swipes) key interception -- see KeyHandler/.
+# Gestures KeyHandler
 TARGET_KEY_HANDLER_LIBS := MarlonKeyHandler
 TARGET_KEY_HANDLER_CLASS := org.lineageos.settings.device.KeyHandler
 

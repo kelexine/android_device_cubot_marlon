@@ -1,5 +1,2 @@
 # Cubot P50 (marlon) vendor sepolicy file_contexts
-
-# Ported-by: kelexine (https://github.com/kelexine)
-# See mtk_hal_extras.te for the vtservice_hidl domain declaration + caveat.
 /vendor/bin/hw/vtservice_hidl    u:object_r:vtservice_hidl_exec:s0

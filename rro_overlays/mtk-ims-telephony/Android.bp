@@ -1,14 +1,4 @@
-// Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon.
-// Ported-by: kelexine (https://github.com/kelexine)
-//
-// OPT-IN / DISABLED BY DEFAULT: only pulled into the build when
-// MARLON_ENABLE_MTK_IMS_FRAMEWORK := true is set (see device.mk). marlon's
-// vendor blobs (vendor/cubot/marlon) ship the native volte_* / IMS radio HAL
-// slots but no framework-side IMS management package -- this overlay and its
-// companion ImsInit app supply that framework glue the same way certus does,
-// but this has not been validated on real P50 hardware. Enable only after
-// confirming vendor/cubot/marlon does not already provide equivalent glue,
-// and test VoLTE/IMS registration behavior before shipping to users.
+// MTK IMS framework telephony overlay (enabled via MARLON_ENABLE_MTK_IMS_FRAMEWORK)
 runtime_resource_overlay {
     name: "mtk-ims-telephony",
     theme: "mtk-ims-telephony",

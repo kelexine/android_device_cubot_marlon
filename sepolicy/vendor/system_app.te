@@ -1,7 +1,4 @@
-# Ported-by: kelexine (https://github.com/kelexine)
-#
-# Paired with BatteryHealthOverlay / FpsInfoOverlay (rro_overlays/) and the
-# sysfs_batteryinfo / sysfs_fps types in file.te + genfs_contexts.
+# Battery info and FPS sysfs node access
 allow system_app sysfs_batteryinfo:dir r_dir_perms;
 allow system_app sysfs_batteryinfo:file r_file_perms;
 

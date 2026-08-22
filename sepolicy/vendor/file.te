@@ -1,17 +1,6 @@
-# Ported-by: kelexine (https://github.com/kelexine)
-#
-# These two types back the sysfs nodes consumed by FpsInfoOverlay and
-# BatteryHealthOverlay (rro_overlays/) -- they are shipped together with
-# those overlays because without the matching genfs_contexts label + app
-# read grants below, enforcing SELinux will silently deny the reads and
-# both features will appear broken with no obvious error.
+# Battery info and FPS sysfs types
 type sysfs_fps, sysfs_type, fs_type;
 type sysfs_batteryinfo, fs_type, sysfs_type;
 
-# Backs the ILITEK double-tap-to-wake control nodes used by DeviceSettings
-# (org.lineageos.settings.device) -- see ilitek_node.c:2498 for the three
-# candidate paths this covers:
-#   /proc/touchpanel/double_tap_enable
-#   /proc/ilitek/double_tap_enable
-#   /sys/android_touch/double_tap_enable
+# Touchpanel sysfs / procfs nodes
 type sysfs_touchpanel, fs_type, sysfs_type;

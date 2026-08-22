@@ -1,11 +1,8 @@
 /*
- * Authored for device/cubot/marlon.
- * Author: kelexine (https://github.com/kelexine)
- *
- * The ILITEK control nodes reset to their kernel-side default on every
- * reboot, so the last user-selected preference has to be re-applied on
- * boot rather than assumed to persist across power cycles.
+ * SPDX-FileCopyrightText: The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 package org.lineageos.settings.device;
 
 import android.content.BroadcastReceiver;
@@ -18,6 +15,9 @@ import androidx.preference.PreferenceManager;
 
 import org.lineageos.settings.device.gestures.DoubleTapToWakeController;
 
+/**
+ * Restores user-selected gesture settings on boot.
+ */
 public class BootCompletedReceiver extends BroadcastReceiver {
 
     private static final String TAG = "DeviceSettings-Boot";
