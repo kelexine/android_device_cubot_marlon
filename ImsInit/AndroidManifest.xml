@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
+<!-- Ported-by: kelexine (https://github.com/kelexine) -->
+<!-- OPT-IN / DISABLED BY DEFAULT -- only built when
+     MARLON_ENABLE_MTK_IMS_FRAMEWORK := true. See PhoneStateService.java. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.cubot.imsinit"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.phone">
+
+    <application
+        android:persistent="true">
+        <receiver android:name="org.lineageos.cubot.imsinit.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <service android:name="org.lineageos.cubot.imsinit.PhoneStateService"/>
+    </application>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+    <uses-permission android:name="android.permission.DIAGNOSTIC"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+</manifest>

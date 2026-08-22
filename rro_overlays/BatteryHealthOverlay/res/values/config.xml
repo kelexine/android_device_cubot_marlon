@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
+<!-- Ported-by: kelexine (https://github.com/kelexine) -->
+<!-- These reference the standard Linux power_supply class sysfs paths,
+     not certus-specific values, so they carry across any device using
+     the mainline kernel power_supply framework (as marlon does). -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Battery Health -->
+    <string name="config_batChargeCycle">/sys/class/power_supply/battery/cycle_count</string>
+    <string name="config_batDesCap">/sys/class/power_supply/battery/charge_full_design</string>
+    <string name="config_batCurCap">/sys/class/power_supply/battery/charge_full</string>
+    <bool name="config_supportBatteryHealth">true</bool>
+
+</resources>

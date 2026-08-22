@@ -1,0 +1,28 @@
+// Ported-by: kelexine (https://github.com/kelexine)
+//
+// libshim_showlogo is intentionally NOT ported: marlon's proprietary-files.txt
+// has no "showlogo"/bootlogo vendor binary that would need it (confirmed by
+// grep) -- there is nothing on this device for it to shim.
+//
+// libshim_vtservice IS an ABI compat shim providing mangled symbols an older
+// prebuilt vtservice_hidl binary may expect from libgui/libaudioclient/
+// libstagefright, for platform builds where those libraries' ABI has moved
+// on. It is NOT wired into PRODUCT_PACKAGES by default (see device.mk) --
+// only add it there if boot testing shows `dlopen failed: cannot locate
+// symbol` errors for vtservice_hidl. Building it here costs nothing; linking
+// it into the image unconditionally would be the unverified assumption.
+cc_library_shared {
+    name: "libshim_vtservice",
+    srcs: ["libshim_vtservice.cpp"],
+    shared_libs: [
+        "libaudioclient",
+        "libgui",
+        "libstagefright",
+        "libutils",
+    ],
+    header_libs: [
+        "libaudioclient_headers",
+        "libmedia_headers",
+        "libmediametrics_headers",
+    ],
+}

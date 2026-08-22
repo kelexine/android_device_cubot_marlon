@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Authored for device/cubot/marlon. -->
+<!-- Author: kelexine (https://github.com/kelexine) -->
+<resources>
+    <string name="app_name">Device Settings</string>
+    <string name="gestures_category_title">Gestures</string>
+    <string name="double_tap_to_wake_title">Double-tap to wake</string>
+    <string name="double_tap_to_wake_summary">Double-tap the screen while it\'s off to wake the device</string>
+</resources>

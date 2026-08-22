@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
+<!-- Ported-by: kelexine (https://github.com/kelexine) -->
+<!-- OPT-IN / DISABLED BY DEFAULT -- only installed when
+     MARLON_ENABLE_MTK_IMS_FRAMEWORK := true (see device.mk). -->
+<permissions>
+    <privapp-permissions package="org.lineageos.cubot.imsinit">
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+    </privapp-permissions>
+</permissions>

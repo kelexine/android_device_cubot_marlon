@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2019 The Android Open Source Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
+<!-- Ported-by: kelexine (https://github.com/kelexine) -->
+<!-- NOTE: certus's own copy of this overlay left its package id as
+     "com.android.wifi.resources.oneplus" (a leftover from whatever tree it
+     was originally sourced from upstream) -- renamed here to avoid carrying
+     that copy-paste artifact into marlon. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.wifi.resources.marlon"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <application android:hasCode="false" />
+    <overlay
+      android:targetPackage="com.android.wifi.resources"
+      android:targetName="WifiCustomization"
+      android:isStatic="true"
+      android:priority="1"/>
+</manifest>

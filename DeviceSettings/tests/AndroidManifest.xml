@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Authored for device/cubot/marlon. -->
+<!-- Author: kelexine (https://github.com/kelexine) -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.settings.device.tests">
+
+    <uses-sdk android:minSdkVersion="34" android:targetSdkVersion="34" />
+
+    <instrumentation
+        android:name="androidx.test.runner.AndroidJUnitRunner"
+        android:targetPackage="org.lineageos.settings.device"
+        android:label="DeviceSettings unit tests" />
+
+    <application android:label="DeviceSettings Tests" />
+
+</manifest>

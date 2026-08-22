@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
+<!-- Ported-by: kelexine (https://github.com/kelexine) -->
+<!-- NOTE: certus's own copy left its package id as
+     "com.android.networkstack.tethering.begonia" (a leftover from whatever
+     tree it was sourced from upstream) -- renamed here. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.networkstack.tethering.marlon"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <application android:hasCode="false" />
+    <overlay
+      android:targetPackage="com.android.networkstack.tethering"
+      android:targetName="TetheringConfig"
+      android:isStatic="true"
+      android:priority="1"/>
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Distilled from device/xiaomi/certus (kelexine) for device/cubot/marlon. -->
+<!-- Ported-by: kelexine (https://github.com/kelexine) -->
+<!-- NOTE: this sysfs node is exposed by MediaTek's legacy "primary_display"
+     kernel module, shared across the MT65xx/MT67xx display driver family
+     (both certus's MT6762 and marlon's MT6765 use it), not certus-specific.
+     Verify the node exists on-device (adb shell cat <path>) before enabling;
+     if MTK renamed/removed it on this kernel, this overlay is a no-op FPS
+     readout rather than a functional break, but confirm before shipping. -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- FPSInfoService FPS node file path -->
+    <string name="config_fpsInfoSysNode" translatable="false">/sys/module/primary_display/parameters/display_framerate_main</string>
+</resources>

@@ -1,0 +1,12 @@
+# Ported-by: kelexine (https://github.com/kelexine)
+#
+# Paired with FpsInfoOverlay (rro_overlays/) and sysfs_fps in file.te +
+# genfs_contexts -- SystemUI (platform_app) reads this node directly.
+allow platform_app sysfs_fps:dir search;
+allow platform_app sysfs_fps:file r_file_perms;
+
+# DeviceSettings (org.lineageos.settings.device) toggling DT2W -- resolves to
+# the platform_app domain since it's a platform-signed privileged app with
+# no sharedUserId. See sysfs_touchpanel in file.te / genfs_contexts.
+allow platform_app sysfs_touchpanel:dir r_dir_perms;
+allow platform_app sysfs_touchpanel:file rw_file_perms;
