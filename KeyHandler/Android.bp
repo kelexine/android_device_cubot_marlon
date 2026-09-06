@@ -1,7 +1,10 @@
 // KeyHandler library merged into services.jar via TARGET_KEY_HANDLER_LIBS in BoardConfig.mk
 java_library {
     name: "MarlonKeyHandler",
-    srcs: ["src/**/*.java"],
+    srcs: [
+        "src/**/*.java",
+        ":marlon_gesture_utils_srcs",
+    ],
     installable: false,
-    sdk_version: "core_platform",
+    platform_apis: true,
 }

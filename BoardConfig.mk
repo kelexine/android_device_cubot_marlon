@@ -76,7 +76,7 @@ BOARD_SEPOLICY_M4DEFS += vendor_sepolicy_vers=$(BOARD_VENDOR_SEPOLICY_VERS)
 BOARD_VENDOR_FILE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_file_contexts
 BOARD_VENDOR_PROPERTY_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_property_contexts
 BOARD_VENDOR_HWSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_hwservice_contexts
-BOARD_VENDOR_NDSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vndservice_contexts
+BOARD_VENDOR_VNDSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vndservice_contexts
 BOARD_VENDOR_SEAPP_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_seapp_contexts
 BOARD_VENDOR_MAC_PERMISSIONS := $(DEVICE_PATH)/sepolicy/vendor/vendor_mac_permissions.xml
 

@@ -15,3 +15,15 @@ android_app {
         enabled: false,
     },
 }
+
+filegroup {
+    name: "marlon_gesture_utils_srcs",
+    srcs: [
+        "src/org/lineageos/settings/device/gestures/ActionUtils.java",
+        "src/org/lineageos/settings/device/gestures/GestureAction.java",
+        "src/org/lineageos/settings/device/gestures/GestureInfo.java",
+        "src/org/lineageos/settings/device/gestures/GestureNodeController.java",
+        "src/org/lineageos/settings/device/gestures/GestureRegistry.java",
+        "src/org/lineageos/settings/device/utils/FileUtils.java",
+    ],
+}

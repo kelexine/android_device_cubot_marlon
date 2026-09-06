@@ -1,15 +1,4 @@
-# MTK power HAL
-type mtk_hal_power, domain;
+# MTK HAL extra policy definitions
+# Note: mtk_hal_power, mtk_hal_mms, hal_mms_server, and vtservice_hidl domains
+# are precompiled in vendor_sepolicy.cil. Add only incremental rules here.
 
-# MTK MMS HAL
-type mtk_hal_mms_hwservice, hwservice_manager_type;
-allow appdomain mtk_hal_mms_hwservice:hwservice_manager find;
-
-type hal_mms_server, domain;
-binder_call(hal_mms_server, hwservicemanager)
-binder_call(hwservicemanager, hal_mms_server)
-
-# MTK videotelephony / vtservice
-type vtservice_hidl, domain;
-type vtservice_hidl_exec, exec_type, vendor_file_type, file_type;
-init_daemon_domain(vtservice_hidl)
