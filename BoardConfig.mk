@@ -35,10 +35,6 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_KERNEL_SEPARATED_DTBO := true
-TARGET_KERNEL_CONFIG := marlon_defconfig
-TARGET_KERNEL_SOURCE := kernel/cubot/marlon
-
 # Kernel - prebuilt
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
@@ -48,6 +44,9 @@ BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_INCLUDE_DTB_IN_BOOTIMG := 
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
 BOARD_KERNEL_SEPARATED_DTBO := 
+else
+TARGET_KERNEL_CONFIG := marlon_defconfig
+TARGET_KERNEL_SOURCE := kernel/cubot/marlon
 endif
 
 # Partitions
@@ -65,20 +64,9 @@ TARGET_BOARD_PLATFORM := mt6765
 BOARD_USES_MTK_HARDWARE := true
 
 # SELinux
+include device/mediatek/sepolicy_vndr/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
-
-# Precompiled vendor sepolicy (from device)
-BOARD_VENDOR_SEPOLICY_CIL_FILE := $(DEVICE_PATH)/sepolicy/vendor/vendor_sepolicy.cil
-BOARD_VENDOR_SEPOLICY_VERS := $(shell cat $(DEVICE_PATH)/sepolicy/vendor/plat_sepolicy_vers.txt)
-BOARD_SEPOLICY_M4DEFS += vendor_sepolicy_vers=$(BOARD_VENDOR_SEPOLICY_VERS)
-
-# Vendor file contexts, property contexts, hwservice contexts
-BOARD_VENDOR_FILE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_file_contexts
-BOARD_VENDOR_PROPERTY_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_property_contexts
-BOARD_VENDOR_HWSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_hwservice_contexts
-BOARD_VENDOR_VNDSERVICE_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vndservice_contexts
-BOARD_VENDOR_SEAPP_CONTEXTS := $(DEVICE_PATH)/sepolicy/vendor/vendor_seapp_contexts
-BOARD_VENDOR_MAC_PERMISSIONS := $(DEVICE_PATH)/sepolicy/vendor/vendor_mac_permissions.xml
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # Lineage Hardware
 BOARD_HARDWARE_CLASS += \

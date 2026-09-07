@@ -11,7 +11,6 @@ wifi.interface=wlan0
 wifi.tethering.interface=ap0
 
 # Miscellaneous
-Build.BRAND=MTK
 com.mediatek.log.gps.ui.enabled=0
 mediatek.wlan.ctia=0
 net.bt.name=Android
