@@ -5,3 +5,14 @@ ro.com.google.acsa=true
 ro.opa.eligible_device=true
 ro.setupwizard.rotation_locked=true
 
+# BPF kernel version override for Android 16+ (25Q2) compatibility on Linux 4.19.
+# Android 16 (API 36 / 25Q2) raises the minimum kernel version requirement to 5.4
+# in NetBpfLoad, causing exit code 6 before any BPF maps are pinned, which leaves
+# /sys/fs/bpf/netd_shared/map_netd_iface_stats_map unpopulated and traffic stats
+# reading 0. Setting 5.4.299 satisfies the gate while keeping the loader below the
+# 5.8/5.10 thresholds that would activate BPF_MAP_TYPE_RINGBUF, BPF_F_MMAPABLE,
+# and bpf_sk_storage_get — all absent on Linux 4.19. Matches the approach used by
+# LineageOS/android_device_xiaomi_sdm660-common, kyasu/android_device_xiaomi_grus,
+# and acroreiser/android_device_lenovo_a6010.
+ro.bpf.kver_override=5.4.299
+
