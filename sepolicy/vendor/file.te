@@ -4,3 +4,10 @@ type sysfs_batteryinfo, fs_type, sysfs_type;
 
 # Touchpanel sysfs / procfs nodes
 type sysfs_touchpanel, fs_type, sysfs_type;
+
+# Custom kernel feature control types
+type sysfs_cpuidle, sysfs_type, fs_type;
+type sysfs_scheduler, sysfs_type, fs_type;
+type proc_tcp_cc, proc_type, fs_type;
+type proc_compaction, proc_type, fs_type;
+type sysfs_ged_tuning, sysfs_type, fs_type;

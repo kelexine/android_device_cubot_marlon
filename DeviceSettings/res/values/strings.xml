@@ -42,4 +42,67 @@
         <item>BROWSER</item>
         <item>VOICE_ASSIST</item>
     </string-array>
+
+    <!-- Categories -->
+    <string name="category_display_gestures">Display &amp; Gestures</string>
+    <string name="category_performance">Performance Profile</string>
+    <string name="category_kernel_tuning">Kernel &amp; Storage</string>
+
+    <!-- Navigation -->
+    <string name="screen_gestures_title">Screen-off gestures</string>
+    <string name="screen_gestures_summary">Configure swipe, letter, and media gestures</string>
+
+    <!-- Performance & Gaming Mode -->
+    <string name="gaming_mode_title">Gaming performance mode</string>
+    <string name="gaming_mode_summary">Elevate GPU DVFS switch margins, enforce 400MHz frequency floor, and prioritize frame rescue</string>
+
+    <!-- CPUIdle Governor -->
+    <string name="cpuidle_governor_title">CPUIdle governor</string>
+    <string name="cpuidle_governor_summary">Power-saving CPU idle governor (%s)</string>
+
+    <!-- I/O Scheduler -->
+    <string name="io_scheduler_title">I/O scheduler</string>
+    <string name="io_scheduler_summary">Flash storage I/O request scheduler (%s)</string>
+
+    <!-- Readahead -->
+    <string name="read_ahead_title">Storage readahead buffer</string>
+    <string name="read_ahead_summary">Prefetch buffer size for sequential read throughput (%s)</string>
+    <string-array name="read_ahead_entries">
+        <item>128 KB (Default)</item>
+        <item>512 KB (Optimized)</item>
+        <item>1024 KB (1 MB)</item>
+        <item>2048 KB (2 MB)</item>
+    </string-array>
+    <string-array name="read_ahead_values" translatable="false">
+        <item>128</item>
+        <item>512</item>
+        <item>1024</item>
+        <item>2048</item>
+    </string-array>
+
+    <!-- TCP Congestion Control -->
+    <string name="tcp_congestion_title">TCP congestion control</string>
+    <string name="tcp_congestion_summary">Network congestion avoidance algorithm (%s)</string>
+    <string-array name="tcp_congestion_entries">
+        <item>BBR (Bottleneck Bandwidth and RTT)</item>
+        <item>CUBIC (Standard)</item>
+    </string-array>
+    <string-array name="tcp_congestion_values" translatable="false">
+        <item>bbr</item>
+        <item>cubic</item>
+    </string-array>
+
+    <!-- Proactive Memory Compaction -->
+    <string name="proactive_compaction_title">Proactive memory compaction</string>
+    <string name="proactive_compaction_summary">Linux 5.8 background memory defragmentation intensity (%s)</string>
+    <string-array name="proactive_compaction_entries">
+        <item>Disabled (0)</item>
+        <item>Balanced (20 - Recommended)</item>
+        <item>Aggressive (50)</item>
+    </string-array>
+    <string-array name="proactive_compaction_values" translatable="false">
+        <item>0</item>
+        <item>20</item>
+        <item>50</item>
+    </string-array>
 </resources>

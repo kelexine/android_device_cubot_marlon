@@ -6,3 +6,15 @@ genfscon sysfs /module/primary_display/parameters u:object_r:sysfs_fps:s0
 genfscon proc /touchpanel u:object_r:sysfs_touchpanel:s0
 genfscon proc /ilitek u:object_r:sysfs_touchpanel:s0
 genfscon sysfs /android_touch u:object_r:sysfs_touchpanel:s0
+
+# Custom kernel feature control nodes
+genfscon sysfs /devices/system/cpu/cpuidle u:object_r:sysfs_cpuidle:s0
+genfscon sysfs /block/mmcblk0/queue/scheduler u:object_r:sysfs_scheduler:s0
+genfscon sysfs /block/mmcblk0/queue/read_ahead_kb u:object_r:sysfs_scheduler:s0
+genfscon sysfs /module/ged/parameters/gx_tb_dvfs_margin u:object_r:sysfs_ged_tuning:s0
+genfscon sysfs /module/ged/parameters/gpu_bottom_freq u:object_r:sysfs_ged_tuning:s0
+genfscon sysfs /kernel/fpsgo/common/fpsgo_enable u:object_r:sysfs_ged_tuning:s0
+
+genfscon proc /sys/net/ipv4/tcp_congestion_control u:object_r:proc_tcp_cc:s0
+genfscon proc /sys/net/ipv4/tcp_available_congestion_control u:object_r:proc_tcp_cc:s0
+genfscon proc /sys/vm/compaction_proactiveness u:object_r:proc_compaction:s0

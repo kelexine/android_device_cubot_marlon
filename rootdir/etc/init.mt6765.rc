@@ -729,6 +729,28 @@ on boot
     chown system system /sys/power/sb_state
     chmod 0660 /sys/power/sb_state
 
+    # Custom kernel feature control surface nodes
+    chown system system /sys/devices/system/cpu/cpuidle/current_governor
+    chmod 0664 /sys/devices/system/cpu/cpuidle/current_governor
+
+    chown system system /sys/block/mmcblk0/queue/scheduler
+    chmod 0664 /sys/block/mmcblk0/queue/scheduler
+    chown system system /sys/block/mmcblk0/queue/read_ahead_kb
+    chmod 0664 /sys/block/mmcblk0/queue/read_ahead_kb
+
+    chown system system /proc/sys/net/ipv4/tcp_congestion_control
+    chmod 0664 /proc/sys/net/ipv4/tcp_congestion_control
+
+    chown system system /proc/sys/vm/compaction_proactiveness
+    chmod 0664 /proc/sys/vm/compaction_proactiveness
+
+    chown system system /sys/module/ged/parameters/gx_tb_dvfs_margin
+    chmod 0664 /sys/module/ged/parameters/gx_tb_dvfs_margin
+    chown system system /sys/module/ged/parameters/gpu_bottom_freq
+    chmod 0664 /sys/module/ged/parameters/gpu_bottom_freq
+    chown system system /sys/kernel/fpsgo/common/fpsgo_enable
+    chmod 0664 /sys/kernel/fpsgo/common/fpsgo_enable
+
 # HMP CPU hotplug strategy
     chown system system /proc/hps/num_base_perf_serv
     chmod 0660 /proc/hps/num_base_perf_serv
@@ -989,6 +1011,12 @@ on property:sys.boot_completed=1
     write /sys/block/dm-3/queue/read_ahead_kb 128
     write /sys/block/dm-4/queue/read_ahead_kb 128
     write /sys/block/dm-5/queue/read_ahead_kb 128
+
+    # Apply optimized kernel defaults on boot
+    write /sys/devices/system/cpu/cpuidle/current_governor teo
+    write /sys/block/mmcblk0/queue/scheduler bfq
+    write /proc/sys/net/ipv4/tcp_congestion_control bbr
+    write /proc/sys/vm/compaction_proactiveness 20
 
 # start EAS+
 on property:sys.boot_completed=1
