@@ -125,6 +125,7 @@ endif
 
 # VINTF
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+PRODUCT_ENABLE_UFFD_GC := false
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/cubot/marlon/marlon-vendor.mk)
