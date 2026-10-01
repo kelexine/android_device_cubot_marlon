@@ -65,6 +65,11 @@ BOARD_SUPER_PARTITION_GROUPS := cubot_dynamic_partitions
 BOARD_CUBOT_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor product
 BOARD_CUBOT_DYNAMIC_PARTITIONS_SIZE := 4290772992
 
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_USES_METADATA_PARTITION := true
+
 # Platform
 TARGET_BOARD_PLATFORM := mt6765
 BOARD_USES_MTK_HARDWARE := true
@@ -116,6 +121,7 @@ include vendor/cubot/marlon/BoardConfigVendor.mk
 
 # Build broken flags
 BUILD_BROKEN_PREBUILT_ELF_FILES := true
+BUILD_BROKEN_INCORRECT_PARTITION_IMAGES := true
 
 include vendor/lineage/config/BoardConfigLineage.mk
 -include vendor/lineage/config/BoardConfigReservedSize.mk
