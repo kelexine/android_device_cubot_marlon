@@ -112,5 +112,9 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 # Inherit the proprietary files
 include vendor/cubot/marlon/BoardConfigVendor.mk
 
+# Build broken flags
+BUILD_BROKEN_PREBUILT_ELF_FILES := true
+
 include vendor/lineage/config/BoardConfigLineage.mk
 -include vendor/lineage/config/BoardConfigReservedSize.mk
+
