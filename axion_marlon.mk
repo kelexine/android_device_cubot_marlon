@@ -23,6 +23,7 @@ TARGET_BOOT_ANIMATION_RES := 720
 TARGET_INCLUDE_AXFX := true
 ifeq ($(TARGET_INCLUDE_AXFX),true)
 $(call inherit-product-if-exists, packages/apps/AxionFx/config.mk)
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/audio_effects.xml,$(PRODUCT_COPY_FILES))
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects_axion.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
 endif
