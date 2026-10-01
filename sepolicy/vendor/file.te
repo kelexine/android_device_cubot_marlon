@@ -1,6 +1,3 @@
-# Battery info and FPS sysfs types
-type sysfs_fps, sysfs_type, fs_type;
-type sysfs_batteryinfo, fs_type, sysfs_type;
 
 # Touchpanel sysfs / procfs nodes
 type sysfs_touchpanel, fs_type, sysfs_type;
