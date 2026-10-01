@@ -1,6 +1,7 @@
 
 # Touchpanel sysfs / procfs nodes
-type sysfs_touchpanel, fs_type, sysfs_type;
+type sysfs_touchpanel, fs_type, sysfs_type, proc_type;
+
 
 # Custom kernel feature control types
 type sysfs_cpuidle, sysfs_type, fs_type;
