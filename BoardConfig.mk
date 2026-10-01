@@ -113,3 +113,4 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 include vendor/cubot/marlon/BoardConfigVendor.mk
 
 include vendor/lineage/config/BoardConfigLineage.mk
+-include vendor/lineage/config/BoardConfigReservedSize.mk
