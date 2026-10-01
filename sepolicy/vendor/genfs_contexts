@@ -18,7 +18,6 @@ genfscon sysfs /kernel/fpsgo/common/fpsgo_enable u:object_r:sysfs_ged_tuning:s0
 genfscon proc /sys/net/ipv4/tcp_congestion_control u:object_r:proc_tcp_cc:s0
 genfscon proc /sys/net/ipv4/tcp_available_congestion_control u:object_r:proc_tcp_cc:s0
 genfscon proc /sys/vm/compaction_proactiveness u:object_r:proc_compaction:s0
-genfscon proc /sys/vm/dirty_writeback_centisecs u:object_r:proc_dirty:s0
 genfscon proc /sys/vm/vfs_cache_pressure u:object_r:proc_drop_caches:s0
 genfscon proc /sys/vm/dirty_ratio u:object_r:proc_dirty:s0
 
