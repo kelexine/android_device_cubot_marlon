@@ -49,6 +49,12 @@ BYPASS_CHARGE_SUPPORTED := false
 # Inherit common Lineage/Axion configuration
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
+# Protobuf vendor compat for Widevine DRM and ClearKey CAS
+PRODUCT_SOURCE_ROOT_DIRS := $(filter-out -prebuilts/misc/protobuf_vendorcompat,$(PRODUCT_SOURCE_ROOT_DIRS))
+PRODUCT_PACKAGES += \
+    libprotobuf-cpp-full-3.9.1-vendorcompat \
+    libprotobuf-cpp-lite-3.9.1-vendorcompat
+
 PRODUCT_DEVICE := marlon
 PRODUCT_NAME := axion_marlon
 PRODUCT_BRAND := CUBOT
