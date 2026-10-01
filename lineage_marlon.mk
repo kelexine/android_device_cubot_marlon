@@ -10,6 +10,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from marlon device
 $(call inherit-product, device/cubot/marlon/device.mk)
 
+# GMS Configuration (Core variant without Google Telecomm)
+WITH_GMS := true
+TARGET_GAPPS_VARIANT := core
+TARGET_INCLUDE_GOOGLE_TELECOMM := false
+
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 

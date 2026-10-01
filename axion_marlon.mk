@@ -46,6 +46,11 @@ AXION_CPU_AUDIO := 0-7
 # Bypass charging: unsupported, no input_suspend node on this kernel
 BYPASS_CHARGE_SUPPORTED := false
 
+# GMS Configuration (Core variant without Google Telecomm)
+WITH_GMS := true
+TARGET_GAPPS_VARIANT := core
+TARGET_INCLUDE_GOOGLE_TELECOMM := false
+
 # Inherit common Lineage/Axion configuration
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
