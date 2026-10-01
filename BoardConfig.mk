@@ -36,8 +36,8 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_INCLUDE_DTB_IN_BOOTIMG := 
 
-# Kernel - build from source (p50_defconfig)
-TARGET_KERNEL_CONFIG := p50_defconfig
+# Kernel - build from source (marlon_defconfig)
+TARGET_KERNEL_CONFIG := marlon_defconfig
 TARGET_KERNEL_SOURCE := kernel/cubot/marlon
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \

@@ -16,8 +16,16 @@ $(call inherit-product, device/cubot/marlon/device.mk)
 
 # AxionOS performance and feature flags
 TARGET_DISABLE_EPPE := true
-TARGET_INCLUDE_AXFX := true
+TARGET_FACE_UNLOCK_SUPPORTED := true
 TARGET_BOOT_ANIMATION_RES := 720
+
+# AxionFx Audio Enhancement Suite
+TARGET_INCLUDE_AXFX := true
+ifeq ($(TARGET_INCLUDE_AXFX),true)
+$(call inherit-product-if-exists, packages/apps/AxionFx/config.mk)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio/audio_effects_axion.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
+endif
 
 # AxionOS "About Phone" device properties
 AXION_MAINTAINER := kelexine
