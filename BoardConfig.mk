@@ -111,3 +111,5 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 
 # Inherit the proprietary files
 include vendor/cubot/marlon/BoardConfigVendor.mk
+
+include vendor/lineage/config/BoardConfigLineage.mk
