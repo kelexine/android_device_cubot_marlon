@@ -111,7 +111,8 @@ PRODUCT_COPY_FILES += \
 
 # AxionOS Kernel Manager
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/ax_kernel_manager.xml
+    $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/ax_kernel_manager.xml \
+    $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/ax_kernel_manager.xml
 
 
 # MTK IMS Framework (opt-in)
