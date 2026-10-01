@@ -6,6 +6,9 @@
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Setup Dalvik VM configs for 6GB RAM
+$(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
+
 # API levels
 PRODUCT_SHIPPING_API_LEVEL := 30
 
