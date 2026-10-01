@@ -130,9 +130,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/privapp-permissions-imsinit.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-imsinit.xml
 endif
 
-# VINTF
+# VINTF & OTA
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_ENABLE_UFFD_GC := false
+
+# Non-A/B Update
+AB_OTA_UPDATER := false
+PRODUCT_SOONG_NAMESPACES += bootable/deprecated-ota
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/cubot/marlon/marlon-vendor.mk)
