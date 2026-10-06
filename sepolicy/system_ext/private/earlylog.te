@@ -1,0 +1,18 @@
+# Author: kelexine <https://github.com/kelexine>
+# SPDX-License-Identifier: Apache-2.0
+
+type earlylog, domain;
+typeattribute earlylog coredomain;
+type earlylog_data_file, file_type;
+
+domain_trans(init, logcat_exec, earlylog)
+
+read_logd(earlylog)
+read_runtime_log_tags(earlylog)
+get_prop(earlylog, logd_prop)
+
+# Output lives in /metadata/earlylog, created by init.target.rc.
+allow earlylog metadata_file:dir search;
+allow earlylog earlylog_data_file:dir rw_dir_perms;
+allow earlylog earlylog_data_file:file create_file_perms;
+allow init earlylog_data_file:dir { create_dir_perms relabelto };

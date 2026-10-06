@@ -1,0 +1,59 @@
+// Author: kelexine <https://github.com/kelexine>
+// SPDX-License-Identifier: Apache-2.0
+
+cc_defaults {
+    name: "pwroff_alarm_defaults",
+    cpp_std: "c++20",
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wshadow",
+    ],
+}
+
+// Policy, device and syscall layers; everything except main().
+cc_library_static {
+    name: "libpwroff_alarm",
+    defaults: ["pwroff_alarm_defaults"],
+    vendor_available: true,
+    host_supported: true,
+    srcs: [
+        "src/alarm_device.cpp",
+        "src/cli.cpp",
+        "src/clock.cpp",
+        "src/epoch.cpp",
+        "src/log.cpp",
+        "src/property_source.cpp",
+        "src/status.cpp",
+        "src/syscalls.cpp",
+    ],
+    export_include_dirs: ["include"],
+    target: {
+        android: {
+            shared_libs: ["liblog"],
+        },
+    },
+}
+
+// Started by init.target.rc whenever vendor.pwroff_alarm.epoch is written.
+cc_binary {
+    name: "pwroff_alarm",
+    defaults: ["pwroff_alarm_defaults"],
+    vendor: true,
+    srcs: ["src/main.cpp"],
+    static_libs: ["libpwroff_alarm"],
+    shared_libs: ["liblog"],
+}
+
+// Host-side unit + integration tests (gtest). Also runnable without an AOSP
+// tree via tests/run_host_tests.sh.
+cc_test_host {
+    name: "pwroff_alarm_tests",
+    defaults: ["pwroff_alarm_defaults"],
+    srcs: [
+        "tests/integration/*.cpp",
+        "tests/unit/*.cpp",
+    ],
+    static_libs: ["libpwroff_alarm"],
+}

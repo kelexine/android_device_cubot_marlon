@@ -1,0 +1,17 @@
+# Author: kelexine <https://github.com/kelexine>
+# SPDX-License-Identifier: Apache-2.0
+
+# power-off alarm
+on property:vendor.pwroff_alarm.epoch=*
+    exec_background - system system -- /vendor/bin/pwroff_alarm sync
+
+# earlylog
+on init
+    mkdir /metadata/earlylog 0770 logd log
+    start earlylog
+
+service earlylog /system/bin/logcat -b main,system,crash,radio,events,kernel -v threadtime -v usec -v printable -v UTC -f /metadata/earlylog/log -r 1024 -n 4
+    disabled
+    user logd
+    group log
+    seclabel u:r:earlylog:s0

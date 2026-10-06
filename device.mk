@@ -72,11 +72,13 @@ PRODUCT_PACKAGES += \
     init.project.rc \
     init.sensor_1_0.rc \
     init.stnfc.rc \
+    init.target.rc \
     meta_init.connectivity.rc \
     meta_init.modem.rc \
     meta_init.project.rc \
     meta_init.rc \
     multi_init.rc \
+    pwroff_alarm \
     init.recovery.mt6762.rc \
     init.recovery.mt6765.rc \
 

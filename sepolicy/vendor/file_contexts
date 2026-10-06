@@ -1,2 +1,5 @@
 # Cubot P50 (marlon) vendor sepolicy file_contexts
 /vendor/bin/hw/vtservice_hidl    u:object_r:vtservice_hidl_exec:s0
+
+# Power-off alarm helper
+/vendor/bin/pwroff_alarm    u:object_r:pwroff_alarm_exec:s0

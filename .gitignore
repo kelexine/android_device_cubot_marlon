@@ -1,0 +1,3 @@
+# Python bytecode from the rootdir/tests contract checker
+__pycache__/
+*.pyc

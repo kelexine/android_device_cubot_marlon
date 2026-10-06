@@ -1,0 +1,5 @@
+# Author: kelexine <https://github.com/kelexine>
+# SPDX-License-Identifier: Apache-2.0
+
+# Early persistent logging (earlylog service in init.target.rc)
+/metadata/earlylog(/.*)?    u:object_r:earlylog_data_file:s0

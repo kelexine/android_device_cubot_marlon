@@ -89,6 +89,7 @@ TARGET_PROVIDES_MTK_PROPRIETARY := true
 # SELinux
 include device/mediatek/sepolicy_vndr/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/system_ext/private
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # Lineage Hardware
