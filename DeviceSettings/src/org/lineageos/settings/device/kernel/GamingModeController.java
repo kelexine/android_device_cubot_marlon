@@ -10,6 +10,7 @@ package org.lineageos.settings.device.kernel;
 
 import android.util.Log;
 
+import org.lineageos.settings.device.encore.EncoreClient;
 import org.lineageos.settings.device.utils.FileUtils;
 
 public final class GamingModeController {
@@ -36,11 +37,17 @@ public final class GamingModeController {
     }
 
     public static boolean isSupported() {
-        return (FileUtils.isFileReadable(NODE_GED_MARGIN) && FileUtils.isFileWritable(NODE_GED_MARGIN))
+        return EncoreClient.getInstance().isAvailable()
+                || (FileUtils.isFileReadable(NODE_GED_MARGIN) && FileUtils.isFileWritable(NODE_GED_MARGIN))
                 || (FileUtils.isFileReadable(NODE_GED_BOTTOM_FREQ) && FileUtils.isFileWritable(NODE_GED_BOTTOM_FREQ));
     }
 
     public static boolean isGamingModeEnabled() {
+        EncoreClient client = EncoreClient.getInstance();
+        if (client.isAvailable()) {
+            return client.isGameMode();
+        }
+
         String curMargin = FileUtils.readOneLine(NODE_GED_MARGIN);
         if (curMargin != null) {
             try {
@@ -61,6 +68,11 @@ public final class GamingModeController {
     }
 
     public static boolean setGamingMode(boolean enabled) {
+        EncoreClient client = EncoreClient.getInstance();
+        if (client.isAvailable()) {
+            return client.setGameMode(enabled, "manual_ui");
+        }
+
         boolean allOk = true;
 
         String targetMargin = enabled ? GAMING_MARGIN : STOCK_MARGIN;

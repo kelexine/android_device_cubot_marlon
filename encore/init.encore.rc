@@ -1,0 +1,13 @@
+#
+# File: init.encore.rc
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-07
+# Purpose: Init service definition for Encore hardware tuning daemon.
+#
+
+service vendor.encore /vendor/bin/encored
+    class hal
+    user system
+    group system readproc
+    capabilities SYS_NICE
+    task_profiles ProcessCapacityHigh

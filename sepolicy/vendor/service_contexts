@@ -1,0 +1,8 @@
+#
+# File: service_contexts
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-07
+# Purpose: Service contexts mapping for Encore AIDL HAL service.
+#
+
+vendor.cubot.hardware.encore.IEncore/default    u:object_r:hal_encore_service:s0

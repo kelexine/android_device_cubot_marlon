@@ -3,3 +3,6 @@
 
 # Power-off alarm helper
 /vendor/bin/pwroff_alarm    u:object_r:pwroff_alarm_exec:s0
+
+# Encore Performance Daemon
+/vendor/bin/encored         u:object_r:vendor_encore_exec:s0

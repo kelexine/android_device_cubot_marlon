@@ -33,6 +33,7 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
     private static final String KEY_DOUBLE_TAP_TO_WAKE =
             BootCompletedReceiver.KEY_DOUBLE_TAP_TO_WAKE;
     private static final String KEY_SCREEN_GESTURES = "key_screen_gestures";
+    private static final String KEY_ENCORE_SETTINGS = "key_encore_settings";
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -40,6 +41,7 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
 
         setUpDoubleTapToWake();
         setUpScreenGesturesNavigation();
+        setUpEncoreNavigation();
         setUpGamingMode();
         setUpCpuidleGovernor();
         setUpIoScheduler();
@@ -177,6 +179,13 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
             getParentFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_frame, new GesturesSettingsFragment())
+                    .addToBackStack(null)
+                    .commit();
+            return true;
+        } else if (KEY_ENCORE_SETTINGS.equals(preference.getKey())) {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, new org.lineageos.settings.device.encore.EncoreSettingsFragment())
                     .addToBackStack(null)
                     .commit();
             return true;

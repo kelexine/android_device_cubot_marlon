@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SPDX-FileCopyrightText: The LineageOS Project
+    Author: Onogwu Franklin Kelechi (kelexine) <https://github.com/kelexine>
+    Date: 2026-10-07
+    Purpose: Preference screen layout for Encore Performance & Gaming controls.
+    SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/encore_telemetry_category">
+        <Preference
+            android:key="encore_telemetry_stats"
+            android:title="@string/encore_stats_title"
+            android:summary="@string/encore_stats_loading"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/encore_profile_category">
+        <ListPreference
+            android:key="encore_profile"
+            android:title="@string/encore_profile_title"
+            android:summary="%s"
+            android:entries="@array/encore_profile_entries"
+            android:entryValues="@array/encore_profile_values"
+            android:defaultValue="0"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:key="encore_gaming_mode"
+            android:title="@string/encore_gaming_mode_title"
+            android:summary="@string/encore_gaming_mode_summary"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/encore_hardware_category">
+        <SwitchPreferenceCompat
+            android:key="encore_touch_boost"
+            android:title="@string/encore_touch_boost_title"
+            android:summary="@string/encore_touch_boost_summary"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:key="encore_thermal_mitigation"
+            android:title="@string/encore_thermal_title"
+            android:summary="@string/encore_thermal_summary"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

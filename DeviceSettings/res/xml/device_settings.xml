@@ -25,6 +25,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/category_performance">
+        <Preference
+            android:key="key_encore_settings"
+            android:title="@string/encore_settings_title"
+            android:summary="@string/encore_settings_summary"
+            app:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             android:key="kernel_gaming_mode"
             android:title="@string/gaming_mode_title"

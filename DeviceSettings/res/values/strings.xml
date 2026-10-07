@@ -105,4 +105,31 @@
         <item>20</item>
         <item>50</item>
     </string-array>
+
+    <!-- Encore Performance Daemon -->
+    <string name="encore_settings_title">Encore Performance &amp; Gaming</string>
+    <string name="encore_settings_summary">Hardware performance profiles, GPU turbo, and touch boost</string>
+    <string name="encore_telemetry_category">Live Hardware Telemetry</string>
+    <string name="encore_stats_title">MT6762 System Clocks &amp; Thermal</string>
+    <string name="encore_stats_loading">Connecting to Encore daemon...</string>
+    <string name="encore_profile_category">Operating Profile</string>
+    <string name="encore_profile_title">Performance profile</string>
+    <string name="encore_gaming_mode_title">Gaming Turbo mode</string>
+    <string name="encore_gaming_mode_summary">Floor Big cluster at 1.8GHz, boost PowerVR GPU &amp; DVFSRC memory bus</string>
+    <string name="encore_hardware_category">Hardware Acceleration</string>
+    <string name="encore_touch_boost_title">Touch sampling boost</string>
+    <string name="encore_touch_boost_summary">Elevate touchpanel scan rate to minimum latency mode</string>
+    <string name="encore_thermal_title">Thermal throttle override</string>
+    <string name="encore_thermal_summary">Relax PPM thermal ceilings during intensive workloads</string>
+
+    <string-array name="encore_profile_entries">
+        <item>Balanced (Standard)</item>
+        <item>Gaming Turbo (Maximum Performance)</item>
+        <item>Battery Saver (Power Efficiency)</item>
+    </string-array>
+    <string-array name="encore_profile_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

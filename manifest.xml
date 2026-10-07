@@ -247,4 +247,12 @@
         <transport>hwbinder</transport>
         <fqname>@2.0::ISupplicant/default</fqname>
     </hal>
+    <hal format="aidl">
+        <name>vendor.cubot.hardware.encore</name>
+        <version>1</version>
+        <interface>
+            <name>IEncore</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
 </manifest>

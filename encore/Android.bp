@@ -1,0 +1,30 @@
+//
+// File: Android.bp
+// Author: kelexine <https://github.com/kelexine>
+// Date: 2026-10-07
+// Purpose: Soong build definition for encored vendor daemon.
+//
+
+cc_binary {
+    name: "encored",
+    vendor: true,
+    init_rc: ["init.encore.rc"],
+    srcs: [
+        "src/main.cpp",
+        "src/EncoreService.cpp",
+        "src/hardware/MT6762Tuner.cpp",
+        "src/hardware/HardwareMonitor.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "libutils",
+        "vendor.cubot.hardware.encore-V1-ndk",
+    ],
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+        "-std=c++20",
+    ],
+}

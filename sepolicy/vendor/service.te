@@ -1,0 +1,8 @@
+#
+# File: service.te
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-07
+# Purpose: Service manager types for Cubot P50 vendor services.
+#
+
+type hal_encore_service, hal_service_type, service_manager_type;
