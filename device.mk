@@ -124,6 +124,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/ax_kernel_manager.xml \
     $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/ax_kernel_manager.xml
 
+# Wi-Fi & P2P Supplicant Overlays (Enable 5GHz P2P / Quick Share)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
+
 
 # MTK IMS Framework (opt-in)
 MARLON_ENABLE_MTK_IMS_FRAMEWORK ?= false
