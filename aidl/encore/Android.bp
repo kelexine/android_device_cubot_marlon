@@ -7,6 +7,7 @@
 
 aidl_interface {
     name: "vendor.cubot.hardware.encore",
+    owner: "cubot",
     vendor_available: true,
     srcs: [
         "vendor/cubot/hardware/encore/*.aidl",
