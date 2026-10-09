@@ -12,7 +12,10 @@ aidl_interface {
     srcs: [
         "vendor/cubot/hardware/encore/*.aidl",
     ],
-    unstable: true,
+    stability: "vintf",
+    flags: [
+        "-Wno-error",
+    ],
     backend: {
         cpp: {
             enabled: false,
