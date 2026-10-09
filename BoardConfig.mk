@@ -42,7 +42,8 @@ TARGET_KERNEL_SOURCE := kernel/cubot/marlon
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM=1 \
-    LLVM_IAS=1
+    LLVM_IAS=1 \
+    KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
 # DTB & DTBO - prebuilt
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img
