@@ -71,6 +71,13 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         }
     }
 
+    private void setUpEncoreNavigation() {
+        Preference pref = findPreference(KEY_ENCORE_SETTINGS);
+        if (pref != null) {
+            pref.setOnPreferenceClickListener(this);
+        }
+    }
+
     private void setUpGamingMode() {
         SwitchPreferenceCompat pref = findPreference(GamingModeController.KEY_GAMING_MODE);
         if (pref == null) {
