@@ -36,7 +36,8 @@ bool MT6762Tuner::setCpuClusterLimits(int cluster, int minFreqKhz, int maxFreqKh
 }
 
 bool MT6762Tuner::setThermalPpmPolicy(bool allowThrottling) {
-    std::ifstream policyFile(std::string(PPM_POLICY_STATUS));
+    std::string policyPath(PPM_POLICY_STATUS);
+    std::ifstream policyFile(policyPath);
     if (!policyFile.is_open()) {
         return false;
     }
