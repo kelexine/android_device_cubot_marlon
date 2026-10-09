@@ -9,3 +9,4 @@ type sysfs_scheduler, sysfs_type, fs_type;
 type proc_tcp_cc, proc_type, fs_type;
 type proc_compaction, proc_type, fs_type;
 type sysfs_ged_tuning, sysfs_type, fs_type;
+type sysfs_devfreq, sysfs_type, fs_type;
