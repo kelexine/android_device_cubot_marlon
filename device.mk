@@ -79,6 +79,7 @@ PRODUCT_PACKAGES += \
     meta_init.rc \
     multi_init.rc \
     pwroff_alarm \
+    boot_kmsg \
     init.recovery.mt6762.rc \
     init.recovery.mt6765.rc \
 

@@ -1,0 +1,21 @@
+#
+# File: boot_kmsg.te
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-09
+# Purpose: SELinux domain for early boot kernel message collector.
+#
+
+type boot_kmsg, domain;
+type boot_kmsg_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(boot_kmsg)
+
+# Read /dev/kmsg
+allow boot_kmsg kmsg_device:chr_file { read open getattr write };
+
+# Write log files in /cache and /metadata
+allow boot_kmsg cache_file:dir { create_dir_perms rw_dir_perms };
+allow boot_kmsg cache_file:file { create_file_perms rw_file_perms };
+
+allow boot_kmsg metadata_file:dir { create_dir_perms rw_dir_perms };
+allow boot_kmsg metadata_file:file { create_file_perms rw_file_perms };

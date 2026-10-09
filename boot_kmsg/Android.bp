@@ -1,0 +1,18 @@
+// Author: kelexine <https://github.com/kelexine>
+// SPDX-License-Identifier: Apache-2.0
+
+cc_binary {
+    name: "boot_kmsg",
+    vendor: true,
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-D_GNU_SOURCE",
+    ],
+    srcs: ["src/main.c"],
+    shared_libs: [
+        "libcutils",
+        "liblog",
+    ],
+}

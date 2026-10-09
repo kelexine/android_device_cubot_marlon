@@ -6,3 +6,6 @@
 
 # Encore Performance Daemon
 /vendor/bin/encored         u:object_r:vendor_encore_exec:s0
+
+# Early Boot kmsg Collector
+/vendor/bin/boot_kmsg       u:object_r:boot_kmsg_exec:s0

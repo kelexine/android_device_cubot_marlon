@@ -15,3 +15,15 @@ service earlylog /system/bin/logcat -b main,system,crash,radio,events,kernel -v 
     user logd
     group log
     seclabel u:r:earlylog:s0
+
+# boot_kmsg
+on post-fs
+    mkdir /cache/bootlog 0775 system system
+    start boot_kmsg
+
+service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 30
+    disabled
+    oneshot
+    user root
+    group system log
+    seclabel u:r:boot_kmsg:s0
