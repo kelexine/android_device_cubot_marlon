@@ -19,7 +19,7 @@ cc_binary {
         "libbase",
         "libbinder_ndk",
         "libutils",
-        "vendor.cubot.hardware.encore-V2-ndk",
+        "vendor.cubot.hardware.encore-ndk",
     ],
     cflags: [
         "-Wall",
