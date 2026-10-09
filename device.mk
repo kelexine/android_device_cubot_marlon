@@ -38,10 +38,6 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service
 
-# Keymint 1.0 bridge over Keymaster 4.0
-PRODUCT_PACKAGES += \
-    android.hardware.security.keymint-service
-
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
