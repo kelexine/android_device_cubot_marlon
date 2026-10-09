@@ -10,7 +10,7 @@ android_app {
     static_libs: [
         "androidx.preference_preference",
         "androidx.appcompat_appcompat",
-        "vendor.cubot.hardware.encore-V1-java",
+        "vendor.cubot.hardware.encore-V2-java",
     ],
     optimize: {
         enabled: false,
