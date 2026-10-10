@@ -34,6 +34,8 @@ allow vendor_encore sysfs_devfreq:dir r_dir_perms;
 allow vendor_encore sysfs_devfreq:file rw_file_perms;
 
 # GED / GPU tuning
+allow vendor_encore sysfs_ged:dir r_dir_perms;
+allow vendor_encore sysfs_ged:file rw_file_perms;
 allow vendor_encore sysfs_ged_tuning:dir r_dir_perms;
 allow vendor_encore sysfs_ged_tuning:file rw_file_perms;
 

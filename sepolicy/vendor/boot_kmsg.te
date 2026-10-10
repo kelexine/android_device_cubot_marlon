@@ -19,3 +19,11 @@ allow boot_kmsg cache_file:file { create_file_perms rw_file_perms };
 
 allow boot_kmsg metadata_file:dir { create_dir_perms rw_dir_perms };
 allow boot_kmsg metadata_file:file { create_file_perms rw_file_perms };
+
+# Spawn and read logcat
+allow boot_kmsg default_prop:file { getattr map open read };
+allow boot_kmsg logcat_exec:file { rx_file_perms };
+allow boot_kmsg logd:unix_stream_socket connectto;
+allow boot_kmsg logdr_socket:sock_file write;
+allow boot_kmsg self:capability { dac_read_search sys_nice };
+

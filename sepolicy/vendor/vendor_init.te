@@ -1,0 +1,21 @@
+#
+# File: vendor_init.te
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-10
+# Purpose: SELinux policy rules for vendor_init on marlon.
+#
+
+# Early boot logger directory in cache
+allow vendor_init cache_file:dir { getattr search };
+
+# Kernel TCP congestion control sysfs/proc
+allow vendor_init proc_tcp_cc:file write;
+
+# Data directories and fingerprint sensor
+allow vendor_init system_data_file:dir { create ioctl open read setattr };
+allow vendor_init vendor_userdir_file:dir { add_name write };
+
+# Properties
+allow vendor_init default_prop:property_service set;
+allow vendor_init init_service_status_private_prop:file read;
+allow vendor_init vts_status_prop:file read;
