@@ -1499,3 +1499,66 @@ vendor/lib64/libprotobuf-cpp-lite-3.9.1.so
 vendor/lib64/libtinycompress.so
 vendor/lib64/libwebrtc_audio_preprocessing.so
 
+
+# Hardware HAL service init scripts
+vendor/etc/init/android.hardware.biometrics.face@1.0-service.rc
+vendor/etc/init/android.hardware.cas@1.2-service.rc
+vendor/etc/init/android.hardware.gatekeeper@1.0-service.rc
+vendor/etc/init/android.hardware.graphics.composer@2.1-service.rc
+vendor/etc/init/android.hardware.health@2.1-service.rc
+vendor/etc/init/android.hardware.media.omx@1.0-service.rc
+vendor/etc/init/android.hardware.memtrack@1.0-service.rc
+vendor/etc/init/vndservicemanager.rc
+
+# VINTF manifests
+vendor/etc/vintf/manifest/android.hardware.cas@1.2-service.xml
+vendor/etc/vintf/manifest/android.hardware.health@2.1.xml
+vendor/etc/vintf/manifest/android.hardware.wifi.hostapd.xml
+
+# Hardware feature permissions
+vendor/etc/permissions/android.hardware.audio.low_latency.xml
+vendor/etc/permissions/android.hardware.biometrics.face.xml
+vendor/etc/permissions/android.hardware.bluetooth.xml
+vendor/etc/permissions/android.hardware.bluetooth_le.xml
+vendor/etc/permissions/android.hardware.camera.xml
+vendor/etc/permissions/android.hardware.faketouch.xml
+vendor/etc/permissions/android.hardware.location.gps.xml
+vendor/etc/permissions/android.hardware.microphone.xml
+vendor/etc/permissions/android.hardware.nfc.hce.xml
+vendor/etc/permissions/android.hardware.nfc.hcef.xml
+vendor/etc/permissions/android.hardware.nfc.uicc.xml
+vendor/etc/permissions/android.hardware.nfc.xml
+vendor/etc/permissions/android.hardware.opengles.aep.xml
+vendor/etc/permissions/android.hardware.se.omapi.uicc.xml
+vendor/etc/permissions/android.hardware.sensor.accelerometer.xml
+vendor/etc/permissions/android.hardware.sensor.compass.xml
+vendor/etc/permissions/android.hardware.sensor.gyroscope.xml
+vendor/etc/permissions/android.hardware.sensor.light.xml
+vendor/etc/permissions/android.hardware.sensor.proximity.xml
+vendor/etc/permissions/android.hardware.sensor.stepcounter.xml
+vendor/etc/permissions/android.hardware.sensor.stepdetector.xml
+vendor/etc/permissions/android.hardware.telephony.gsm.xml
+vendor/etc/permissions/android.hardware.telephony.ims.xml
+vendor/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml
+vendor/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
+vendor/etc/permissions/android.hardware.touchscreen.multitouch.xml
+vendor/etc/permissions/android.hardware.touchscreen.xml
+vendor/etc/permissions/android.hardware.usb.accessory.xml
+vendor/etc/permissions/android.hardware.usb.host.xml
+vendor/etc/permissions/android.hardware.vulkan.compute.xml
+vendor/etc/permissions/android.hardware.vulkan.level.xml
+vendor/etc/permissions/android.hardware.vulkan.version.xml
+vendor/etc/permissions/android.hardware.wifi.direct.xml
+vendor/etc/permissions/android.hardware.wifi.passpoint.xml
+vendor/etc/permissions/android.hardware.wifi.xml
+vendor/etc/permissions/android.software.device_id_attestation.xml
+vendor/etc/permissions/android.software.ipsec_tunnels.xml
+vendor/etc/permissions/android.software.midi.xml
+vendor/etc/permissions/android.software.sip.voip.xml
+vendor/etc/permissions/android.software.verified_boot.xml
+vendor/etc/permissions/android.software.vulkan.deqp.level.xml
+vendor/etc/permissions/handheld_core_hardware.xml
+
+# Vendor binaries
+vendor/bin/vndservice
+vendor/bin/vndservicemanager
