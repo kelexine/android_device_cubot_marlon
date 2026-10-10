@@ -134,8 +134,12 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(DEVICE_PATH)/framework_compatibility_matrix.xml
 
-# Inherit the proprietary files
-include vendor/cubot/marlon/BoardConfigVendor.mk
+# Shims
+TARGET_LD_SHIM_LIBS += \
+    /vendor/lib/libnvram.so|libshim_base.so \
+    /vendor/lib/libsysenv.so|libshim_base.so \
+    /vendor/lib64/libnvram.so|libshim_base.so \
+    /vendor/lib64/libsysenv.so|libshim_base.so
 
 # Build broken flags
 BUILD_BROKEN_PREBUILT_ELF_FILES := true

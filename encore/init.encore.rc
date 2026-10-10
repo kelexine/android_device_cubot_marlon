@@ -6,8 +6,12 @@
 #
 
 service vendor.encore /vendor/bin/encored
-    class hal
+    disabled
     user system
     group system readproc
     capabilities SYS_NICE
     task_profiles ProcessCapacityHigh
+
+on property:sys.boot_completed=1
+    start vendor.encore
+

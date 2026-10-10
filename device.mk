@@ -76,6 +76,7 @@ PRODUCT_PACKAGES += \
     multi_init.rc \
     pwroff_alarm \
     boot_kmsg \
+    libshim_base \
     init.recovery.mt6762.rc \
     init.recovery.mt6765.rc \
 

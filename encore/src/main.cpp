@@ -22,9 +22,19 @@ int main(int /*argc*/, char* argv[]) {
     std::shared_ptr<EncoreService> service = ndk::SharedRefBase::make<EncoreService>();
     const std::string instance = std::string(EncoreService::descriptor) + "/default";
 
-    binder_status_t status = AServiceManager_addService(service->asBinder().get(), instance.c_str());
+    binder_status_t status = STATUS_UNKNOWN_ERROR;
+    for (int retry = 0; retry < 30; ++retry) {
+        status = AServiceManager_addService(service->asBinder().get(), instance.c_str());
+        if (status == STATUS_OK) {
+            break;
+        }
+        LOG(WARNING) << "Could not register " << instance << " with ServiceManager (error: "
+                     << status << "), retrying in 250ms (attempt " << (retry + 1) << "/30)...";
+        usleep(250000);
+    }
+
     if (status != STATUS_OK) {
-        LOG(FATAL) << "Failed to register " << instance << " with ServiceManager (error: " << status << ")";
+        LOG(ERROR) << "Failed to register " << instance << " with ServiceManager after retries (error: " << status << ")";
         return EXIT_FAILURE;
     }
 
