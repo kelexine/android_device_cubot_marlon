@@ -12,10 +12,12 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -23,6 +25,14 @@
 #define FALLBACK_LOG_PATH "/metadata/bootlog/boot-kmsg.log"
 #define DEFAULT_TIMEOUT_SECS 30
 #define BUFFER_SIZE 16384
+
+static volatile sig_atomic_t g_running = 1;
+static pid_t g_logcat_pid = -1;
+
+static void handle_sigterm(int sig) {
+    (void)sig;
+    g_running = 0;
+}
 
 static long milliseconds(void) {
     struct timespec ts;
@@ -41,6 +51,34 @@ static void ensure_parent_dir(const char *path) {
     }
 }
 
+static void spawn_logcat(const char *kmsg_path) {
+    char logcat_path[512];
+    strncpy(logcat_path, kmsg_path, sizeof(logcat_path) - 1);
+    logcat_path[sizeof(logcat_path) - 1] = '\0';
+    char *ext = strstr(logcat_path, "kmsg.log");
+    if (ext) {
+        strcpy(ext, "logcat.log");
+    } else {
+        strncat(logcat_path, ".logcat", sizeof(logcat_path) - strlen(logcat_path) - 1);
+    }
+    ensure_parent_dir(logcat_path);
+
+    g_logcat_pid = fork();
+    if (g_logcat_pid == 0) {
+        /* Child: execute logcat */
+        execl("/system/bin/logcat", "logcat",
+              "-b", "main,system,crash,radio,events",
+              "-v", "threadtime",
+              "-v", "usec",
+              "-v", "printable",
+              "-f", logcat_path,
+              "-r", "8192",
+              "-n", "4",
+              NULL);
+        _exit(127);
+    }
+}
+
 int main(int argc, char **argv) {
     const char *target_path = DEFAULT_LOG_PATH;
     int timeout_secs = DEFAULT_TIMEOUT_SECS;
@@ -51,6 +89,10 @@ int main(int argc, char **argv) {
     if (argc >= 3) {
         timeout_secs = atoi(argv[2]);
     }
+
+    signal(SIGTERM, handle_sigterm);
+    signal(SIGINT, handle_sigterm);
+    signal(SIGHUP, handle_sigterm);
 
     /* Open /dev/kmsg non-blocking */
     int kmsg = open("/dev/kmsg", O_RDONLY | O_NONBLOCK | O_CLOEXEC);
@@ -74,8 +116,11 @@ int main(int argc, char **argv) {
         }
     }
 
+    /* Start background logcat streaming to corresponding logcat file */
+    spawn_logcat(target_path);
+
     const char *header = "========================================\n"
-                         " Marlon early kmsg collector (boot_kmsg)\n"
+                         " Marlon early kmsg & logcat collector\n"
                          " Device: Cubot P50 (marlon / MT6765)\n"
                          "========================================\n";
     write(out, header, strlen(header));
@@ -85,7 +130,7 @@ int main(int argc, char **argv) {
     long end_time = (timeout_secs > 0) ? (last_sync + ((long)timeout_secs * 1000L)) : 0;
     char buffer[BUFFER_SIZE];
 
-    while (end_time == 0 || milliseconds() < end_time) {
+    while (g_running && (end_time == 0 || milliseconds() < end_time)) {
         struct pollfd pfd = {.fd = kmsg, .events = POLLIN};
         int ret = poll(&pfd, 1, 100);
         if (ret < 0 && errno != EINTR) {
@@ -127,6 +172,10 @@ int main(int argc, char **argv) {
     }
 
 finish:
+    if (g_logcat_pid > 0) {
+        kill(g_logcat_pid, SIGTERM);
+        waitpid(g_logcat_pid, NULL, WNOHANG);
+    }
     fsync(out);
     close(out);
     close(kmsg);
