@@ -49,10 +49,7 @@ int main(int argc, char **argv) {
         target_path = argv[1];
     }
     if (argc >= 3) {
-        int t = atoi(argv[2]);
-        if (t > 0 && t <= 300) {
-            timeout_secs = t;
-        }
+        timeout_secs = atoi(argv[2]);
     }
 
     /* Open /dev/kmsg non-blocking */
@@ -85,10 +82,10 @@ int main(int argc, char **argv) {
     fsync(out);
 
     long last_sync = milliseconds();
-    long end_time = last_sync + ((long)timeout_secs * 1000L);
+    long end_time = (timeout_secs > 0) ? (last_sync + ((long)timeout_secs * 1000L)) : 0;
     char buffer[BUFFER_SIZE];
 
-    while (milliseconds() < end_time) {
+    while (end_time == 0 || milliseconds() < end_time) {
         struct pollfd pfd = {.fd = kmsg, .events = POLLIN};
         int ret = poll(&pfd, 1, 100);
         if (ret < 0 && errno != EINTR) {

@@ -21,9 +21,11 @@ on post-fs
     mkdir /cache/bootlog 0775 system system
     start boot_kmsg
 
-service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 30
+on property:sys.boot_completed=1
+    stop boot_kmsg
+
+service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 0
     disabled
-    oneshot
     user root
     group system log
     seclabel u:r:boot_kmsg:s0
