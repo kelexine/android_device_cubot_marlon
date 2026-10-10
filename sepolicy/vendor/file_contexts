@@ -1,11 +1,7 @@
-# Cubot P50 (marlon) vendor sepolicy file_contexts
-/vendor/bin/hw/vtservice_hidl    u:object_r:vtservice_hidl_exec:s0
-
-# Power-off alarm helper
-/vendor/bin/pwroff_alarm    u:object_r:pwroff_alarm_exec:s0
-
-# Encore Performance Daemon
-/vendor/bin/encored         u:object_r:vendor_encore_exec:s0
-
-# Early Boot kmsg Collector
-/vendor/bin/boot_kmsg       u:object_r:boot_kmsg_exec:s0
+#
+# Custom SEPolicy file contexts for Cubot P50
+#
+/sys/class/leds/lcd-backlight(/.*)?    u:object_r:sysfs_leds:s0
+/sys/class/leds/red(/.*)?              u:object_r:sysfs_leds:s0
+/sys/class/leds/green(/.*)?            u:object_r:sysfs_leds:s0
+/sys/class/leds/blue(/.*)?             u:object_r:sysfs_leds:s0

@@ -1,0 +1,7 @@
+#
+# Hardware Abstraction Layer - Lights
+#
+allow hal_light_default { sysfs_light sysfs_graphics sysfs_leds }:dir search;
+allow hal_light_default { sysfs_light sysfs_graphics sysfs_leds }:file rw_file_perms;
+allow hal_light_default { sysfs_devices_block sysfs }:dir search;
+allow hal_light_default sysfs:file rw_file_perms;
