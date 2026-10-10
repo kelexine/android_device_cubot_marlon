@@ -40,6 +40,7 @@ vendor/lib64/libnvram.so
 vendor/lib64/libnvram_platform.so
 vendor/lib64/libnvram_sec.so
 vendor/lib64/libtinyxml.so
+vendor/lib64/libutils.so
 vendor/lib64/vendor.mediatek.hardware.audio@6.1.so
 
 # Audio (FX modules)
@@ -472,6 +473,7 @@ vendor/lib/egl/libGLESv1_CM_mtk.so
 vendor/lib/egl/libGLESv2_mtk.so
 vendor/lib/egl/libMEOW_gift.so
 vendor/lib/egl/libMEOW_trace.so
+vendor/lib/android.hardware.audio.common@6.0-util.so
 vendor/lib/hw/android.hardware.audio@6.0-impl-mediatek.so
 vendor/lib/hw/android.hardware.graphics.composer@2.1-impl.so
 vendor/lib/hw/android.hardware.memtrack@1.0-impl.so
@@ -514,6 +516,7 @@ vendor/lib64/egl/libGLESv1_CM_mtk.so
 vendor/lib64/egl/libGLESv2_mtk.so
 vendor/lib64/egl/libMEOW_gift.so
 vendor/lib64/egl/libMEOW_trace.so
+vendor/lib64/android.hardware.audio.common@6.0-util.so
 vendor/lib64/hw/android.hardware.audio@6.0-impl-mediatek.so
 vendor/lib64/hw/android.hardware.graphics.composer@2.1-impl.so
 vendor/lib64/hw/android.hardware.memtrack@1.0-impl.so
