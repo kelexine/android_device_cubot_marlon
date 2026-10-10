@@ -135,4 +135,34 @@ bool _ZN7android16deviceFromStringERKNSt3__112basic_stringIcNS0_11char_traitsIcE
     if (dev) *dev = 0;
     return true;
 }
+
+/*
+ * Legacy C++ ABI Exception Handling for 32-bit VoLTE / RIL Daemons:
+ * bip, volte_imcb, volte_stack, volte_ua, volte_imsm_93, wfca
+ */
+bool __cxa_type_match(void* /*throw_type*/, void* /*catch_type*/, bool /*is_reference*/, void** /*matched_object*/) {
+    return false;
 }
+
+void __cxa_begin_cleanup(void* /*unwind_exception*/) {
+}
+
+void __cxa_call_unexpected(void* /*unwind_exception*/) {
+}
+
+/*
+ * Legacy vndservicemanager Binder ProcessState / IPCThreadState stubs
+ */
+bool _ZN7android12ProcessState20becomeContextManagerEPFbRKNS_8String16ERKNS_2spINS_7IBinderEEEPvES9_(void* /*this_ptr*/, void* /*cb*/, void* /*userData*/) {
+    return true;
+}
+
+int32_t _ZN7android12ProcessState32getStrongRefCountForNodeByHandleEi(void* /*this_ptr*/, int32_t /*handle*/) {
+    return 1;
+}
+
+void _ZN7android14IPCThreadState19setTheContextObjectENS_2spINS_7BBinderEEE(void* /*this_ptr*/, void* /*obj*/) {
+}
+
+}
+
