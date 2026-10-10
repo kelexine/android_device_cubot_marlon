@@ -78,4 +78,61 @@ void CBS_init(struct CBS *cbs, const uint8_t *data, size_t len) {
     }
 }
 
+
+/*
+ * STFlashTool symbol: android::base::Trim(const std::string&)
+ * Modern libbase uses Trim(std::string_view).
+ */
+void _ZN7android4base4TrimENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE(void* ret, const char* data, size_t len);
+
+void _ZN7android4base4TrimERKNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE(void* ret, const void* str) {
+    const unsigned char* s = (const unsigned char*)str;
+    const char* data;
+    size_t len;
+    if (s[0] & 1) {
+        len = ((const size_t*)str)[1];
+        data = ((const char* const*)str)[2];
+    } else {
+        len = s[0] >> 1;
+        data = (const char*)(s + 1);
+    }
+    _ZN7android4base4TrimENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE(ret, data, len);
+}
+
+/*
+ * Health 2.0 / Minijail symbol:
+ * android::base::WriteStringToFd(const std::string&, android::base::borrowed_fd)
+ */
+bool _ZN7android4base15WriteStringToFdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEi(const char* data, size_t len, int fd);
+
+bool _ZN7android4base15WriteStringToFdERKNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS0_11borrowed_fdE(const void* str, int fd) {
+    const unsigned char* s = (const unsigned char*)str;
+    const char* data;
+    size_t len;
+    if (s[0] & 1) {
+        len = ((const size_t*)str)[1];
+        data = ((const char* const*)str)[2];
+    } else {
+        len = s[0] >> 1;
+        data = (const char*)(s + 1);
+    }
+    return _ZN7android4base15WriteStringToFdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEi(data, len, fd);
+}
+
+/*
+ * VNDK Binder compatibility:
+ * android::BpBinder::handle() const
+ */
+int32_t _ZNK7android8BpBinder6handleEv(void* /*this_ptr*/) {
+    return 0;
+}
+
+/*
+ * Audio effects config:
+ * android::deviceFromString(const std::string&, unsigned int&)
+ */
+bool _ZN7android16deviceFromStringERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERj(const void* /*str*/, uint32_t* dev) {
+    if (dev) *dev = 0;
+    return true;
+}
 }
