@@ -9,10 +9,90 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <system/audio.h>
 
 #define MAKE_STRING_FROM_ENUM(enumval) { #enumval, enumval }
-#define TERMINATOR { .literal = nullptr }
+#define TERMINATOR { .literal = nullptr, .value = AUDIO_FORMAT_DEFAULT }
+
+enum audio_format_t : uint32_t {
+    AUDIO_FORMAT_INVALID = 0xFFFFFFFFu,
+    AUDIO_FORMAT_DEFAULT = 0,
+    AUDIO_FORMAT_PCM_16_BIT = 0x1u,
+    AUDIO_FORMAT_PCM_8_BIT = 0x2u,
+    AUDIO_FORMAT_PCM_32_BIT = 0x3u,
+    AUDIO_FORMAT_PCM_8_24_BIT = 0x4u,
+    AUDIO_FORMAT_PCM_FLOAT = 0x5u,
+    AUDIO_FORMAT_PCM_24_BIT_PACKED = 0x6u,
+    AUDIO_FORMAT_MP3 = 0x01000000u,
+    AUDIO_FORMAT_AMR_NB = 0x02000000u,
+    AUDIO_FORMAT_AMR_WB = 0x03000000u,
+    AUDIO_FORMAT_AAC = 0x04000000u,
+    AUDIO_FORMAT_AAC_MAIN = 0x04000001u,
+    AUDIO_FORMAT_AAC_LC = 0x04000002u,
+    AUDIO_FORMAT_AAC_SSR = 0x04000004u,
+    AUDIO_FORMAT_AAC_LTP = 0x04000008u,
+    AUDIO_FORMAT_AAC_HE_V1 = 0x04000010u,
+    AUDIO_FORMAT_AAC_SCALABLE = 0x04000020u,
+    AUDIO_FORMAT_AAC_ERLC = 0x04000040u,
+    AUDIO_FORMAT_AAC_LD = 0x04000080u,
+    AUDIO_FORMAT_AAC_HE_V2 = 0x04000100u,
+    AUDIO_FORMAT_AAC_ELD = 0x04000200u,
+    AUDIO_FORMAT_AAC_XHE = 0x04000300u,
+    AUDIO_FORMAT_AAC_ADTS = 0x1e000000u,
+    AUDIO_FORMAT_AAC_ADTS_MAIN = 0x1e000001u,
+    AUDIO_FORMAT_AAC_ADTS_LC = 0x1e000002u,
+    AUDIO_FORMAT_AAC_ADTS_SSR = 0x1e000004u,
+    AUDIO_FORMAT_AAC_ADTS_LTP = 0x1e000008u,
+    AUDIO_FORMAT_AAC_ADTS_HE_V1 = 0x1e000010u,
+    AUDIO_FORMAT_AAC_ADTS_SCALABLE = 0x1e000020u,
+    AUDIO_FORMAT_AAC_ADTS_ERLC = 0x1e000040u,
+    AUDIO_FORMAT_AAC_ADTS_LD = 0x1e000080u,
+    AUDIO_FORMAT_AAC_ADTS_HE_V2 = 0x1e000100u,
+    AUDIO_FORMAT_AAC_ADTS_ELD = 0x1e000200u,
+    AUDIO_FORMAT_AAC_ADTS_XHE = 0x1e000300u,
+    AUDIO_FORMAT_VORBIS = 0x05000000u,
+    AUDIO_FORMAT_HE_AAC_V1 = 0x05000001u,
+    AUDIO_FORMAT_HE_AAC_V2 = 0x05000002u,
+    AUDIO_FORMAT_OPUS = 0x08000000u,
+    AUDIO_FORMAT_AC3 = 0x09000000u,
+    AUDIO_FORMAT_E_AC3 = 0x0a000000u,
+    AUDIO_FORMAT_DTS = 0x0b000000u,
+    AUDIO_FORMAT_DTS_HD = 0x0c000000u,
+    AUDIO_FORMAT_IEC61937 = 0x0d000000u,
+    AUDIO_FORMAT_DOLBY_TRUEHD = 0x0e000000u,
+    AUDIO_FORMAT_EVRC = 0x10000000u,
+    AUDIO_FORMAT_EVRCB = 0x11000000u,
+    AUDIO_FORMAT_EVRCWB = 0x12000000u,
+    AUDIO_FORMAT_EVRCNW = 0x13000000u,
+    AUDIO_FORMAT_AAC_ADIF = 0x14000000u,
+    AUDIO_FORMAT_WMA = 0x15000000u,
+    AUDIO_FORMAT_WMA_PRO = 0x16000000u,
+    AUDIO_FORMAT_AMR_WB_PLUS = 0x17000000u,
+    AUDIO_FORMAT_MP2 = 0x18000000u,
+    AUDIO_FORMAT_QCELP = 0x19000000u,
+    AUDIO_FORMAT_DSD = 0x1c000000u,
+    AUDIO_FORMAT_FLAC = 0x1d000000u,
+    AUDIO_FORMAT_ALAC = 0x1f000000u,
+    AUDIO_FORMAT_APE = 0x20000000u,
+    AUDIO_FORMAT_SBC = 0x21000000u,
+    AUDIO_FORMAT_APTX = 0x22000000u,
+    AUDIO_FORMAT_APTX_HD = 0x23000000u,
+    AUDIO_FORMAT_AC4 = 0x24000000u,
+    AUDIO_FORMAT_LDAC = 0x25000000u,
+    AUDIO_FORMAT_MAT = 0x26000000u,
+    AUDIO_FORMAT_E_AC3_JOC = 0x27000000u,
+    AUDIO_FORMAT_MAT_1_0 = 0x26000001u,
+    AUDIO_FORMAT_MAT_2_0 = 0x26000002u,
+    AUDIO_FORMAT_MAT_2_1 = 0x26000003u,
+    AUDIO_FORMAT_AAC_LATM = 0x28000000u,
+    AUDIO_FORMAT_AAC_LATM_LC = 0x28000002u,
+    AUDIO_FORMAT_AAC_LATM_HE_V1 = 0x28000010u,
+    AUDIO_FORMAT_AAC_LATM_HE_V2 = 0x28000100u,
+    AUDIO_FORMAT_CELT = 0x29000000u,
+    AUDIO_FORMAT_APTX_ADAPTIVE = 0x2a000000u,
+    AUDIO_FORMAT_LHDC = 0x2b000000u,
+    AUDIO_FORMAT_LHDC_LL = 0x2c000000u,
+    AUDIO_FORMAT_APTX_TWSP = 0x2d000000u
+};
 
 namespace android {
 
@@ -125,17 +205,20 @@ template class TypeConverter<DefaultTraits<audio_format_t>>;
 extern "C" {
 
 /*
- * Modern 5-argument constructor in libaudioutils:
+ * Modern 5-argument constructor in libaudioutils (weak link / forward):
  * audio_utils_fifo(frameCount, frameSize, buffer, throttle, sync)
  */
-extern void _ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle, int sync);
+__attribute__((weak))
+void _ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle, int sync);
 
 /*
  * Legacy 4-argument constructor:
  * audio_utils_fifo::audio_utils_fifo(unsigned int, unsigned int, void*, bool)
  */
 void _ZN16audio_utils_fifoC1EjjPvb(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle) {
-    _ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync(this_ptr, frameCount, frameSize, buffer, throttle, 0);
+    if (_ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync) {
+        _ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync(this_ptr, frameCount, frameSize, buffer, throttle, 0);
+    }
 }
 
 void _ZN16audio_utils_fifoC2EjjPvb(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle) {

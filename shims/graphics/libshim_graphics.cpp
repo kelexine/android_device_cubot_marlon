@@ -7,10 +7,20 @@
  */
 
 #include <stdint.h>
-#include <ui/GraphicBufferMapper.h>
-#include <ui/Rect.h>
+
+struct native_handle;
+typedef struct native_handle native_handle_t;
+typedef int32_t status_t;
 
 namespace android {
+
+class Rect;
+
+class GraphicBufferMapper {
+public:
+    status_t lock(const native_handle_t* handle, uint32_t usage, const Rect& bounds, void** vaddr);
+    status_t unlock(const native_handle_t* handle);
+};
 
 extern "C" {
 
@@ -49,3 +59,4 @@ status_t _ZN7android19GraphicBufferMapper6unlockEPK13native_handle(
 
 } // extern "C"
 } // namespace android
+
