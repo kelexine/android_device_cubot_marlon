@@ -245,6 +245,22 @@ uint64_t _ZN11unwindstack3Elf8GetRelPcEmPKNS_7MapInfoE(uint64_t step_pc, const v
     return step_pc;
 }
 
+uint64_t _ZN11unwindstack3Elf8GetRelPcEyPNS_7MapInfoE(uint64_t step_pc, void* /*map_info*/) {
+    return step_pc;
+}
+
+uint64_t _ZN11unwindstack3Elf8GetRelPcEyPKNS_7MapInfoE(uint64_t step_pc, const void* /*map_info*/) {
+    return step_pc;
+}
+
+/*
+ * aidl::android::hardware::light::ILights::fromBinder stub for /vendor/bin/factory
+ */
+void _ZN4aidl7android8hardware5light7ILights10fromBinderERKN3ndk10SpAIBinderE(void* ret, const void* /*binder*/) {
+    if (ret) memset(ret, 0, sizeof(void*) * 2);
+}
+
+
 /*
  * unwindstack::RegsArm::Read and RegsArm64::Read definitions
  */
