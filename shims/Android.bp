@@ -1,14 +1,7 @@
 //
 // File: shims/Android.bp
 // Author: kelexine <https://github.com/kelexine>
-// Date: 2026-10-10
-// Purpose: Build definition for libshim_base.
+// Date: 2026-10-11
+// Purpose: Modular shim categories container.
 // SPDX-License-Identifier: Apache-2.0
 //
-
-cc_library_shared {
-    name: "libshim_base",
-    srcs: ["libshim_base.cpp"],
-    shared_libs: ["libbase"],
-    vendor: true,
-}

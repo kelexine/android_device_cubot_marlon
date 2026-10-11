@@ -19,8 +19,12 @@ namespace_imports = [
 ]
 
 blob_fixups: blob_fixups_user_type = {
-    # Audio primary TypeConverter shim
-    'vendor/lib/hw/audio.primary.mt6765.so': blob_fixup()
+    # Audio HAL and effect shims
+    ('vendor/lib/hw/audio.primary.mt6765.so',
+     'vendor/lib/libnbaio_mono.so',
+     'vendor/lib64/libnbaio_mono.so',
+     'vendor/lib/libeffectsconfig.so',
+     'vendor/lib64/libeffectsconfig.so'): blob_fixup()
         .add_needed('libshim_audio.so'),
 
     # Libutils refcount and incStrong backwards compatibility
@@ -31,31 +35,68 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/lib64/libmtkcam_stdutils.so': blob_fixup()
         .replace_needed('libutils.so', 'libutils-v30.so'),
 
-    # Base shims for nvram and system env (Basename, Trim)
+    # RIL fusion: detach obsolete libmtkutils to prevent String16 .rodata collisions
+    'vendor/lib64/librilfusion.so': blob_fixup()
+        .replace_needed('libmtkutils.so', 'libutils.so'),
+
+    # Base shims for nvram, sysenv, applypatch, nfc, and health
     ('vendor/lib/libnvram.so',
      'vendor/lib/libsysenv.so',
      'vendor/lib64/libnvram.so',
-     'vendor/lib64/libsysenv.so'): blob_fixup()
+     'vendor/lib64/libsysenv.so',
+     'vendor/bin/applypatch',
+     'vendor/bin/nfcstackp-vendor',
+     'vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so',
+     'vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so'): blob_fixup()
         .add_needed('libshim_base.so'),
 
     # Widevine DRM BoringSSL CBS_init
     ('vendor/lib/libwvhidl.so',
-     'vendor/lib/mediadrm/libwvdrmengine.so'): blob_fixup()
-        .add_needed('libshim_base.so'),
+     'vendor/lib64/libwvhidl.so',
+     'vendor/lib/mediadrm/libwvdrmengine.so',
+     'vendor/lib64/mediadrm/libwvdrmengine.so'): blob_fixup()
+        .add_needed('libshim_crypto.so'),
 
-    # AEE AEDV unwindstack shims
+    # AEE AEDV and UDF unwindstack shims
     ('vendor/bin/aee_aedv',
-     'vendor/bin/aee_aedv64'): blob_fixup()
-        .add_needed('libshim_base.so'),
+     'vendor/bin/aee_aedv64',
+     'vendor/lib/libudf.so',
+     'vendor/lib64/libudf.so'): blob_fixup()
+        .add_needed('libshim_unwindstack.so'),
 
     # Telephony and RIL 32-bit daemons C++ ABI shims
     ('vendor/bin/bip',
      'vendor/bin/volte_imcb',
+     'vendor/bin/volte_imsm_93',
+     'vendor/bin/volte_md_status',
      'vendor/bin/volte_stack',
      'vendor/bin/volte_ua',
-     'vendor/bin/volte_imsm_93',
      'vendor/bin/wfca'): blob_fixup()
-        .add_needed('libshim_base.so'),
+        .add_needed('libshim_cxx.so'),
+
+    # Camera PropertyMap shim
+    ('vendor/lib/libmtkcam_stdutils.so',
+     'vendor/lib64/libmtkcam_stdutils.so'): blob_fixup()
+        .add_needed('libshim_camera.so'),
+
+    # VNDK Binder and service manager shims
+    ('vendor/bin/vndservicemanager',
+     'vendor/bin/STFlashTool'): blob_fixup()
+        .add_needed('libshim_binder.so'),
+
+    # GraphicBufferMapper lock/unlock OMX shims
+    ('vendor/lib/libMtkOmxVdecEx.so',
+     'vendor/lib/libstagefright_softomx.so'): blob_fixup()
+        .add_needed('libshim_graphics.so'),
+
+    # Factory AIDL Lights HAL stub
+    'vendor/bin/factory': blob_fixup()
+        .add_needed('libshim_lights.so'),
+
+    # Face unlock TEE client: remove unused libstdc++.so DT_NEEDED
+    ('vendor/lib/libcv_faceid.so',
+     'vendor/lib64/libcv_faceid.so'): blob_fixup()
+        .remove_needed('libstdc++.so'),
 }
 
 module = ExtractUtilsModule(

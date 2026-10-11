@@ -77,6 +77,15 @@ PRODUCT_PACKAGES += \
     pwroff_alarm \
     boot_kmsg \
     libshim_base \
+    libshim_audio \
+    libshim_binder \
+    libshim_camera \
+    libshim_crypto \
+    libshim_cxx \
+    libshim_graphics \
+    libshim_lights \
+    libshim_unwindstack \
+    libshim_vtservice \
     init.recovery.mt6762.rc \
     init.recovery.mt6765.rc \
 

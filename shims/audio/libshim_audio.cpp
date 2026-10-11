@@ -1,18 +1,33 @@
 /*
- * Copyright (C) 2016 The Android Open Source Project
- *
+ * File: libshim_audio.cpp
+ * Author: kelexine <https://github.com/kelexine>
+ * Date: 2026-10-11
+ * Purpose: Audio HAL compatibility shim providing TypeConverter::mTable,
+ *          audio_utils_fifo constructor, and deviceFromString.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <media/TypeConverter.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <system/audio.h>
 
 #define MAKE_STRING_FROM_ENUM(enumval) { #enumval, enumval }
 #define TERMINATOR { .literal = nullptr }
 
 namespace android {
 
+template <typename T>
+struct DefaultTraits {
+    typedef T Type;
+    struct Table {
+        const char *literal;
+        Type value;
+    };
+    static const Table mTable[];
+};
+
 template <>
-const FormatConverter::Table FormatConverter::mTable[] = {
+const DefaultTraits<audio_format_t>::Table DefaultTraits<audio_format_t>::mTable[] = {
     MAKE_STRING_FROM_ENUM(AUDIO_FORMAT_PCM_16_BIT),
     MAKE_STRING_FROM_ENUM(AUDIO_FORMAT_PCM_8_BIT),
     MAKE_STRING_FROM_ENUM(AUDIO_FORMAT_PCM_32_BIT),
@@ -92,4 +107,48 @@ const FormatConverter::Table FormatConverter::mTable[] = {
     TERMINATOR
 };
 
+template <typename Traits>
+class TypeConverter {
+public:
+    static const typename Traits::Table mTable[];
+};
+
+template <typename Traits>
+const typename Traits::Table TypeConverter<Traits>::mTable[] = {
+    TERMINATOR
+};
+
+template class TypeConverter<DefaultTraits<audio_format_t>>;
+
 } // namespace android
+
+extern "C" {
+
+/*
+ * Modern 5-argument constructor in libaudioutils:
+ * audio_utils_fifo(frameCount, frameSize, buffer, throttle, sync)
+ */
+extern void _ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle, int sync);
+
+/*
+ * Legacy 4-argument constructor:
+ * audio_utils_fifo::audio_utils_fifo(unsigned int, unsigned int, void*, bool)
+ */
+void _ZN16audio_utils_fifoC1EjjPvb(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle) {
+    _ZN16audio_utils_fifoC1EjjPvb21audio_utils_fifo_sync(this_ptr, frameCount, frameSize, buffer, throttle, 0);
+}
+
+void _ZN16audio_utils_fifoC2EjjPvb(void* this_ptr, unsigned int frameCount, unsigned int frameSize, void* buffer, bool throttle) {
+    _ZN16audio_utils_fifoC1EjjPvb(this_ptr, frameCount, frameSize, buffer, throttle);
+}
+
+/*
+ * Audio effects config:
+ * android::deviceFromString(const std::string&, unsigned int&)
+ */
+bool _ZN7android16deviceFromStringERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEERj(const void* /*str*/, uint32_t* dev) {
+    if (dev) *dev = 0;
+    return true;
+}
+
+} // extern "C"

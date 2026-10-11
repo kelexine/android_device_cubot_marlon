@@ -1,13 +1,18 @@
 /*
- * OPT-IN: not linked into any PRODUCT_PACKAGES by default. See Android.bp
- * in this directory for when to actually enable this.
+ * File: libshim_vtservice.cpp
+ * Author: kelexine <https://github.com/kelexine>
+ * Date: 2026-10-11
+ * Purpose: MediaTek ViLTE / vtservice_hidl compatibility shim.
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 #include <gui/SurfaceComposerClient.h>
 #include <media/AudioTrack.h>
 
 using namespace android;
 
 extern "C" {
+
 void _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_tjj20audio_output_flags_tPFviPvS4_ES4_i15audio_session_tNS0_13transfer_typeEPK20audio_offload_info_tjiPK18audio_attributes_tbfi(
         audio_stream_type_t streamType,
         uint32_t sampleRate,
@@ -31,7 +36,7 @@ void _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_tjj20audio_o
     new android::AudioTrack(streamType, sampleRate, format, channelMask, frameCount, flags, cbf,
                             user, notificationFrames, sessionId, transferType, offloadInfo, attributionSource,
                             pAttributes, doNotReconnect, maxRequiredSpeed, selectedDeviceId);
-        }
+}
 
 void _ZN7android7SurfaceC1ERKNS_2spINS_22IGraphicBufferProducerEEEbRKNS1_INS_7IBinderEEE(
     void* thisptr, const sp<IGraphicBufferProducer>& bufferProducer, bool controlledByApp, const sp<IBinder>& surfaceControlHandle);
@@ -45,5 +50,6 @@ void _ZN7android11AudioSourceC1E14audio_source_tRKNS_8String16Ejjjjii28audio_mic
     uint32_t sampleRate, uint32_t channels, uint32_t outSampleRate, uid_t uid, pid_t pid,
     audio_port_handle_t selectedDeviceId, int32_t selectedMicDirection, float selectedMicFieldDimension);
 
-int _ZN7android10MediaMuxerC1EiNS0_12OutputFormatE[6] = { 0, 1, 2, 3, 4, NULL };
-}
+int _ZN7android10MediaMuxerC1EiNS0_12OutputFormatE[6] = { 0, 1, 2, 3, 4, 0 };
+
+} // extern "C"
