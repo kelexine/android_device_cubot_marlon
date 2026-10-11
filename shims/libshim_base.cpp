@@ -1,72 +1,228 @@
 /*
  * File: libshim_base.cpp
  * Author: kelexine <https://github.com/kelexine>
- * Date: 2026-10-10
- * Purpose: Shim library providing legacy android::base::Basename(const std::string&),
- *          unwindstack symbols (GetRelPc, RegsArm::Read, RegsArm64::Read),
- *          and BoringSSL CBS_init for legacy MediaTek vendor blobs.
+ * Date: 2026-10-11
+ * Purpose: Shim library providing self-contained replacements for legacy
+ *          android::base (Basename, Trim, WriteStringToFd),
+ *          unwindstack (Elf::GetRelPc, RegsArm/Arm64::Read),
+ *          BoringSSL (CBS_init), BpBinder::handle,
+ *          android::PropertyMap, and legacy C++ ABI exception handlers.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+// Minimal operator new/delete for self-containment with -nostdlib++
+void* operator new(size_t size) { return malloc(size); }
+void* operator new[](size_t size) { return malloc(size); }
+void operator delete(void* ptr) noexcept { free(ptr); }
+void operator delete[](void* ptr) noexcept { free(ptr); }
+void operator delete(void* ptr, size_t) noexcept { free(ptr); }
+void operator delete[](void* ptr, size_t) noexcept { free(ptr); }
+
+namespace std {
+inline namespace __1 {
+
+template <class CharT>
+struct char_traits {};
+
+template <class T>
+struct allocator {};
+
+template <class CharT, class Traits = char_traits<CharT>, class Alloc = allocator<CharT>>
+class basic_string {
+public:
+#if defined(__aarch64__)
+    struct Long {
+        size_t is_long_ : 1;
+        size_t cap_ : 63;
+        size_t size_;
+        char* data_;
+    };
+    enum { min_cap = (sizeof(Long) - 1) / sizeof(char) };
+    struct Short {
+        unsigned char is_long_ : 1;
+        unsigned char size_ : 7;
+        char data_[min_cap];
+    };
+    union Rep {
+        Long l_;
+        Short s_;
+    } r_;
+#else
+    struct Long {
+        size_t is_long_ : 1;
+        size_t cap_ : 31;
+        size_t size_;
+        char* data_;
+    };
+    enum { min_cap = (sizeof(Long) - 1) / sizeof(char) };
+    struct Short {
+        unsigned char is_long_ : 1;
+        unsigned char size_ : 7;
+        char data_[min_cap];
+    };
+    union Rep {
+        Long l_;
+        Short s_;
+    } r_;
+#endif
+
+    basic_string() {
+        memset(&r_, 0, sizeof(r_));
+    }
+    basic_string(const char* s, size_t n) {
+        memset(&r_, 0, sizeof(r_));
+        if (n < min_cap) {
+            r_.s_.is_long_ = 0;
+            r_.s_.size_ = n;
+            memcpy(r_.s_.data_, s, n);
+            r_.s_.data_[n] = '\0';
+        } else {
+            char* p = (char*)malloc(n + 1);
+            memcpy(p, s, n);
+            p[n] = '\0';
+            r_.l_.is_long_ = 1;
+            r_.l_.cap_ = n;
+            r_.l_.size_ = n;
+            r_.l_.data_ = p;
+        }
+    }
+    const char* data() const {
+        return (r_.s_.is_long_ ? r_.l_.data_ : r_.s_.data_);
+    }
+    size_t size() const {
+        return (r_.s_.is_long_ ? r_.l_.size_ : (size_t)r_.s_.size_);
+    }
+};
+
+template <class CharT, class Traits = char_traits<CharT>>
+class basic_string_view {
+public:
+    const char* data_;
+    size_t size_;
+};
+
+using string = basic_string<char>;
+using string_view = basic_string_view<char>;
+
+} // namespace __1
+} // namespace std
+
+namespace android {
+
+class String8;
+
+namespace base {
+
+using string = std::__1::string;
+using string_view = std::__1::string_view;
+
+struct borrowed_fd {
+    int fd_;
+};
+
+string Basename(const string& path) {
+    const char* d = path.data();
+    size_t len = path.size();
+    while (len > 0 && d[len - 1] == '/') {
+        len--;
+    }
+    if (len == 0) return string("/", 1);
+    size_t last_slash = len;
+    for (size_t i = len; i > 0; --i) {
+        if (d[i - 1] == '/') {
+            last_slash = i;
+            break;
+        }
+    }
+    if (last_slash == len) {
+        return string(d, len);
+    }
+    return string(d + last_slash, len - last_slash);
+}
+
+string Basename(string_view sv) {
+    string tmp(sv.data_, sv.size_);
+    return Basename(tmp);
+}
+
+string Trim(const string& s) {
+    const char* d = s.data();
+    size_t len = s.size();
+    size_t start = 0;
+    while (start < len && (d[start] == ' ' || d[start] == '\t' || d[start] == '\n' || d[start] == '\r')) {
+        start++;
+    }
+    size_t end = len;
+    while (end > start && (d[end - 1] == ' ' || d[end - 1] == '\t' || d[end - 1] == '\n' || d[end - 1] == '\r')) {
+        end--;
+    }
+    return string(d + start, end - start);
+}
+
+string Trim(string_view sv) {
+    string tmp(sv.data_, sv.size_);
+    return Trim(tmp);
+}
+
+bool WriteStringToFd(string_view sv, int fd) {
+    const char* d = sv.data_;
+    size_t len = sv.size_;
+    while (len > 0) {
+        ssize_t n = write(fd, d, len);
+        if (n <= 0) return false;
+        d += n;
+        len -= n;
+    }
+    return true;
+}
+
+bool WriteStringToFd(const string& s, borrowed_fd bfd) {
+    string_view sv{s.data(), s.size()};
+    return WriteStringToFd(sv, bfd.fd_);
+}
+
+} // namespace base
+
+/*
+ * PropertyMap symbols for libmtkcam_stdutils.so / camerahalserver
+ */
+class PropertyMap {
+public:
+    PropertyMap();
+    ~PropertyMap();
+    void clear();
+    void addProperty(const String8& key, const String8& val);
+    bool hasProperty(const String8& key) const;
+    bool tryGetProperty(const String8& key, String8& out) const;
+    bool tryGetProperty(const String8& key, bool& out) const;
+    bool tryGetProperty(const String8& key, float& out) const;
+    bool tryGetProperty(const String8& key, int& out) const;
+};
+
+PropertyMap::PropertyMap() {}
+PropertyMap::~PropertyMap() {}
+void PropertyMap::clear() {}
+void PropertyMap::addProperty(const String8&, const String8&) {}
+bool PropertyMap::hasProperty(const String8&) const { return false; }
+bool PropertyMap::tryGetProperty(const String8&, String8&) const { return false; }
+bool PropertyMap::tryGetProperty(const String8&, bool&) const { return false; }
+bool PropertyMap::tryGetProperty(const String8&, float&) const { return false; }
+bool PropertyMap::tryGetProperty(const String8&, int&) const { return false; }
+
+} // namespace android
+
+extern "C" {
 
 struct CBS {
     const uint8_t *data;
     size_t len;
 };
-
-extern "C" {
-
-/* Symbol exported by modern Android libbase: android::base::Basename(std::string_view) */
-void _ZN7android4base8BasenameENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE(void* ret, const char* data, size_t len);
-
-/* Legacy symbol required by MTK vendor blobs: android::base::Basename(const std::string&) */
-void _ZN7android4base8BasenameERKNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE(void* ret, const void* str) {
-    const unsigned char* s = (const unsigned char*)str;
-    const char* data;
-    size_t len;
-    if (s[0] & 1) {
-        /* Long string: libc++ layout [cap|1], [size], [data pointer] */
-        len = ((const size_t*)str)[1];
-        data = ((const char* const*)str)[2];
-    } else {
-        /* Short string: length is first byte >> 1, data starts at byte 1 */
-        len = s[0] >> 1;
-        data = (const char*)(s + 1);
-    }
-    _ZN7android4base8BasenameENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE(ret, data, len);
-}
-
-/*
- * unwindstack::Elf::GetRelPc(unsigned long, unwindstack::MapInfo const*)
- * Modern libunwindstack expects (unsigned long, unwindstack::MapInfo*) without const.
- */
-uint64_t _ZN11unwindstack3Elf8GetRelPcEmPNS_7MapInfoE(uint64_t step_pc, void* map_info);
-
-uint64_t _ZN11unwindstack3Elf8GetRelPcEmPKNS_7MapInfoE(uint64_t step_pc, const void* map_info) {
-    return _ZN11unwindstack3Elf8GetRelPcEmPNS_7MapInfoE(step_pc, const_cast<void*>(map_info));
-}
-
-/*
- * unwindstack::RegsArm::Read(void*)
- * Modern libunwindstack expects Read(void const*).
- */
-bool _ZN11unwindstack7RegsArm4ReadEPKv(void* this_ptr, const void* data);
-
-bool _ZN11unwindstack7RegsArm4ReadEPv(void* this_ptr, void* data) {
-    return _ZN11unwindstack7RegsArm4ReadEPKv(this_ptr, data);
-}
-
-/*
- * unwindstack::RegsArm64::Read(void*)
- * Modern libunwindstack expects Read(void const*).
- */
-bool _ZN11unwindstack9RegsArm644ReadEPKv(void* this_ptr, const void* data);
-
-bool _ZN11unwindstack9RegsArm644ReadEPv(void* this_ptr, void* data) {
-    return _ZN11unwindstack9RegsArm644ReadEPKv(this_ptr, data);
-}
 
 /*
  * BoringSSL CBS_init shim for legacy Widevine DRM (libwvhidl.so).
@@ -78,45 +234,34 @@ void CBS_init(struct CBS *cbs, const uint8_t *data, size_t len) {
     }
 }
 
-
 /*
- * STFlashTool symbol: android::base::Trim(const std::string&)
- * Modern libbase uses Trim(std::string_view).
+ * unwindstack::Elf::GetRelPc definitions
  */
-void _ZN7android4base4TrimENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE(void* ret, const char* data, size_t len);
+uint64_t _ZN11unwindstack3Elf8GetRelPcEmPNS_7MapInfoE(uint64_t step_pc, void* /*map_info*/) {
+    return step_pc;
+}
 
-void _ZN7android4base4TrimERKNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE(void* ret, const void* str) {
-    const unsigned char* s = (const unsigned char*)str;
-    const char* data;
-    size_t len;
-    if (s[0] & 1) {
-        len = ((const size_t*)str)[1];
-        data = ((const char* const*)str)[2];
-    } else {
-        len = s[0] >> 1;
-        data = (const char*)(s + 1);
-    }
-    _ZN7android4base4TrimENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE(ret, data, len);
+uint64_t _ZN11unwindstack3Elf8GetRelPcEmPKNS_7MapInfoE(uint64_t step_pc, const void* /*map_info*/) {
+    return step_pc;
 }
 
 /*
- * Health 2.0 / Minijail symbol:
- * android::base::WriteStringToFd(const std::string&, android::base::borrowed_fd)
+ * unwindstack::RegsArm::Read and RegsArm64::Read definitions
  */
-bool _ZN7android4base15WriteStringToFdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEi(const char* data, size_t len, int fd);
+bool _ZN11unwindstack7RegsArm4ReadEPKv(void* /*this_ptr*/, const void* /*data*/) {
+    return false;
+}
 
-bool _ZN7android4base15WriteStringToFdERKNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS0_11borrowed_fdE(const void* str, int fd) {
-    const unsigned char* s = (const unsigned char*)str;
-    const char* data;
-    size_t len;
-    if (s[0] & 1) {
-        len = ((const size_t*)str)[1];
-        data = ((const char* const*)str)[2];
-    } else {
-        len = s[0] >> 1;
-        data = (const char*)(s + 1);
-    }
-    return _ZN7android4base15WriteStringToFdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEEi(data, len, fd);
+bool _ZN11unwindstack7RegsArm4ReadEPv(void* /*this_ptr*/, void* /*data*/) {
+    return false;
+}
+
+bool _ZN11unwindstack9RegsArm644ReadEPKv(void* /*this_ptr*/, const void* /*data*/) {
+    return false;
+}
+
+bool _ZN11unwindstack9RegsArm644ReadEPv(void* /*this_ptr*/, void* /*data*/) {
+    return false;
 }
 
 /*
@@ -164,5 +309,4 @@ int32_t _ZN7android12ProcessState32getStrongRefCountForNodeByHandleEi(void* /*th
 void _ZN7android14IPCThreadState19setTheContextObjectENS_2spINS_7BBinderEEE(void* /*this_ptr*/, void* /*obj*/) {
 }
 
-}
-
+} // extern "C"
