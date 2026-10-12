@@ -2,3 +2,7 @@
 # Note: mtk_hal_power, mtk_hal_mms, hal_mms_server, and vtservice_hidl domains
 # are precompiled in vendor_sepolicy.cil. Add only incremental rules here.
 
+# Power HAL thermal property access
+get_prop(mtk_hal_power, vendor_thermal_prop)
+
+
