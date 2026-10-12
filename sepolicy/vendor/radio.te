@@ -2,3 +2,10 @@
 # IMS settings access
 allow radio system_app_data_file:dir r_dir_perms;
 allow radio system_app_data_file:file r_file_perms;
+
+# Netdagent UDP sockets
+allow netdagent self:udp_socket { create ioctl };
+
+# RIL MediaTek GWSD support property
+get_prop(rild, system_mtk_gwsd_prop)
+

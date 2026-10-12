@@ -6,7 +6,7 @@
 #
 
 # Early boot logger directory in cache
-allow vendor_init cache_file:dir { getattr search };
+allow vendor_init cache_file:dir { add_name create getattr open read search setattr write };
 
 # Kernel TCP congestion control sysfs/proc
 allow vendor_init proc_tcp_cc:file write;
