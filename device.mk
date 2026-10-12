@@ -86,7 +86,8 @@ PRODUCT_COPY_FILES += \
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+    $(LOCAL_PATH) \
+    hardware/mediatek
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
@@ -129,3 +130,13 @@ PRODUCT_ENABLE_UFFD_GC := false
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/cubot/marlon/marlon-vendor.mk)
+
+# MediaTek Hardware & Power HAL integration
+PRODUCT_PACKAGES := $(filter-out vendor.mediatek.hardware.mtkpower@1.0-service, $(PRODUCT_PACKAGES))
+PRODUCT_PACKAGES += \
+    vendor.mediatek.hardware.mtkpower@1.2-service.stub \
+    libmtkperf_client_vendor \
+    libpowerhalwrap_vendor \
+    libaedv
+
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
