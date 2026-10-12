@@ -51,6 +51,13 @@ void Lights::setBacklight(uint32_t color) {
         brightness = (brightness * alpha) / 255;
     }
 
+    if (color != 0 && brightness == 0) {
+        brightness = (color & 0xff);
+        if (brightness <= 1) {
+            brightness = 35; // Minimum visible backlight level
+        }
+    }
+
     writeSysfs(LCD_BACKLIGHT_PATH, brightness);
     writeSysfs(MT6370_BLED_PATH, brightness);
 }
