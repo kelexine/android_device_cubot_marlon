@@ -26,4 +26,13 @@ void CBS_init(struct CBS *cbs, const uint8_t *data, size_t len) {
     }
 }
 
+/*
+ * BoringSSL sk_dup shim for vendor wpa_supplicant.
+ */
+void *OPENSSL_sk_dup(const void *sk);
+
+void *sk_dup(const void *sk) {
+    return OPENSSL_sk_dup(sk);
+}
+
 } // extern "C"

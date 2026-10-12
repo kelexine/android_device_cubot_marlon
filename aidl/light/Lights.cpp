@@ -15,6 +15,7 @@ namespace hardware {
 namespace light {
 
 #define LCD_BACKLIGHT_PATH "/sys/class/leds/lcd-backlight/brightness"
+#define MT6370_BLED_PATH    "/sys/class/leds/mt6370_pmu_bled/brightness"
 #define RED_LED_PATH       "/sys/class/leds/red/brightness"
 #define GREEN_LED_PATH     "/sys/class/leds/green/brightness"
 #define BLUE_LED_PATH      "/sys/class/leds/blue/brightness"
@@ -22,7 +23,6 @@ namespace light {
 static void writeSysfs(const std::string& path, uint32_t value) {
     std::ofstream file(path);
     if (!file.is_open()) {
-        LOG(WARNING) << "Failed to open " << path;
         return;
     }
     file << value << std::endl;
@@ -52,6 +52,7 @@ void Lights::setBacklight(uint32_t color) {
     }
 
     writeSysfs(LCD_BACKLIGHT_PATH, brightness);
+    writeSysfs(MT6370_BLED_PATH, brightness);
 }
 
 void Lights::setLed(int id, const HwLightState& state) {

@@ -50,8 +50,9 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so'): blob_fixup()
         .add_needed('libshim_base.so'),
 
-    # Widevine DRM BoringSSL CBS_init
-    ('vendor/lib/libwvhidl.so',
+    # Widevine DRM BoringSSL CBS_init and wpa_supplicant sk_dup
+    ('vendor/bin/hw/wpa_supplicant',
+     'vendor/lib/libwvhidl.so',
      'vendor/lib64/libwvhidl.so',
      'vendor/lib/mediadrm/libwvdrmengine.so',
      'vendor/lib64/mediadrm/libwvdrmengine.so'): blob_fixup()
@@ -97,6 +98,11 @@ blob_fixups: blob_fixups_user_type = {
     ('vendor/lib/libcv_faceid.so',
      'vendor/lib64/libcv_faceid.so'): blob_fixup()
         .remove_needed('libstdc++.so'),
+
+    # MTK RIL CallStack print shim
+    ('vendor/lib/libmtk-ril.so',
+     'vendor/lib64/libmtk-ril.so'): blob_fixup()
+        .add_needed('libshim_ril.so'),
 }
 
 module = ExtractUtilsModule(

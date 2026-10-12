@@ -84,6 +84,7 @@ PRODUCT_PACKAGES += \
     libshim_cxx \
     libshim_graphics \
     libshim_lights \
+    libshim_ril \
     libshim_unwindstack \
     libshim_vtservice \
     init.recovery.mt6762.rc \
