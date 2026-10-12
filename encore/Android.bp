@@ -9,6 +9,7 @@ cc_binary {
     name: "encored",
     vendor: true,
     init_rc: ["init.encore.rc"],
+    vintf_fragments: ["vendor.cubot.hardware.encore.xml"],
     srcs: [
         "src/main.cpp",
         "src/EncoreService.cpp",
