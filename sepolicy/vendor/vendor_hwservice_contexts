@@ -47,7 +47,6 @@ vendor.mediatek.hardware.apmonitor::IApmService u:object_r:mtk_hal_apm_hwservice
 vendor.microtrust.hardware.thh::IThhDevice u:object_r:hal_thh_hwservice:s0
 vendor.microtrust.hardware.tui::ITuiDevice u:object_r:hal_tui_hwservice:s0
 vendor.microtrust.hardware.capi::IClientApiDevice u:object_r:hal_capi_hwservice:s0
-vendor.mediatek.hardware.wifi.supplicant::ISupplicant u:object_r:hal_wifi_supplicant_hwservice:s0
 vendor.mediatek.hardware.camera.security::ISecureCamera u:object_r:hal_camera_hwservice:s0
 vendor.mediatek.hardware.camera.frhandler::IFRHandler u:object_r:hal_camera_hwservice:s0
 vendor.mediatek.hardware.mdmonitor::IMDMonitorService u:object_r:mtk_mdm_hidl_server:s0
