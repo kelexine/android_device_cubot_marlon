@@ -4,3 +4,6 @@ allow system_app sysfs_batteryinfo:file r_file_perms;
 
 allow system_app sysfs_fps:dir search;
 allow system_app sysfs_fps:file r_file_perms;
+
+# Power-off alarm: publish the next alarm epoch for pwroff_alarm
+set_prop(system_app, vendor_pwroff_alarm_prop)

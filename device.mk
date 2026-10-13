@@ -6,6 +6,9 @@
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Setup Dalvik VM configs for 6GB RAM
+$(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
+
 # API levels
 PRODUCT_SHIPPING_API_LEVEL := 30
 
@@ -34,10 +37,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service
-
-# Keymint 1.0 bridge over Keymaster 4.0
-PRODUCT_PACKAGES += \
-    android.hardware.security.keymint-service
 
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
@@ -69,19 +68,31 @@ PRODUCT_PACKAGES += \
     init.project.rc \
     init.sensor_1_0.rc \
     init.stnfc.rc \
+    init.target.rc \
     meta_init.connectivity.rc \
     meta_init.modem.rc \
     meta_init.project.rc \
     meta_init.rc \
     multi_init.rc \
+    pwroff_alarm \
+    boot_kmsg \
+    libshim_base \
+    libshim_audio \
+    libshim_binder \
+    libshim_camera \
+    libshim_crypto \
+    libshim_cxx \
+    libshim_graphics \
+    libshim_lights \
+    libshim_ril \
+    libshim_unwindstack \
+    libshim_vtservice \
     init.recovery.mt6762.rc \
     init.recovery.mt6765.rc \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6765:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6765 \
-    $(LOCAL_PATH)/rootdir/etc/fstab.mt6765:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.mt6765 \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6762:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6762 \
-    $(LOCAL_PATH)/rootdir/etc/fstab.mt6762:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.mt6762 \
     $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap
 
 # Soong namespaces
@@ -107,22 +118,51 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     DeviceSettings
 
+# Encore Hardware Daemon & AIDL Interface
+PRODUCT_PACKAGES += \
+    encored \
+    vendor.cubot.hardware.encore
+
 # Keylayouts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/ACCDET.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ACCDET.kl \
     $(LOCAL_PATH)/keylayout/mtk-kpd.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/mtk-kpd.kl
 
-# MTK IMS Framework (opt-in)
-MARLON_ENABLE_MTK_IMS_FRAMEWORK ?= false
+# AxionOS Kernel Manager
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/ax_kernel_manager.xml \
+    $(LOCAL_PATH)/configs/ax_kernel_manager.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/ax_kernel_manager.xml
 
-ifeq ($(MARLON_ENABLE_MTK_IMS_FRAMEWORK),true)
+# Wi-Fi & P2P Supplicant Overlays (Enable 5GHz P2P / Quick Share)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
+
+
+# MediaTek IMS / VoLTE Service (Android 16 standalone)
 PRODUCT_PACKAGES += \
-    ImsInit \
+    ImsService \
     mtk-ims-telephony
 
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.dbg.volte_avail_ovr=1 \
+    persist.dbg.vt_avail_ovr=1 \
+    persist.dbg.wfc_avail_ovr=1 \
+    persist.vendor.vilte_support=0 \
+    persist.vendor.ims_support=1 \
+    persist.vendor.volte_support=1
+
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/permissions/privapp-permissions-imsinit.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-imsinit.xml
-endif
+    $(LOCAL_PATH)/permissions/privapp-permissions-com.mediatek.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-com.mediatek.ims.xml
+
+
+# VINTF & OTA
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+PRODUCT_ENABLE_UFFD_GC := false
+
+# Non-A/B Update
+AB_OTA_UPDATER := false
+PRODUCT_SOONG_NAMESPACES += bootable/deprecated-ota
 
 # VINTF
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
@@ -140,3 +180,14 @@ PRODUCT_PACKAGES += \
     libaedv
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
+
+# Wi-Fi Stack (AIDL / Modern Source Stack via libwifi-hal-wrapper)
+PRODUCT_PACKAGES := $(filter-out android.hardware.wifi@1.0-service-lazy hostapd wpa_supplicant, $(PRODUCT_PACKAGES))
+PRODUCT_PACKAGES += \
+    wpa_supplicant \
+    hostapd \
+    libwifi-hal-wrapper \
+    android.hardware.wifi-service
+
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.wifi@1.0-service-lazy.rc %vendor/etc/init/android.hardware.wifi.supplicant-service.rc, $(PRODUCT_COPY_FILES))
+

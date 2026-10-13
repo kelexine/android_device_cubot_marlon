@@ -19,7 +19,7 @@ public class DeviceSettingsActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content_frame, new GesturesSettingsFragment())
+                    .replace(R.id.content_frame, new DeviceSettingsFragment())
                     .commit();
         }
     }

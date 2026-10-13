@@ -1,0 +1,18 @@
+//
+// File: prebuilts/ims/Android.bp
+// Author: kelexine <https://github.com/kelexine>
+// Date: 2026-10-13
+// Purpose: Standalone modern Android 16 MediaTek ImsService prebuilt.
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app_import {
+    name: "ImsService",
+    owner: "mediatek",
+    apk: "ImsService.apk",
+    certificate: "platform",
+    dex_preopt: {
+        enabled: false,
+    },
+    privileged: true,
+}

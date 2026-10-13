@@ -1,5 +1,8 @@
-# Telephony and IMS service types
-type mwis_service, service_manager_type;
-type mtk_ims_service, service_manager_type;
-type wfo_service, service_manager_type;
-type vtservice_service, service_manager_type;
+#
+# File: service.te
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-07
+# Purpose: Service manager types for Cubot P50 vendor services.
+#
+
+type hal_encore_service, hal_service_type, service_manager_type;

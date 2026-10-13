@@ -1,0 +1,5 @@
+# Author: kelexine <https://github.com/kelexine>
+# SPDX-License-Identifier: Apache-2.0
+
+# Power-off alarm: next-alarm UTC epoch published by the framework app.
+vendor.pwroff_alarm.    u:object_r:vendor_pwroff_alarm_prop:s0

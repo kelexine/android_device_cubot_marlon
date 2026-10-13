@@ -1,4 +1,8 @@
-mwis                    u:object_r:mwis_service:s0
-mtkIms                  u:object_r:mtk_ims_service:s0
-wfo                     u:object_r:wfo_service:s0
-media.VTS               u:object_r:vtservice_service:s0
+#
+# File: service_contexts
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-07
+# Purpose: Service contexts mapping for Encore AIDL HAL service.
+#
+
+vendor.cubot.hardware.encore.IEncore/default    u:object_r:hal_encore_service:s0

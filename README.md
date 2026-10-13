@@ -30,15 +30,23 @@ This repository contains the device configuration and hardware HAL profiles for 
 
 ## Building
 
+### LineageOS
 ```bash
-# Initialize ROM build environment
 source build/envsetup.sh
-
-# Lunch target
 lunch lineage_marlon-userdebug
-
-# Build LineageOS zip
 mka bacon -j$(nproc)
+```
+
+### AxionOS
+```bash
+# Repo sync with AxionAOSP manifest
+repo init -u https://github.com/AxionAOSP/android.git -b lineage-23.2 --git-lfs
+repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+
+# Build AxionOS target
+source build/envsetup.sh
+lunch axion_marlon-userdebug
+m bacon -j$(nproc)
 ```
 
 ## Contributing

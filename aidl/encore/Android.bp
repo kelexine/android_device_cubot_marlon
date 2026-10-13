@@ -1,0 +1,28 @@
+//
+// File: Android.bp
+// Author: kelexine <https://github.com/kelexine>
+// Date: 2026-10-07
+// Purpose: Soong build definition for vendor.cubot.hardware.encore AIDL interface.
+//
+
+aidl_interface {
+    name: "vendor.cubot.hardware.encore",
+    owner: "cubot",
+    vendor_available: true,
+    srcs: [
+        "vendor/cubot/hardware/encore/*.aidl",
+    ],
+    stability: "vintf",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            enabled: true,
+            platform_apis: true,
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+}

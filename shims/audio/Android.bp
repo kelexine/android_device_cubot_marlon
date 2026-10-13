@@ -1,0 +1,20 @@
+//
+// File: shims/audio/Android.bp
+// Author: kelexine <https://github.com/kelexine>
+// Date: 2026-10-11
+// Purpose: Build definition for libshim_audio.
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "libshim_audio",
+    srcs: ["libshim_audio.cpp"],
+    header_libs: [
+        "libhardware_headers",
+        "libsystem_headers",
+    ],
+    shared_libs: [
+        "libaudioutils",
+    ],
+    vendor: true,
+}

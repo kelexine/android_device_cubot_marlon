@@ -3,13 +3,16 @@ android_test {
     name: "DeviceSettingsTests",
     manifest: "AndroidManifest.xml",
     srcs: ["src/**/*.java"],
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
     static_libs: [
         "androidx.test.rules",
         "androidx.test.runner",
         "junit",
     ],
     libs: [
-        "android.test.base",
+        "android.test.base.stubs",
     ],
     instrumentation_for: "DeviceSettings",
     test_suites: ["device-tests"],

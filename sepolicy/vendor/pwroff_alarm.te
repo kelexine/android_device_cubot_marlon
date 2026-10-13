@@ -1,0 +1,18 @@
+# Author: kelexine <https://github.com/kelexine>
+# SPDX-License-Identifier: Apache-2.0
+#
+# pwroff_alarm: vendor helper that arms the PMIC power-on alarm via /dev/alarm.
+# Started by init.target.rc (exec_background, system:system).
+
+type pwroff_alarm, domain;
+type pwroff_alarm_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(pwroff_alarm)
+
+# /dev/alarm; alarm_device is declared in device/mediatek/sepolicy_vndr.
+allow pwroff_alarm alarm_device:chr_file rw_file_perms;
+
+# Next-alarm epoch handed over by the framework app. vendor_public_prop is a
+# vendor-owned property with no system/vendor restrictions, so system_app may
+# set it (see system_app.te) and this domain may read it.
+vendor_public_prop(vendor_pwroff_alarm_prop)
+get_prop(pwroff_alarm, vendor_pwroff_alarm_prop)

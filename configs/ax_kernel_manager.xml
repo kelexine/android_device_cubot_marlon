@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kernel-manager>
+    <!-- CPU clusters -->
+    <cpu
+        id="little"
+        group="Little Cluster (CPU 0-3)"
+        minId="axion_min_freq"
+        maxId="axion_max_freq"
+        governorId="little_cpu_governor"
+        node="/sys/devices/system/cpu/cpufreq/policy0" />
+
+    <cpu
+        id="big"
+        group="Big Cluster (CPU 4-7)"
+        minId="axion_min_freq_big"
+        maxId="axion_max_freq_big"
+        governorId="big_cpu_governor"
+        node="/sys/devices/system/cpu/cpufreq/policy4" />
+</kernel-manager>
