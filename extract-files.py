@@ -104,6 +104,10 @@ blob_fixups: blob_fixups_user_type = {
     ('vendor/lib/libmtk-ril.so',
      'vendor/lib64/libmtk-ril.so'): blob_fixup()
         .add_needed('libshim_ril.so'),
+
+    # Wi-Fi HAL wrapper integration: rename vendor libwifi-hal.so SONAME
+    'vendor/lib64/libwifi-hal.so': blob_fixup()
+        .fix_soname('libwifi-hal-mtk.so'),
 }
 
 module = ExtractUtilsModule(
