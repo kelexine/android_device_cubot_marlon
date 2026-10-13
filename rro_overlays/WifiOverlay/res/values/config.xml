@@ -24,4 +24,10 @@
     <!-- Channel list for 5GHz SoftAP operation -->
     <string translatable="false" name="config_wifi_framework_sap_2G_channel_list">1,6,11</string>
 
+    <!-- Boolean indicating whether WPA3 SAE is supported for SoftAP (set to false for legacy MTK drivers) -->
+    <bool translatable="false" name="config_wifi_softap_sae_supported">false</bool>
+
+    <!-- Set to false if driver does not support nl80211 reg changed event -->
+    <bool translatable="false" name="config_wifiDriverSupportedNl80211RegChangedEvent">false</bool>
+
 </resources>

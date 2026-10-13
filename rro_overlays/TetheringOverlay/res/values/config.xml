@@ -36,4 +36,8 @@
         <item>"p2p\\d+"</item>
     </string-array>
 
+    <!-- Boolean indicating whether the legacy DHCP server (dnsmasq) is enabled for tethering.
+         Set to false to use the modern, native Java DHCP server in Mainline NetworkStack. -->
+    <bool translatable="false" name="config_tether_enable_legacy_dhcp_server">false</bool>
+
 </resources>
