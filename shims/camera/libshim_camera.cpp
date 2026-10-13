@@ -39,3 +39,19 @@ bool PropertyMap::tryGetProperty(const String8&, float&) const { return false; }
 bool PropertyMap::tryGetProperty(const String8&, int&) const { return false; }
 
 } // namespace android
+
+extern "C" {
+
+/*
+ * libprocessgroup compatibility for camerahalserver / MTK camera HAL.
+ * On 4.19 kernel trees, task profile and cgroup controller calls are stubbed to prevent crashes.
+ */
+void SetTaskProfiles(...) {
+    // Stub implementation: do nothing
+}
+
+bool CgroupGetControllerPath(...) {
+    return false;
+}
+
+} // extern "C"

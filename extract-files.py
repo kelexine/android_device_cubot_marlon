@@ -75,8 +75,9 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/bin/wfca'): blob_fixup()
         .add_needed('libshim_cxx.so'),
 
-    # Camera PropertyMap shim
-    ('vendor/lib/libmtkcam_stdutils.so',
+    # Camera PropertyMap and SetTaskProfiles shim
+    ('vendor/bin/hw/camerahalserver',
+     'vendor/lib/libmtkcam_stdutils.so',
      'vendor/lib64/libmtkcam_stdutils.so'): blob_fixup()
         .add_needed('libshim_camera.so'),
 
