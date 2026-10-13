@@ -161,6 +161,13 @@ BUILD_BROKEN_INCORRECT_PARTITION_IMAGES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_DUP_RULES := true
 
+# libwifi-hal-wrapper struct compatibility for pre-Android 14 QPR2 / pre-A16 QPR0 vendor blobs
+# The Cubot P50 vendor blob is A11 (RP1A.200720.011), predating both struct additions.
+SOONG_CONFIG_NAMESPACES += mediatek_wifi_hal
+SOONG_CONFIG_mediatek_wifi_hal += use_pre_u_qpr2_struct use_pre_baklava_qpr0_struct
+SOONG_CONFIG_mediatek_wifi_hal_use_pre_u_qpr2_struct := true
+SOONG_CONFIG_mediatek_wifi_hal_use_pre_baklava_qpr0_struct := true
+
 include vendor/lineage/config/BoardConfigLineage.mk
 -include vendor/lineage/config/BoardConfigReservedSize.mk
 
