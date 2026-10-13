@@ -139,17 +139,22 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
 
 
-# MTK IMS Framework (opt-in)
-MARLON_ENABLE_MTK_IMS_FRAMEWORK ?= false
-
-ifeq ($(MARLON_ENABLE_MTK_IMS_FRAMEWORK),true)
+# MediaTek IMS / VoLTE Service (Android 16 standalone)
 PRODUCT_PACKAGES += \
-    ImsInit \
+    ImsService \
     mtk-ims-telephony
 
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.dbg.volte_avail_ovr=1 \
+    persist.dbg.vt_avail_ovr=1 \
+    persist.dbg.wfc_avail_ovr=1 \
+    persist.vendor.vilte_support=0 \
+    persist.vendor.ims_support=1 \
+    persist.vendor.volte_support=1
+
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/permissions/privapp-permissions-imsinit.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-imsinit.xml
-endif
+    $(LOCAL_PATH)/permissions/privapp-permissions-com.mediatek.ims.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-com.mediatek.ims.xml
+
 
 # VINTF & OTA
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
