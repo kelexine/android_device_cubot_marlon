@@ -12,6 +12,12 @@
     <!-- Boolean indicating whether the Wi-Fi chipset supports dual band (2.4GHz and 5GHz) -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
 
+    <!-- Modern Android 16 replacement for config_wifi_dual_band_support -->
+    <bool translatable="false" name="config_wifi5ghzSupport">true</bool>
+
+    <!-- Indicates that connected MAC randomization is supported on this device -->
+    <bool translatable="false" name="config_wifi_connected_mac_randomization_supported">true</bool>
+
     <!-- Boolean indicating whether 5GHz band is supported for SoftAP -->
     <bool translatable="false" name="config_wifi_softap_5ghz_supported">true</bool>
 
@@ -23,6 +29,9 @@
 
     <!-- Channel list for 5GHz SoftAP operation -->
     <string translatable="false" name="config_wifi_framework_sap_2G_channel_list">1,6,11</string>
+
+    <!-- Disable WPA2 to WPA3 auto-upgrade (legacy MTK driver compatibility) -->
+    <bool translatable="false" name="config_wifiSaeUpgradeEnabled">false</bool>
 
     <!-- Boolean indicating whether WPA3 SAE is supported for SoftAP (set to false for legacy MTK drivers) -->
     <bool translatable="false" name="config_wifi_softap_sae_supported">false</bool>
