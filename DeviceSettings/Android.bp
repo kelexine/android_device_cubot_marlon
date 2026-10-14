@@ -11,6 +11,7 @@ android_app {
         "androidx.preference_preference",
         "androidx.appcompat_appcompat",
         "vendor.cubot.hardware.encore-V1-java",
+        "SettingsLib",
     ],
     optimize: {
         enabled: false,

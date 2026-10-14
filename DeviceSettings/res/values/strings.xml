@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Device Settings</string>
+    <string name="app_name">Device Extras</string>
+    <string name="device_extras_title">Device Extras</string>
+    <string name="device_extras_summary">Screen gestures, Encore performance profiles, and kernel tuning</string>
 
     <string name="gestures_category_wake_title">Wake gestures</string>
     <string name="double_tap_to_wake_title">Double-tap to wake</string>
