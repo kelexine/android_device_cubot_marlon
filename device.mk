@@ -187,8 +187,10 @@ PRODUCT_PACKAGES := $(filter-out android.hardware.wifi@1.0-service-lazy hostapd 
 PRODUCT_PACKAGES += \
     wpa_supplicant \
     hostapd \
+    wpa_cli \
+    hostapd_cli \
     libwifi-hal-wrapper \
-    android.hardware.wifi-service
+    android.hardware.wifi-service-lazy
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.wifi@1.0-service-lazy.rc %vendor/etc/init/android.hardware.wifi.supplicant-service.rc, $(PRODUCT_COPY_FILES))
 
