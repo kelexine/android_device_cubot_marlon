@@ -36,14 +36,14 @@
     <!-- Automatic brightness available -->
     <bool name="config_automatic_brightness_available">true</bool>
 
-    <!-- Notification & Battery LED -->
+    <!-- Notification & Battery LED (Physical LED is Blue) -->
     <bool name="config_intrusiveNotificationLed">true</bool>
-    <color name="config_defaultNotificationColor">#ffffffff</color>
+    <color name="config_defaultNotificationColor">#ff0000ff</color>
     <integer name="config_defaultNotificationLedOn">500</integer>
     <integer name="config_defaultNotificationLedOff">2000</integer>
-    <integer name="config_notificationsBatteryLowARGB">0xffff0000</integer>
-    <integer name="config_notificationsBatteryMediumARGB">0xffffff00</integer>
-    <integer name="config_notificationsBatteryFullARGB">0xff00ff00</integer>
+    <integer name="config_notificationsBatteryLowARGB">0xff0000ff</integer>
+    <integer name="config_notificationsBatteryMediumARGB">0xff0000ff</integer>
+    <integer name="config_notificationsBatteryFullARGB">0xff0000ff</integer>
     <integer name="config_notificationsBatteryLedOn">125</integer>
     <integer name="config_notificationsBatteryLedOff">2875</integer>
 

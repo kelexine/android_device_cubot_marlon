@@ -6,6 +6,7 @@
 
 #include "Lights.h"
 
+#include <algorithm>
 #include <android-base/logging.h>
 #include <fstream>
 
@@ -22,6 +23,9 @@ namespace light {
 #define RED_DELAY_OFF_PATH "/sys/class/leds/red/delay_off"
 #define GREEN_LED_PATH     "/sys/class/leds/green/brightness"
 #define BLUE_LED_PATH      "/sys/class/leds/blue/brightness"
+#define BLUE_TRIGGER_PATH   "/sys/class/leds/blue/trigger"
+#define BLUE_DELAY_ON_PATH  "/sys/class/leds/blue/delay_on"
+#define BLUE_DELAY_OFF_PATH "/sys/class/leds/blue/delay_off"
 
 static void writeSysfs(const std::string& path, uint32_t value) {
     std::ofstream file(path);
@@ -78,18 +82,30 @@ void Lights::setLed(int id, const HwLightState& state) {
     uint32_t green = (state.color >> 8) & 0xff;
     uint32_t blue = state.color & 0xff;
 
-    if (state.flashMode != FlashMode::NONE && state.flashOnMs > 0 && state.flashOffMs > 0 && red > 0) {
+    // Cubot P50 has a single MT6357 PMIC current-sink LED, physically emitting Blue light.
+    // In stock DTB, Isink1 was registered under label "red", while some custom trees may label it "blue".
+    // Calculate brightness from maximum color intensity so any notification/battery color activates it.
+    uint32_t brightness = std::max({red, green, blue});
+
+    if (state.flashMode != FlashMode::NONE && state.flashOnMs > 0 && state.flashOffMs > 0 && brightness > 0) {
         writeSysfsStr(RED_TRIGGER_PATH, "timer");
         writeSysfs(RED_DELAY_ON_PATH, state.flashOnMs);
         writeSysfs(RED_DELAY_OFF_PATH, state.flashOffMs);
-        writeSysfs(RED_LED_PATH, red);
+        writeSysfs(RED_LED_PATH, brightness);
+
+        writeSysfsStr(BLUE_TRIGGER_PATH, "timer");
+        writeSysfs(BLUE_DELAY_ON_PATH, state.flashOnMs);
+        writeSysfs(BLUE_DELAY_OFF_PATH, state.flashOffMs);
+        writeSysfs(BLUE_LED_PATH, brightness);
     } else {
         writeSysfsStr(RED_TRIGGER_PATH, "none");
-        writeSysfs(RED_LED_PATH, red);
+        writeSysfs(RED_LED_PATH, brightness);
+
+        writeSysfsStr(BLUE_TRIGGER_PATH, "none");
+        writeSysfs(BLUE_LED_PATH, brightness);
     }
 
     writeSysfs(GREEN_LED_PATH, green);
-    writeSysfs(BLUE_LED_PATH, blue);
 }
 
 ndk::ScopedAStatus Lights::setLightState(int id, const HwLightState& state) {
