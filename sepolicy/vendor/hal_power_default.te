@@ -1,0 +1,69 @@
+#
+# Hardware Abstraction Layer - Power
+#
+# Rules for the LineageOS libperfmgr power HAL
+# (android.hardware.power-service.lineage-libperfmgr), which drives the
+# performance nodes listed in configs/powerhint.json.
+#
+# Node set on this device (verified against boot-time listings):
+#   /sys/devices/system/cpu/cpufreq/policy{0,4}/scaling_{min,max}_freq
+#   /sys/module/ged/parameters/gx_force_cpu_boost
+#   /sys/kernel/ged/hal/dvfs_margin_value
+#   /sys/kernel/fpsgo/common/gpu_block_boost
+#   /sys/kernel/fpsgo/fbt/boost_ta
+#   /sys/module/fbt_cpu/parameters/{floor_bound,variance,bhr,bhr_opp}
+#   /proc/perfmgr/boost_ctrl/dram_ctrl/ddr
+#   /proc/perfmgr/boost_ctrl/eas_ctrl/perf_{,bg_,fg_,ta_}uclamp_min
+#
+# Policy types referenced below (proc_perfmgr, proc_cpufreq, proc_hps,
+# proc_cm_mgr, proc_fliperfs, sysfs_fbt_cpu, sysfs_fbt_fteh, sysfs_fpsgo,
+# sysfs_mtk_cpufreq, sysfs_mtk_gpufreq, sysfs_gpu, vendor_mtk_powerhal_prop)
+# come from device/mediatek/sepolicy_vndr, not from this tree.
+#
+
+typeattribute hal_power_default mlstrustedsubject;
+
+allow hal_power_default sysfs_devices_system_cpu:file rw_file_perms;
+allow hal_power_default cgroup:file r_file_perms;
+
+# Get/set powerhal state properties (vendor.powerhal.*)
+set_prop(hal_power_default, vendor_mtk_powerhal_prop)
+
+# Set scheduling info for apps (for ADPF)
+allow hal_power_default appdomain:process { getsched setsched };
+allow hal_power_default self:capability sys_nice;
+
+# Set scheduling info for system_server (for ADPF)
+allow hal_power_default system_server:process setsched;
+
+# Set CPU frequency
+allow hal_power_default sysfs_mtk_cpufreq:file rw_file_perms;
+
+# Set GPU frequency
+allow hal_power_default sysfs_mtk_gpufreq:file rw_file_perms;
+allow hal_power_default sysfs_gpu:dir r_dir_perms;
+allow hal_power_default sysfs_gpu:file rw_file_perms;
+
+# Set perfmgr nodes
+allow hal_power_default proc_perfmgr:dir r_dir_perms;
+allow hal_power_default proc_perfmgr:file rw_file_perms;
+allow hal_power_default sysfs_fpsgo:dir r_dir_perms;
+allow hal_power_default sysfs_fpsgo:file rw_file_perms;
+allow hal_power_default proc_ppm:dir r_dir_perms;
+allow hal_power_default proc_ppm:file rw_file_perms;
+allow hal_power_default proc_cpufreq:dir r_dir_perms;
+allow hal_power_default proc_cpufreq:file rw_file_perms;
+allow hal_power_default proc_hps:dir r_dir_perms;
+allow hal_power_default proc_hps:file rw_file_perms;
+allow hal_power_default proc_cm_mgr:dir r_dir_perms;
+allow hal_power_default proc_cm_mgr:file rw_file_perms;
+allow hal_power_default proc_fliperfs:dir r_dir_perms;
+allow hal_power_default proc_fliperfs:file rw_file_perms;
+allow hal_power_default sysfs_fbt_cpu:dir r_dir_perms;
+allow hal_power_default sysfs_fbt_cpu:file rw_file_perms;
+allow hal_power_default sysfs_fbt_fteh:dir r_dir_perms;
+allow hal_power_default sysfs_fbt_fteh:file rw_file_perms;
+
+# GED tuning (gpu_block_boost, dvfs_margin_value, gx_force_cpu_boost)
+allow hal_power_default sysfs_ged:dir r_dir_perms;
+allow hal_power_default sysfs_ged:file rw_file_perms;

@@ -31,7 +31,11 @@ PRODUCT_PACKAGES += \
 
 # Power (AIDL)
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.example
+    android.hardware.power-service.lineage-libperfmgr \
+    libmtkperf_client
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # Graphics Composer 2.1 HIDL compat
 PRODUCT_PACKAGES += \
@@ -98,6 +102,7 @@ PRODUCT_COPY_FILES += \
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
+    hardware/lineage/interfaces/power-libperfmgr \
     hardware/mediatek
 
 # Overlays
