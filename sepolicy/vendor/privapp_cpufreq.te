@@ -1,0 +1,17 @@
+#
+# File: privapp_cpufreq.te
+# Author: kelexine <https://github.com/kelexine>
+# Purpose: Allow privileged apps to read cpufreq policy nodes.
+#
+# AxDiagnostics (com.axion.diagnostics) walks the cluster nodes listed in
+# configs/ax_kernel_manager.xml and reads scaling_cur_freq /
+# scaling_max_freq / scaling_governor under each policy. Those nodes carry
+# the sysfs_devices_system_cpu label, which no app domain may read by
+# default, so every CPU frequency read is denied and the app shows no
+# frequencies at all.
+#
+# Read-only: this grants r_file_perms on CPU policy nodes only.
+#
+
+allow privapp sysfs_devices_system_cpu:dir r_dir_perms;
+allow privapp sysfs_devices_system_cpu:file r_file_perms;

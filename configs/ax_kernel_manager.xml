@@ -1,19 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <kernel-manager>
-    <!-- CPU clusters -->
-    <cpu
-        id="little"
-        group="Little Cluster (CPU 0-3)"
-        minId="axion_min_freq"
-        maxId="axion_max_freq"
-        governorId="little_cpu_governor"
-        node="/sys/devices/system/cpu/cpufreq/policy0" />
+    <!--
+        CPU clusters for Cubot P50 (marlon, MT6765).
 
+        policy0 is the BIG cluster and policy4 is the LITTLE cluster, which
+        is the inverse of the usual MediaTek ordering. From the stock device
+        tree: cpu0-3 carry capacity-dmips-mhz 1024 with an OPP table topping
+        out at 2301000 kHz, while cpu4-7 carry capacity-dmips-mhz 801 with
+        an OPP table topping out at 1800000 kHz.
+    -->
     <cpu
         id="big"
-        group="Big Cluster (CPU 4-7)"
+        group="Big Cluster (CPU 0-3)"
         minId="axion_min_freq_big"
         maxId="axion_max_freq_big"
         governorId="big_cpu_governor"
+        node="/sys/devices/system/cpu/cpufreq/policy0" />
+
+    <cpu
+        id="little"
+        group="Little Cluster (CPU 4-7)"
+        minId="axion_min_freq"
+        maxId="axion_max_freq"
+        governorId="little_cpu_governor"
         node="/sys/devices/system/cpu/cpufreq/policy4" />
 </kernel-manager>
