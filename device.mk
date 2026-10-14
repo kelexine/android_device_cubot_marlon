@@ -142,7 +142,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
-
+# MediaTek BesLoudness Audio Enhancement
+PRODUCT_PACKAGES += \
+    BesLoudness
 
 # MediaTek IMS / VoLTE Service (Android 16 standalone)
 PRODUCT_PACKAGES += \
