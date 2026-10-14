@@ -17,10 +17,21 @@ namespace light {
 #define LCD_BACKLIGHT_PATH "/sys/class/leds/lcd-backlight/brightness"
 #define MT6370_BLED_PATH    "/sys/class/leds/mt6370_pmu_bled/brightness"
 #define RED_LED_PATH       "/sys/class/leds/red/brightness"
+#define RED_TRIGGER_PATH   "/sys/class/leds/red/trigger"
+#define RED_DELAY_ON_PATH  "/sys/class/leds/red/delay_on"
+#define RED_DELAY_OFF_PATH "/sys/class/leds/red/delay_off"
 #define GREEN_LED_PATH     "/sys/class/leds/green/brightness"
 #define BLUE_LED_PATH      "/sys/class/leds/blue/brightness"
 
 static void writeSysfs(const std::string& path, uint32_t value) {
+    std::ofstream file(path);
+    if (!file.is_open()) {
+        return;
+    }
+    file << value << std::endl;
+}
+
+static void writeSysfsStr(const std::string& path, const std::string& value) {
     std::ofstream file(path);
     if (!file.is_open()) {
         return;
@@ -53,8 +64,8 @@ void Lights::setBacklight(uint32_t color) {
 
     if (color != 0 && brightness == 0) {
         brightness = (color & 0xff);
-        if (brightness <= 1) {
-            brightness = 35; // Minimum visible backlight level
+        if (brightness < 10) {
+            brightness = 10; // Minimum visible backlight level
         }
     }
 
@@ -67,7 +78,16 @@ void Lights::setLed(int id, const HwLightState& state) {
     uint32_t green = (state.color >> 8) & 0xff;
     uint32_t blue = state.color & 0xff;
 
-    writeSysfs(RED_LED_PATH, red);
+    if (state.flashMode != FlashMode::NONE && state.flashOnMs > 0 && state.flashOffMs > 0 && red > 0) {
+        writeSysfsStr(RED_TRIGGER_PATH, "timer");
+        writeSysfs(RED_DELAY_ON_PATH, state.flashOnMs);
+        writeSysfs(RED_DELAY_OFF_PATH, state.flashOffMs);
+        writeSysfs(RED_LED_PATH, red);
+    } else {
+        writeSysfsStr(RED_TRIGGER_PATH, "none");
+        writeSysfs(RED_LED_PATH, red);
+    }
+
     writeSysfs(GREEN_LED_PATH, green);
     writeSysfs(BLUE_LED_PATH, blue);
 }
