@@ -624,9 +624,9 @@ vendor/etc/gnss/carrier/agps_profiles_conf2_carrier_Verizon_Wireless.xml
 vendor/etc/gnss/agps_profiles_conf2.xml
 
 # Health
-vendor/bin/hw/android.hardware.health@2.1-service
+# vendor/bin/hw/android.hardware.health@2.1-service
 vendor/bin/fuelgauged
-vendor/etc/init/android.hardware.health@2.1-service.rc
+# vendor/etc/init/android.hardware.health@2.1-service.rc
 vendor/etc/init/fuelgauged_init.rc
 # vendor/etc/vintf/manifest/android.hardware.health@2.1.xml
 
@@ -988,7 +988,7 @@ vendor/etc/init/vendor.mediatek.hardware.gpu@1.0-service.rc
 vendor/etc/init/vendor.mediatek.hardware.mtkcodecservice@1.1-service.rc
 vendor/etc/init/vendor_flash_recovery.rc
 vendor/etc/init/vibrator-mtk-default.rc
-vendor/etc/init/vndservicemanager.rc
+# vendor/etc/init/vndservicemanager.rc
 vendor/etc/ipsec/ipsec.d/cacerts/DigiCertGlobalRootCA.crt
 vendor/etc/ipsec/ipsec.d/cacerts/DigiCertGlobalRootG2.crt
 vendor/etc/ipsec/ipsec.d/cacerts/DigiCertGlobalRootG3.crt
@@ -1444,13 +1444,13 @@ vendor/ueventd.rc
 # MediaTek Proprietary HAL implementations
 vendor/lib/hw/android.hardware.bluetooth@1.0-impl-mediatek.so
 vendor/lib/hw/android.hardware.graphics.mapper@4.0-impl-mediatek.so
-vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so
+# vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so
 vendor/lib64/android.hardware.power-service-mediatek.so
 vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so
 vendor/lib64/hw/android.hardware.camera.provider@2.6-impl-mediatek.so
 vendor/lib64/hw/android.hardware.gnss@2.1-impl-mediatek.so
 vendor/lib64/hw/android.hardware.graphics.mapper@4.0-impl-mediatek.so
-vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
+# vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
 
 # Legacy shared library dependencies for MTK blobs
 vendor/lib/libnbaio_mono.so
@@ -1466,14 +1466,14 @@ vendor/lib64/libwebrtc_audio_preprocessing.so
 
 
 # Hardware HAL service init scripts
-vendor/etc/init/android.hardware.biometrics.face@1.0-service.rc
-vendor/etc/init/android.hardware.cas@1.2-service.rc
-vendor/etc/init/android.hardware.gatekeeper@1.0-service.rc
-vendor/etc/init/android.hardware.graphics.composer@2.1-service.rc
-vendor/etc/init/android.hardware.health@2.1-service.rc
-vendor/etc/init/android.hardware.media.omx@1.0-service.rc
-vendor/etc/init/android.hardware.memtrack@1.0-service.rc
-vendor/etc/init/vndservicemanager.rc
+# vendor/etc/init/android.hardware.biometrics.face@1.0-service.rc
+# vendor/etc/init/android.hardware.cas@1.2-service.rc
+# vendor/etc/init/android.hardware.gatekeeper@1.0-service.rc
+# vendor/etc/init/android.hardware.graphics.composer@2.1-service.rc
+# vendor/etc/init/android.hardware.health@2.1-service.rc
+# vendor/etc/init/android.hardware.media.omx@1.0-service.rc
+# vendor/etc/init/android.hardware.memtrack@1.0-service.rc
+# vendor/etc/init/vndservicemanager.rc
 
 # VINTF manifests
 # vendor/etc/vintf/manifest/android.hardware.cas@1.2-service.xml
@@ -1524,5 +1524,5 @@ vendor/etc/permissions/android.software.vulkan.deqp.level.xml
 vendor/etc/permissions/handheld_core_hardware.xml
 
 # Vendor binaries
-vendor/bin/vndservice
-vendor/bin/vndservicemanager
+# vendor/bin/vndservice
+# vendor/bin/vndservicemanager
