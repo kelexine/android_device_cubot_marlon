@@ -735,22 +735,22 @@ vendor/lib64/vendor.mediatek.hardware.nvram@1.0.so
 vendor/lib64/vendor.mediatek.hardware.nvram@1.1.so
 
 # Power
-system_ext/lib/vendor.mediatek.hardware.mtkpower@1.0.so
-system_ext/lib/vendor.mediatek.hardware.mtkpower@1.1.so
-system_ext/lib64/vendor.mediatek.hardware.mtkpower@1.0.so
-system_ext/lib64/vendor.mediatek.hardware.mtkpower@1.1.so
+# system_ext/lib/vendor.mediatek.hardware.mtkpower@1.0.so
+# system_ext/lib/vendor.mediatek.hardware.mtkpower@1.1.so
+# system_ext/lib64/vendor.mediatek.hardware.mtkpower@1.0.so
+# system_ext/lib64/vendor.mediatek.hardware.mtkpower@1.1.so
 # vendor/bin/hw/vendor.mediatek.hardware.mtkpower@1.0-service
 # vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc
 vendor/lib/hw/power.default.so
 vendor/lib/hw/power.mt6765.so
 vendor/lib/hw/vendor.mediatek.hardware.mtkpower@1.1-impl.so
-vendor/lib/vendor.mediatek.hardware.mtkpower@1.0.so
-vendor/lib/vendor.mediatek.hardware.mtkpower@1.1.so
+# vendor/lib/vendor.mediatek.hardware.mtkpower@1.0.so
+# vendor/lib/vendor.mediatek.hardware.mtkpower@1.1.so
 vendor/lib64/hw/power.default.so
 vendor/lib64/hw/power.mt6765.so
 vendor/lib64/hw/vendor.mediatek.hardware.mtkpower@1.1-impl.so
-vendor/lib64/vendor.mediatek.hardware.mtkpower@1.0.so
-vendor/lib64/vendor.mediatek.hardware.mtkpower@1.1.so
+# vendor/lib64/vendor.mediatek.hardware.mtkpower@1.0.so
+# vendor/lib64/vendor.mediatek.hardware.mtkpower@1.1.so
 
 # Radio
 system_ext/lib/vendor.mediatek.hardware.mtkradioex@2.0.so
@@ -911,7 +911,7 @@ vendor/bin/aee_aedv
 vendor/bin/aee_aedv64
 vendor/bin/aee_dumpstatev
 vendor/bin/aeev
-vendor/bin/applypatch
+# vendor/bin/applypatch
 vendor/bin/atcid
 vendor/bin/audiocmdservice_atci
 vendor/bin/autobt
