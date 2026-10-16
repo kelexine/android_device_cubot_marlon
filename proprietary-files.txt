@@ -1455,13 +1455,13 @@ vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
 # Legacy shared library dependencies for MTK blobs
 vendor/lib/libnbaio_mono.so
 vendor/lib/libpixelflinger.so
-vendor/lib/libprotobuf-cpp-full-3.9.1.so
-vendor/lib/libprotobuf-cpp-lite-3.9.1.so
+# vendor/lib/libprotobuf-cpp-full-3.9.1.so
+# vendor/lib/libprotobuf-cpp-lite-3.9.1.so
 vendor/lib/libwebrtc_audio_preprocessing.so
 vendor/lib64/libnbaio_mono.so
 vendor/lib64/libpixelflinger.so
-vendor/lib64/libprotobuf-cpp-full-3.9.1.so
-vendor/lib64/libprotobuf-cpp-lite-3.9.1.so
+# vendor/lib64/libprotobuf-cpp-full-3.9.1.so
+# vendor/lib64/libprotobuf-cpp-lite-3.9.1.so
 vendor/lib64/libwebrtc_audio_preprocessing.so
 
 
