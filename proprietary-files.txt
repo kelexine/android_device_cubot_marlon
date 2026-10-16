@@ -1471,7 +1471,6 @@ vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
 vendor/lib/libavservices_minijail.so
 vendor/lib/libdrm.so
 vendor/lib/libeffects.so
-vendor/lib/libeffectsconfig.so
 vendor/lib/libhwc2on1adapter.so
 vendor/lib/libnbaio_mono.so
 vendor/lib/libopus.so
@@ -1483,7 +1482,6 @@ vendor/lib/libtinycompress.so
 vendor/lib/libwebrtc_audio_preprocessing.so
 vendor/lib64/libdrm.so
 vendor/lib64/libeffects.so
-vendor/lib64/libeffectsconfig.so
 vendor/lib64/libhwc2on1adapter.so
 vendor/lib64/libnbaio_mono.so
 vendor/lib64/libpixelflinger.so

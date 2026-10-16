@@ -22,9 +22,7 @@ blob_fixups: blob_fixups_user_type = {
     # Audio HAL and effect shims
     ('vendor/lib/hw/audio.primary.mt6765.so',
      'vendor/lib/libnbaio_mono.so',
-     'vendor/lib64/libnbaio_mono.so',
-     'vendor/lib/libeffectsconfig.so',
-     'vendor/lib64/libeffectsconfig.so'): blob_fixup()
+     'vendor/lib64/libnbaio_mono.so'): blob_fixup()
         .add_needed('libshim_audio.so'),
 
     # Libutils refcount and incStrong backwards compatibility
