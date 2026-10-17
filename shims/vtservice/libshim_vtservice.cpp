@@ -16,7 +16,13 @@ using namespace android;
 
 extern "C" {
 
-void _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_t20audio_channel_mask_tj20audio_output_flags_tRKNS_2wpINS0_19IAudioTrackCallbackEEEi15audio_session_tNS0_13transfer_typeEPK20audio_offload_info_tRKNS_7content22AttributionSourceStateEPK18audio_attributes_tbfi(
+#if defined(__LP64__)
+#define audio_track_ctor _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_t20audio_channel_mask_tm20audio_output_flags_tRKNS_2wpINS0_19IAudioTrackCallbackEEEi15audio_session_tNS0_13transfer_typeEPK20audio_offload_info_tRKNS_7content22AttributionSourceStateEPK18audio_attributes_tbfi
+#else
+#define audio_track_ctor _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_t20audio_channel_mask_tj20audio_output_flags_tRKNS_2wpINS0_19IAudioTrackCallbackEEEi15audio_session_tNS0_13transfer_typeEPK20audio_offload_info_tRKNS_7content22AttributionSourceStateEPK18audio_attributes_tbfi
+#endif
+
+void audio_track_ctor(
         void* thisptr,
         audio_stream_type_t streamType,
         uint32_t sampleRate,
@@ -64,7 +70,7 @@ void _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_tjj20audio_o
     wp<AudioTrack::IAudioTrackCallback> cbfWrapper =
             (cbf ? sp<LegacyCallbackWrapper>::make(cbf, user) : nullptr);
 
-    _ZN7android10AudioTrackC1E19audio_stream_type_tj14audio_format_t20audio_channel_mask_tj20audio_output_flags_tRKNS_2wpINS0_19IAudioTrackCallbackEEEi15audio_session_tNS0_13transfer_typeEPK20audio_offload_info_tRKNS_7content22AttributionSourceStateEPK18audio_attributes_tbfi(
+    audio_track_ctor(
             thisptr, streamType, sampleRate, format, channelMask, frameCount, flags,
             cbfWrapper, notificationFrames, sessionId, transferType, offloadInfo,
             attributionSource, pAttributes, doNotReconnect, maxRequiredSpeed,
