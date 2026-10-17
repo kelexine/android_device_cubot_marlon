@@ -21,5 +21,6 @@ cc_library_shared {
         "libmedia_headers",
         "libmediametrics_headers",
     ],
+    include_dirs: ["frameworks/native/include"],
     vendor: true,
 }
