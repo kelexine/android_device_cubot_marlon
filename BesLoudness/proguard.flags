@@ -7,3 +7,4 @@
 }
 
 -keep class ** extends androidx.preference.PreferenceFragment
+-keep class ** extends androidx.preference.PreferenceFragmentCompat
