@@ -1,0 +1,5 @@
+#
+# Author: kelexine <https://github.com/kelexine>
+# Properties used by hal_power_default, not declared in sepolicy_vndr.
+#
+vendor_internal_prop(vendor_mtk_powerhal_prop)

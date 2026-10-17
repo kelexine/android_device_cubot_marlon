@@ -17,7 +17,7 @@
 #
 # Policy types referenced below (proc_perfmgr, proc_cpufreq, proc_hps,
 # proc_cm_mgr, proc_fliperfs, sysfs_fbt_cpu, sysfs_fbt_fteh, sysfs_fpsgo,
-# sysfs_mtk_cpufreq, sysfs_mtk_gpufreq, sysfs_gpu, vendor_mtk_powerhal_prop)
+# sysfs_gpu)
 # come from device/mediatek/sepolicy_vndr, not from this tree.
 #
 
@@ -36,11 +36,7 @@ allow hal_power_default self:capability sys_nice;
 # Set scheduling info for system_server (for ADPF)
 allow hal_power_default system_server:process setsched;
 
-# Set CPU frequency
-allow hal_power_default sysfs_mtk_cpufreq:file rw_file_perms;
-
 # Set GPU frequency
-allow hal_power_default sysfs_mtk_gpufreq:file rw_file_perms;
 allow hal_power_default sysfs_gpu:dir r_dir_perms;
 allow hal_power_default sysfs_gpu:file rw_file_perms;
 

@@ -13,5 +13,5 @@
 # Read-only: this grants r_file_perms on CPU policy nodes only.
 #
 
-allow privapp sysfs_devices_system_cpu:dir r_dir_perms;
-allow privapp sysfs_devices_system_cpu:file r_file_perms;
+allow priv_app sysfs_devices_system_cpu:dir r_dir_perms;
+allow priv_app sysfs_devices_system_cpu:file r_file_perms;

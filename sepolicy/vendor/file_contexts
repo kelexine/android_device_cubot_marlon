@@ -5,3 +5,7 @@
 /sys/class/leds/red(/.*)?              u:object_r:sysfs_leds:s0
 /sys/class/leds/green(/.*)?            u:object_r:sysfs_leds:s0
 /sys/class/leds/blue(/.*)?             u:object_r:sysfs_leds:s0
+
+# Power-off alarm helper / early boot kmsg collector (dropped in c38655d)
+/(system/vendor|vendor)/bin/pwroff_alarm    u:object_r:pwroff_alarm_exec:s0
+/(system/vendor|vendor)/bin/boot_kmsg       u:object_r:boot_kmsg_exec:s0
