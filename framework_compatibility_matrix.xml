@@ -132,7 +132,7 @@
     </hal>
     <hal format="hidl" optional="true">
         <name>vendor.mediatek.hardware.mtkpower</name>
-        <version>1.1</version>
+        <version>1.1-2</version>
         <interface>
             <name>IMtkPerf</name>
             <instance>default</instance>
