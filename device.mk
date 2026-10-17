@@ -199,3 +199,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.wifi@1.0-service-lazy.rc %vendor/etc/init/android.hardware.wifi.supplicant-service.rc, $(PRODUCT_COPY_FILES))
 
+PRODUCT_PACKAGES := $(filter-out android.hardware.lights-service.mediatek lights-mtk-default.xml, $(PRODUCT_PACKAGES))
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/lights-mtk-default.rc, $(PRODUCT_COPY_FILES))
+PRODUCT_PACKAGES := $(filter-out vibrator-mtk-default.xml, $(PRODUCT_PACKAGES))
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vibrator-mtk-default.rc, $(PRODUCT_COPY_FILES))
+
