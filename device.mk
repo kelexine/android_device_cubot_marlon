@@ -37,9 +37,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
-# Kernel (DTB)
+# Kernel (DTB & DTBO)
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilts/dtb.img:dtb.img
+    $(LOCAL_PATH)/prebuilts/dtb.img:dtb.img \
+    $(LOCAL_PATH)/prebuilts/dtbo.img:dtbo.img
 
 # Graphics Composer 2.1 HIDL compat
 PRODUCT_PACKAGES += \
