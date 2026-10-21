@@ -192,6 +192,13 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
 
+# Legacy MTK audio HAL (android.hardware.audio@6.0-impl-mediatek.so) links against the stock
+# Android 11 libaudiofoundation.so. The system copy is not visible from the vendor namespace
+# on Android 16, so install the stock blob on the vendor partition.
+PRODUCT_COPY_FILES += \
+    vendor/cubot/marlon/proprietary/vendor/lib/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiofoundation.so \
+    vendor/cubot/marlon/proprietary/vendor/lib64/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiofoundation.so
+
 # Wi-Fi Stack (AIDL / Modern Source Stack via libwifi-hal-wrapper)
 PRODUCT_PACKAGES := $(filter-out android.hardware.wifi@1.0-service-lazy hostapd wpa_supplicant, $(PRODUCT_PACKAGES))
 PRODUCT_PACKAGES += \
