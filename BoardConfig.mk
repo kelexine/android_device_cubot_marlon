@@ -52,15 +52,18 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM_IAS=1 \
     KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
-# DTB & DTBO - prebuilt
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img
-BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
-BOARD_KERNEL_SEPARATED_DTBO := true
+# DTB & DTBO packaging configs for inline compilation (primary route)
+BOARD_DTB_CFG := $(DEVICE_PATH)/configs/dtb.cfg
+BOARD_DTBO_CFG := $(DEVICE_PATH)/configs/dtbo.cfg
 
-# Allow forcing prebuilt kernel binary if explicitly requested
+# Allow forcing prebuilt kernel binary and trees if explicitly requested (secondary fallback)
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilts/kernel
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
+BOARD_INCLUDE_DTB_IN_BOOTIMG :=
+BOARD_KERNEL_SEPARATED_DTBO :=
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 endif
 
 # Partitions
