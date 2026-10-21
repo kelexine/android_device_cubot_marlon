@@ -1,0 +1,10 @@
+#
+# File: sepolicy/system_ext/public/attributes
+# Author: kelexine <https://github.com/kelexine>
+# Date: 2026-10-21
+# Purpose: Cross-partition SELinux attributes bridging system_ext and vendor policies.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+attribute mtk_misc_block_device_type;
+attribute mtk_earlylog_dir_type;

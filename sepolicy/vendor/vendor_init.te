@@ -5,8 +5,11 @@
 # Purpose: SELinux policy rules for vendor_init on marlon.
 #
 
-# Early boot logger directory in cache
+# Early boot logger directory in cache and metadata
 allow vendor_init cache_file:dir { add_name create getattr open read search setattr write };
+allow vendor_init unlabeled:dir { add_name getattr open read relabelfrom search write };
+allow vendor_init metadata_file:dir { add_name getattr open read relabelto search write };
+allow vendor_init mtk_earlylog_dir_type:dir { create_dir_perms relabelto };
 
 # Kernel TCP congestion control sysfs/proc
 allow vendor_init proc_tcp_cc:file write;

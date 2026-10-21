@@ -1,8 +1,23 @@
 # MTK HAL extra policy definitions
-# Note: mtk_hal_power, mtk_hal_mms, hal_mms_server, and vtservice_hidl domains
-# are precompiled in vendor_sepolicy.cil. Add only incremental rules here.
+# Note: mtk_hal_power, mtk_hal_mms, hal_mms_server, vtservice_hidl,
+# para_block_device, rpmb_device, tee, thermal_manager, and mtk_hal_camera
+# are declared in device/mediatek/sepolicy_vndr. Add only incremental rules here.
 
-# Power HAL thermal property access
+# Power HAL & thermal_manager thermal property access
 get_prop(mtk_hal_power, vendor_thermal_prop)
+get_prop(thermal_manager, vendor_thermal_prop)
+
+# Camera HAL default_prop read access
+get_prop(mtk_hal_camera, default_prop)
+
+# Bridge MTK para partition (/dev/block/mmcblk0p3) to misctrl and kcmdlinectrl
+typeattribute para_block_device mtk_misc_block_device_type;
+
+# Allow TrustKernel teed custom RPMB ioctl (0x000d) on /dev/mmcblk0rpmb
+# (rw_file_perms is already granted in device/mediatek/sepolicy_vndr/base/vendor/tee.te)
+allowxperm tee rpmb_device:chr_file ioctl 0x000d;
+
+# Allow init to follow /sys/class/leds/{lcd-backlight,red} symlinks
+allow init sysfs_leds:lnk_file r_file_perms;
 
 

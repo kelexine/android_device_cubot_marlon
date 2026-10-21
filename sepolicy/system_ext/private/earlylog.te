@@ -4,6 +4,7 @@
 type earlylog, domain;
 typeattribute earlylog coredomain;
 type earlylog_data_file, file_type;
+typeattribute earlylog_data_file mtk_earlylog_dir_type;
 
 domain_trans(init, logcat_exec, earlylog)
 
@@ -13,6 +14,14 @@ get_prop(earlylog, logd_prop)
 
 # Output lives in /metadata/earlylog, created by init.target.rc.
 allow earlylog metadata_file:dir search;
+allow earlylog unlabeled:dir search;
 allow earlylog earlylog_data_file:dir rw_dir_perms;
 allow earlylog earlylog_data_file:file create_file_perms;
 allow init earlylog_data_file:dir { create_dir_perms relabelto };
+
+# Allow AOSP misc/kcmdline controllers to access MTK para partition (/dev/block/mmcblk0p3)
+allow { misctrl kcmdlinectrl } mtk_misc_block_device_type:blk_file rw_file_perms;
+
+# Allow storaged to inspect eMMC block sysfs attributes (/sys/block/mmcblk0)
+allow storaged sysfs_devices_block:dir r_dir_perms;
+allow storaged sysfs:file r_file_perms;
