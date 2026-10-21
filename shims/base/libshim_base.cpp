@@ -11,6 +11,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <dlfcn.h>
 
 void* operator new(size_t size) { return malloc(size); }
 void* operator new[](size_t size) { return malloc(size); }
@@ -191,14 +192,17 @@ bool WriteStringToFd(const string& s, borrowed_fd bfd) {
  * RefBase compatibility stubs for pre-Android 12 MediaTek blobs (e.g. pq@2.2-service).
  * Android 12+ enforces incStrongRequireStrong on RefBase and LightRefBase, which asserts
  * if an object starts a thread in its constructor before being assigned to an sp<>.
- * Forwarding to incStrong prevents SIGABRT.
+ * Resolving incStrong dynamically via dlsym avoids link-time undefined references while
+ * safely bypassing the abort check.
  */
 extern "C" {
 
-void _ZNK7android7RefBase9incStrongEPKv(const void* thiz, const void* id);
-
 void _ZNK7android7RefBase22incStrongRequireStrongEPKv(const void* thiz, const void* id) {
-    _ZNK7android7RefBase9incStrongEPKv(thiz, id);
+    typedef void (*incStrongFn)(const void*, const void*);
+    static incStrongFn real_incStrong = (incStrongFn)dlsym(RTLD_DEFAULT, "_ZNK7android7RefBase9incStrongEPKv");
+    if (real_incStrong) {
+        real_incStrong(thiz, id);
+    }
 }
 
 void _ZN7android47LightRefBase_reportIncStrongRequireStrongFailedEPKv(const void* /*thiz*/) {
