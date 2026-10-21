@@ -29,11 +29,34 @@ void CallStack::print(Printer&) const {}
 
 class String8 {
 public:
+    size_t length() const;
+    char* lockBuffer(size_t size);
+    void unlockBuffer();
+
     void toUpper();
     void toUpper(size_t start, size_t num);
 };
 
-void String8::toUpper() {}
-void String8::toUpper(size_t, size_t) {}
+void String8::toUpper() {
+    toUpper(0, length());
+}
+
+void String8::toUpper(size_t start, size_t num) {
+    const size_t len = length();
+    if (start >= len) {
+        return;
+    }
+    if (num > len - start) {
+        num = len - start;
+    }
+    char* buf = lockBuffer(len);
+    if (!buf) {
+        return;
+    }
+    for (size_t i = start; i < start + num; i++) {
+        buf[i] = static_cast<char>(toupper(static_cast<unsigned char>(buf[i])));
+    }
+    unlockBuffer();
+}
 
 } // namespace android
