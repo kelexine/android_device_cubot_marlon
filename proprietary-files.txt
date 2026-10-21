@@ -1466,18 +1466,18 @@ vendor/lib64/libwebrtc_audio_preprocessing.so
 
 
 # Hardware HAL service init scripts
-# vendor/etc/init/android.hardware.biometrics.face@1.0-service.rc
-# vendor/etc/init/android.hardware.cas@1.2-service.rc
-# vendor/etc/init/android.hardware.gatekeeper@1.0-service.rc
-# vendor/etc/init/android.hardware.graphics.composer@2.1-service.rc
-# vendor/etc/init/android.hardware.health@2.1-service.rc
-# vendor/etc/init/android.hardware.media.omx@1.0-service.rc
-# vendor/etc/init/android.hardware.memtrack@1.0-service.rc
-# vendor/etc/init/vndservicemanager.rc
+vendor/etc/init/android.hardware.biometrics.face@1.0-service.rc
+vendor/etc/init/android.hardware.cas@1.2-service.rc
+vendor/etc/init/android.hardware.gatekeeper@1.0-service.rc
+# vendor/etc/init/android.hardware.graphics.composer@2.1-service.rc (built from source in device.mk)
+# vendor/etc/init/android.hardware.health@2.1-service.rc (using Lineage AIDL health)
+vendor/etc/init/android.hardware.media.omx@1.0-service.rc
+# vendor/etc/init/android.hardware.memtrack@1.0-service.rc (built from source in device.mk)
+vendor/etc/init/vndservicemanager.rc
 
 # VINTF manifests
-# vendor/etc/vintf/manifest/android.hardware.cas@1.2-service.xml
-# vendor/etc/vintf/manifest/android.hardware.health@2.1.xml
+vendor/etc/vintf/manifest/android.hardware.cas@1.2-service.xml
+# vendor/etc/vintf/manifest/android.hardware.health@2.1.xml (using Lineage AIDL health)
 
 # Hardware feature permissions
 vendor/etc/permissions/android.hardware.audio.low_latency.xml
@@ -1524,5 +1524,5 @@ vendor/etc/permissions/android.software.vulkan.deqp.level.xml
 vendor/etc/permissions/handheld_core_hardware.xml
 
 # Vendor binaries
-# vendor/bin/vndservice
-# vendor/bin/vndservicemanager
+vendor/bin/vndservice
+vendor/bin/vndservicemanager

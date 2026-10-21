@@ -37,7 +37,7 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/lib64/librilfusion.so': blob_fixup()
         .replace_needed('libmtkutils.so', 'libutils.so'),
 
-    # Base shims for nvram, sysenv, applypatch, nfc, and health
+    # Base shims for nvram, sysenv, applypatch, nfc, health, and PQ
     ('vendor/lib/libnvram.so',
      'vendor/lib/libsysenv.so',
      'vendor/lib64/libnvram.so',
@@ -45,7 +45,9 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/bin/applypatch',
      'vendor/bin/nfcstackp-vendor',
      'vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so',
-     'vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so'): blob_fixup()
+     'vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so',
+     'vendor/lib/hw/vendor.mediatek.hardware.pq@2.6-impl.so',
+     'vendor/lib64/hw/vendor.mediatek.hardware.pq@2.6-impl.so'): blob_fixup()
         .add_needed('libshim_base.so'),
 
     # Widevine DRM BoringSSL CBS_init and wpa_supplicant sk_dup
@@ -56,9 +58,11 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/mediadrm/libwvdrmengine.so'): blob_fixup()
         .add_needed('libshim_crypto.so'),
 
-    # AEE AEDV and UDF unwindstack shims
+    # AEE AEDV, libaedv, and UDF unwindstack shims
     ('vendor/bin/aee_aedv',
      'vendor/bin/aee_aedv64',
+     'vendor/lib/libaedv.so',
+     'vendor/lib64/libaedv.so',
      'vendor/lib/libudf.so',
      'vendor/lib64/libudf.so'): blob_fixup()
         .add_needed('libshim_unwindstack.so'),

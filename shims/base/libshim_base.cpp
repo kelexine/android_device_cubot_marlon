@@ -186,3 +186,23 @@ bool WriteStringToFd(const string& s, borrowed_fd bfd) {
 
 } // namespace base
 } // namespace android
+
+/*
+ * RefBase compatibility stubs for pre-Android 12 MediaTek blobs (e.g. pq@2.2-service).
+ * Android 12+ enforces incStrongRequireStrong on RefBase and LightRefBase, which asserts
+ * if an object starts a thread in its constructor before being assigned to an sp<>.
+ * Forwarding to incStrong prevents SIGABRT.
+ */
+extern "C" {
+
+void _ZNK7android7RefBase9incStrongEPKv(const void* thiz, const void* id);
+
+void _ZNK7android7RefBase22incStrongRequireStrongEPKv(const void* thiz, const void* id) {
+    _ZNK7android7RefBase9incStrongEPKv(thiz, id);
+}
+
+void _ZN7android47LightRefBase_reportIncStrongRequireStrongFailedEPKv(const void* /*thiz*/) {
+    // No-op stub to prevent aborting on LightRefBase
+}
+
+} // extern "C"
