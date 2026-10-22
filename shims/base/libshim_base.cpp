@@ -221,6 +221,19 @@ typedef int32_t (*RealThreadRun32)(void* thiz, const char* name, int32_t priorit
 typedef void (*RefBaseIncStrong)(const void* thiz, const void* id);
 typedef void (*RefBaseDecStrong)(const void* thiz, const void* id);
 
+static inline void* get_refbase_ptr(void* thiz) {
+    if (!thiz) return nullptr;
+    char* vptr = *(char**)thiz;
+    if (!vptr) return nullptr;
+#if defined(__aarch64__)
+    int64_t vbase_offset = *(int64_t*)(vptr - 24);
+    return (char*)thiz + vbase_offset;
+#else
+    int32_t vbase_offset = *(int32_t*)(vptr - 12);
+    return (char*)thiz + vbase_offset;
+#endif
+}
+
 int32_t _ZN7android6Thread3runEPKcim(void* thiz, const char* name, int32_t priority, size_t stack) {
     static RealThreadRun64 real_run = nullptr;
     static RefBaseIncStrong real_inc = (RefBaseIncStrong)dlsym(RTLD_DEFAULT, "_ZNK7android7RefBase9incStrongEPKv");
@@ -236,15 +249,16 @@ int32_t _ZN7android6Thread3runEPKcim(void* thiz, const char* name, int32_t prior
         }
     }
 
-    if (real_inc) {
-        real_inc(thiz, thiz);
+    void* refbase = get_refbase_ptr(thiz);
+    if (real_inc && refbase) {
+        real_inc(refbase, thiz);
     }
     int32_t ret = -1;
     if (real_run) {
         ret = real_run(thiz, name, priority, stack);
     }
-    if (real_dec) {
-        real_dec(thiz, thiz);
+    if (real_dec && refbase) {
+        real_dec(refbase, thiz);
     }
     return ret;
 }
@@ -264,15 +278,16 @@ int32_t _ZN7android6Thread3runEPKcij(void* thiz, const char* name, int32_t prior
         }
     }
 
-    if (real_inc) {
-        real_inc(thiz, thiz);
+    void* refbase = get_refbase_ptr(thiz);
+    if (real_inc && refbase) {
+        real_inc(refbase, thiz);
     }
     int32_t ret = -1;
     if (real_run) {
         ret = real_run(thiz, name, priority, stack);
     }
-    if (real_dec) {
-        real_dec(thiz, thiz);
+    if (real_dec && refbase) {
+        real_dec(refbase, thiz);
     }
     return ret;
 }
