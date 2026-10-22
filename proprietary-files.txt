@@ -1469,7 +1469,6 @@ vendor/lib64/libwebrtc_audio_preprocessing.so
 vendor/etc/init/android.hardware.biometrics.face@1.0-service.rc
 vendor/etc/init/android.hardware.cas@1.2-service.rc
 vendor/etc/init/android.hardware.gatekeeper@1.0-service.rc
-# vendor/etc/init/android.hardware.graphics.composer@2.1-service.rc (built from source in device.mk)
 # vendor/etc/init/android.hardware.health@2.1-service.rc (using Lineage AIDL health)
 vendor/etc/init/android.hardware.media.omx@1.0-service.rc
 # vendor/etc/init/android.hardware.memtrack@1.0-service.rc (built from source in device.mk)

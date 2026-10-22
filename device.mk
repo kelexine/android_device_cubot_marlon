@@ -193,11 +193,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
 
 # Legacy MTK audio HAL (android.hardware.audio@6.0-impl-mediatek.so) links against the stock
-# Android 11 libaudiofoundation.so. The system copy is not visible from the vendor namespace
-# on Android 16, so install the stock blob on the vendor partition.
+# Android 11 libaudiofoundation.so and android.hardware.audio.common@6.0-util.so (which provides
+# the 2-argument audioConfigFromHal symbol required by vendor blobs).
+# Install stock blobs directly onto the vendor partition to prevent linker aborts.
 PRODUCT_COPY_FILES += \
     vendor/cubot/marlon/proprietary/vendor/lib/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiofoundation.so \
-    vendor/cubot/marlon/proprietary/vendor/lib64/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiofoundation.so
+    vendor/cubot/marlon/proprietary/vendor/lib64/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiofoundation.so \
+    vendor/cubot/marlon/proprietary/vendor/lib/android.hardware.audio.common@6.0-util.so:$(TARGET_COPY_OUT_VENDOR)/lib/android.hardware.audio.common@6.0-util.so \
+    vendor/cubot/marlon/proprietary/vendor/lib64/android.hardware.audio.common@6.0-util.so:$(TARGET_COPY_OUT_VENDOR)/lib64/android.hardware.audio.common@6.0-util.so
 
 # Wi-Fi Stack (AIDL / Modern Source Stack via libwifi-hal-wrapper)
 PRODUCT_PACKAGES := $(filter-out android.hardware.wifi@1.0-service-lazy hostapd wpa_supplicant, $(PRODUCT_PACKAGES))
