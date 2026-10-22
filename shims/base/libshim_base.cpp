@@ -209,4 +209,72 @@ void _ZN7android47LightRefBase_reportIncStrongRequireStrongFailedEPKv(const void
     // No-op stub to prevent aborting on LightRefBase
 }
 
+/*
+ * Thread::run compatibility wrapper.
+ * In Android 12+, Thread::run inlines an assertion in libutils that aborts if the
+ * thread object has not already been assigned to an sp<> (strong count is INITIAL_STRONG_VALUE).
+ * Intercepting Thread::run and incrementing strong refcount via incStrong ensures the
+ * inlined incStrongRequireStrong check passes, after which we decrement the refcount to balance.
+ */
+typedef int32_t (*RealThreadRun64)(void* thiz, const char* name, int32_t priority, size_t stack);
+typedef int32_t (*RealThreadRun32)(void* thiz, const char* name, int32_t priority, uint32_t stack);
+typedef void (*RefBaseIncStrong)(const void* thiz, const void* id);
+typedef void (*RefBaseDecStrong)(const void* thiz, const void* id);
+
+int32_t _ZN7android6Thread3runEPKcim(void* thiz, const char* name, int32_t priority, size_t stack) {
+    static RealThreadRun64 real_run = nullptr;
+    static RefBaseIncStrong real_inc = (RefBaseIncStrong)dlsym(RTLD_DEFAULT, "_ZNK7android7RefBase9incStrongEPKv");
+    static RefBaseDecStrong real_dec = (RefBaseDecStrong)dlsym(RTLD_DEFAULT, "_ZNK7android7RefBase9decStrongEPKv");
+
+    if (!real_run) {
+        real_run = (RealThreadRun64)dlsym(RTLD_NEXT, "_ZN7android6Thread3runEPKcim");
+        if (!real_run) {
+            void* handle = dlopen("libutils.so", RTLD_NOW);
+            if (handle) {
+                real_run = (RealThreadRun64)dlsym(handle, "_ZN7android6Thread3runEPKcim");
+            }
+        }
+    }
+
+    if (real_inc) {
+        real_inc(thiz, thiz);
+    }
+    int32_t ret = -1;
+    if (real_run) {
+        ret = real_run(thiz, name, priority, stack);
+    }
+    if (real_dec) {
+        real_dec(thiz, thiz);
+    }
+    return ret;
+}
+
+int32_t _ZN7android6Thread3runEPKcij(void* thiz, const char* name, int32_t priority, uint32_t stack) {
+    static RealThreadRun32 real_run = nullptr;
+    static RefBaseIncStrong real_inc = (RefBaseIncStrong)dlsym(RTLD_DEFAULT, "_ZNK7android7RefBase9incStrongEPKv");
+    static RefBaseDecStrong real_dec = (RefBaseDecStrong)dlsym(RTLD_DEFAULT, "_ZNK7android7RefBase9decStrongEPKv");
+
+    if (!real_run) {
+        real_run = (RealThreadRun32)dlsym(RTLD_NEXT, "_ZN7android6Thread3runEPKcij");
+        if (!real_run) {
+            void* handle = dlopen("libutils.so", RTLD_NOW);
+            if (handle) {
+                real_run = (RealThreadRun32)dlsym(handle, "_ZN7android6Thread3runEPKcij");
+            }
+        }
+    }
+
+    if (real_inc) {
+        real_inc(thiz, thiz);
+    }
+    int32_t ret = -1;
+    if (real_run) {
+        ret = real_run(thiz, name, priority, stack);
+    }
+    if (real_dec) {
+        real_dec(thiz, thiz);
+    }
+    return ret;
+}
+
 } // extern "C"
