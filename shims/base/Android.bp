@@ -9,5 +9,8 @@
 cc_library_shared {
     name: "libshim_base",
     srcs: ["libshim_base.cpp"],
+    shared_libs: [
+        "libdl",
+    ],
     vendor: true,
 }

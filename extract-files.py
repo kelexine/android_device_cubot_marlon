@@ -21,6 +21,8 @@ namespace_imports = [
 blob_fixups: blob_fixups_user_type = {
     # Audio HAL and effect shims
     ('vendor/lib/hw/audio.primary.mt6765.so',
+     'vendor/lib/libaudiofoundation.so',
+     'vendor/lib64/libaudiofoundation.so',
      'vendor/lib/libnbaio_mono.so',
      'vendor/lib64/libnbaio_mono.so'): blob_fixup()
         .add_needed('libshim_audio.so'),
@@ -37,13 +39,15 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/lib64/librilfusion.so': blob_fixup()
         .replace_needed('libmtkutils.so', 'libutils.so'),
 
-    # Base shims for nvram, sysenv, applypatch, nfc, health, and PQ
+    # Base shims for nvram, sysenv, applypatch, nfc, health, RIL, and PQ
     ('vendor/lib/libnvram.so',
      'vendor/lib/libsysenv.so',
      'vendor/lib64/libnvram.so',
      'vendor/lib64/libsysenv.so',
      'vendor/bin/applypatch',
      'vendor/bin/nfcstackp-vendor',
+     'vendor/lib64/libmtk-ril.so',
+     'vendor/bin/hw/vendor.mediatek.hardware.pq@2.2-service',
      'vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so',
      'vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so',
      'vendor/lib/hw/vendor.mediatek.hardware.pq@2.6-impl.so',

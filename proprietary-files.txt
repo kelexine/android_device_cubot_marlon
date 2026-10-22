@@ -624,11 +624,11 @@ vendor/etc/gnss/carrier/agps_profiles_conf2_carrier_Verizon_Wireless.xml
 vendor/etc/gnss/agps_profiles_conf2.xml
 
 # Health
-# vendor/bin/hw/android.hardware.health@2.1-service
+vendor/bin/hw/android.hardware.health@2.1-service
 vendor/bin/fuelgauged
-# vendor/etc/init/android.hardware.health@2.1-service.rc
+vendor/etc/init/android.hardware.health@2.1-service.rc
 vendor/etc/init/fuelgauged_init.rc
-# vendor/etc/vintf/manifest/android.hardware.health@2.1.xml
+vendor/etc/vintf/manifest/android.hardware.health@2.1.xml
 
 # Keymaster
 vendor/bin/hw/android.hardware.keymaster@4.0-service.trustkernel
@@ -1444,13 +1444,13 @@ vendor/ueventd.rc
 # MediaTek Proprietary HAL implementations
 vendor/lib/hw/android.hardware.bluetooth@1.0-impl-mediatek.so
 vendor/lib/hw/android.hardware.graphics.mapper@4.0-impl-mediatek.so
-# vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so
+vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so
 vendor/lib64/android.hardware.power-service-mediatek.so
 vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so
 vendor/lib64/hw/android.hardware.camera.provider@2.6-impl-mediatek.so
 vendor/lib64/hw/android.hardware.gnss@2.1-impl-mediatek.so
 vendor/lib64/hw/android.hardware.graphics.mapper@4.0-impl-mediatek.so
-# vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
+vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
 
 # Legacy shared library dependencies for MTK blobs
 vendor/lib/libnbaio_mono.so

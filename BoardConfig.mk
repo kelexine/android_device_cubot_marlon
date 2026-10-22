@@ -176,7 +176,11 @@ TARGET_LD_SHIM_LIBS += \
     /vendor/lib/libnvram.so|libshim_base.so \
     /vendor/lib/libsysenv.so|libshim_base.so \
     /vendor/lib64/libnvram.so|libshim_base.so \
-    /vendor/lib64/libsysenv.so|libshim_base.so
+    /vendor/lib64/libsysenv.so|libshim_base.so \
+    /vendor/lib/libaudiofoundation.so|libshim_audio.so \
+    /vendor/lib64/libaudiofoundation.so|libshim_audio.so \
+    /vendor/lib64/libmtk-ril.so|libshim_base.so \
+    /vendor/bin/hw/vendor.mediatek.hardware.pq@2.2-service|libshim_base.so
 
 # Build broken flags
 BUILD_BROKEN_PREBUILT_ELF_FILES := true
