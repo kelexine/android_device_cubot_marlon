@@ -198,7 +198,27 @@ const typename Traits::Table TypeConverter<Traits>::mTable[] = {
     TERMINATOR
 };
 
+struct OutputDeviceTraits {
+    typedef uint32_t Type;
+    struct Table {
+        const char *literal;
+        Type value;
+    };
+    static const Table mTable[];
+};
+
+struct InputDeviceTraits {
+    typedef uint32_t Type;
+    struct Table {
+        const char *literal;
+        Type value;
+    };
+    static const Table mTable[];
+};
+
 template class TypeConverter<DefaultTraits<audio_format_t>>;
+template class TypeConverter<OutputDeviceTraits>;
+template class TypeConverter<InputDeviceTraits>;
 
 } // namespace android
 
