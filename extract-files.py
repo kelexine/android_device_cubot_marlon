@@ -21,11 +21,16 @@ namespace_imports = [
 blob_fixups: blob_fixups_user_type = {
     # Audio HAL and effect shims
     ('vendor/lib/hw/audio.primary.mt6765.so',
+     'vendor/lib64/hw/audio.primary.mt6765.so',
      'vendor/lib/libaudiofoundation.so',
      'vendor/lib64/libaudiofoundation.so',
      'vendor/lib/libnbaio_mono.so',
      'vendor/lib64/libnbaio_mono.so'): blob_fixup()
         .add_needed('libshim_audio.so'),
+
+    # Bluetooth HCI Gabeldorsche status event compatibility
+    'vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so': blob_fixup()
+        .add_needed('libshim_bt.so'),
 
     # Libutils refcount and incStrong backwards compatibility
     ('vendor/lib64/hw/vendor.mediatek.hardware.pq@2.6-impl.so',

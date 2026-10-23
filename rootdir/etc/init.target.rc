@@ -22,8 +22,16 @@ on post-fs
     mkdir /cache/bootlog 0775 system system
     start boot_kmsg
 
+on boot
+    setprop vendor.usb.controller musb-hdrc
+    setprop sys.usb.controller musb-hdrc
+    setprop sys.usb.configfs 1
+
 on property:sys.boot_completed=1
     stop boot_kmsg
+    setprop vendor.usb.controller musb-hdrc
+    setprop sys.usb.controller musb-hdrc
+    setprop sys.usb.configfs 1
 
 service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 0
     disabled

@@ -179,8 +179,12 @@ TARGET_LD_SHIM_LIBS += \
     /vendor/lib64/libsysenv.so|libshim_base.so \
     /vendor/lib/libaudiofoundation.so|libshim_audio.so \
     /vendor/lib64/libaudiofoundation.so|libshim_audio.so \
+    /vendor/lib/hw/audio.primary.mt6765.so|libshim_audio.so \
+    /vendor/lib64/hw/audio.primary.mt6765.so|libshim_audio.so \
     /vendor/lib64/libmtk-ril.so|libshim_base.so \
-    /vendor/bin/hw/vendor.mediatek.hardware.pq@2.2-service|libshim_base.so
+    /vendor/bin/hw/vendor.mediatek.hardware.pq@2.2-service|libshim_base.so \
+    /vendor/lib/hw/android.hardware.bluetooth@1.0-impl-mediatek.so|libshim_bt.so \
+    /vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so|libshim_bt.so
 
 # Build broken flags
 BUILD_BROKEN_PREBUILT_ELF_FILES := true
