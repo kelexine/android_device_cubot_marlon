@@ -54,12 +54,12 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
 
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/cubot/marlon-modules/source/vendor/mediatek/kernel_modules
 TARGET_KERNEL_EXT_MODULES := \
-    connectivity/common \
-    connectivity/gps \
-    connectivity/bt/mt66xx/legacy \
-    connectivity/wlan/adaptor \
-    connectivity/wlan/core/gen4m \
-    met_drv_v2
+    connectivity/common:kbuild \
+    connectivity/gps:kbuild \
+    connectivity/bt/mt66xx/legacy:kbuild \
+    connectivity/wlan/adaptor:kbuild \
+    connectivity/wlan/core/gen4m:kbuild \
+    met_drv_v2:kbuild
 
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     wmt_drv.ko \
