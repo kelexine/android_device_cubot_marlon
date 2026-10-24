@@ -28,10 +28,20 @@
 
     <!-- Float brightness equivalents (for modern Android DisplayPowerController) -->
     <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.05</item>
-    <item name="config_screenBrightnessDozeFloat" format="float" type="dimen">0.0</item>
     <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.039215686</item>
     <item name="config_screenBrightnessSettingMaximumFloat" format="float" type="dimen">1.0</item>
     <item name="config_screenBrightnessSettingDefaultFloat" format="float" type="dimen">0.4</item>
+
+    <!-- Whether the display blanks itself when transitioning from a doze to a non-doze state -->
+    <bool name="config_displayBlanksAfterDoze">true</bool>
+
+    <!-- If true, the doze component is not started until after the screen has been
+         turned off and the screen off animation has been performed. -->
+    <bool name="config_dozeAfterScreenOffByDefault">true</bool>
+
+    <!-- Power Management: Specifies whether to decouple the auto-suspend state of the
+         device from the display on/off state. -->
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
 
     <!-- Automatic brightness available -->
     <bool name="config_automatic_brightness_available">true</bool>
