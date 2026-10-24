@@ -195,8 +195,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
 
-# Speaker layout channel mask ABI compatibility for pre-15 QPR2 MTK Audio HAL
-$(call soong_config_set,android_hardware_audio,skip_speaker_layout_channel_mask_field,true)
 
 # Legacy MTK audio HAL (android.hardware.audio@6.0-impl-mediatek.so) links against the stock
 # Android 11 libaudiofoundation.so and android.hardware.audio.common@6.0-util.so (which provides
