@@ -36,6 +36,12 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so': blob_fixup()
         .add_needed('libshim_bt.so'),
 
+    # Bluetooth Audio HAL in-process session and provider compatibility
+    ('vendor/lib/hw/audio.bluetooth.default.so',
+     'vendor/lib64/hw/audio.bluetooth.default.so'): blob_fixup()
+        .replace_needed('libbluetooth_audio_session_mediatek.so', 'android.hardware.bluetooth.audio-impl-mediatek.so')
+        .add_needed('libbluetooth_audio_session.so'),
+
     # Libutils refcount and incStrong backwards compatibility
     ('vendor/lib64/hw/vendor.mediatek.hardware.pq@2.6-impl.so',
      'vendor/lib64/hw/android.hardware.thermal@2.0-impl.so'): blob_fixup()

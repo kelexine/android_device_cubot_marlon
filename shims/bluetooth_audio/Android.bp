@@ -1,0 +1,26 @@
+//
+// File: shims/bluetooth_audio/Android.bp
+// Author: kelexine <https://github.com/kelexine>
+// Date: 2026-10-24
+// Purpose: Build definition for android.hardware.bluetooth.audio-impl-mediatek.
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "android.hardware.bluetooth.audio-impl-mediatek",
+    srcs: ["bt_audio_impl_mtk.cpp"],
+    header_libs: [
+        "libhardware_headers",
+        "libsystem_headers",
+    ],
+    shared_libs: [
+        "libbase",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+        "android.hardware.bluetooth.audio@2.0",
+        "vendor.mediatek.hardware.bluetooth.audio@2.1",
+        "libbluetooth_audio_session",
+    ],
+    vendor: true,
+}

@@ -86,6 +86,8 @@ PRODUCT_PACKAGES += \
     boot_kmsg \
     libshim_base \
     libshim_audio \
+    libshim_bt \
+    android.hardware.bluetooth.audio-impl-mediatek \
     libshim_binder \
     libshim_camera \
     libshim_crypto \
@@ -231,6 +233,13 @@ PRODUCT_PACKAGES += \
     android.hardware.usb@1.3-service.basic \
     android.hardware.usb@1.0.vendor:64
 
-PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.usb@1.1-service-mediatekv2.rc, $(PRODUCT_COPY_FILES))
+# Bluetooth Audio (in-process MediaTek Audio HAL provider, drop AOSP standalone daemon)
+PRODUCT_PACKAGES := $(filter-out android.hardware.bluetooth.audio@2.0-service, $(PRODUCT_PACKAGES))
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.bluetooth.audio@2.0-service.rc, $(PRODUCT_COPY_FILES))
+
+# Audio Policy Configuration
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
+
 
 
