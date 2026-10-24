@@ -1,0 +1,2 @@
+# Allow mnld (GPS daemon) to read backlight / LED sysfs symlinks (e.g. /sys/class/leds/lcd-backlight)
+allow mnld sysfs_leds:lnk_file r_file_perms;

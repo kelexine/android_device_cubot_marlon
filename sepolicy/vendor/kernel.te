@@ -1,0 +1,3 @@
+# MediaTek connectivity worker thread (mtk_wmtd_worker)
+allow kernel fuse:dir search;
+dontaudit kernel self:capability dac_read_search;
