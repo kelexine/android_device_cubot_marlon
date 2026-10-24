@@ -20,11 +20,6 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot-service.lineage \
     fastbootd
 
-# Health (HIDL 2.1)
-PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-service \
-    android.hardware.health@2.0-impl-2.1
-
 # Lights (AIDL)
 PRODUCT_PACKAGES += \
     android.hardware.lights-service.lineage
@@ -202,9 +197,7 @@ PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtk
 # Install stock blobs directly onto the vendor partition to prevent linker aborts.
 PRODUCT_COPY_FILES += \
     vendor/cubot/marlon/proprietary/vendor/lib/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiofoundation.so \
-    vendor/cubot/marlon/proprietary/vendor/lib64/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiofoundation.so \
-    vendor/cubot/marlon/proprietary/vendor/lib/android.hardware.audio.common@6.0-util.so:$(TARGET_COPY_OUT_VENDOR)/lib/android.hardware.audio.common@6.0-util.so \
-    vendor/cubot/marlon/proprietary/vendor/lib64/android.hardware.audio.common@6.0-util.so:$(TARGET_COPY_OUT_VENDOR)/lib64/android.hardware.audio.common@6.0-util.so
+    vendor/cubot/marlon/proprietary/vendor/lib64/libaudiofoundation.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiofoundation.so
 
 # Wi-Fi Stack (AIDL / Modern Source Stack via libwifi-hal-wrapper)
 PRODUCT_PACKAGES := $(filter-out android.hardware.wifi@1.0-service-lazy hostapd wpa_supplicant, $(PRODUCT_PACKAGES))
