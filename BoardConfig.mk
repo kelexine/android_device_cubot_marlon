@@ -50,9 +50,6 @@ TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM=1 \
     LLVM_IAS=1 \
-    CONFIG_MTK_PLATFORM=mt6765 \
-    CONFIG_MTK_COMBO_CHIP='"CONSYS_6765"' \
-    CONFIG_MTK_MET_PLF=m \
     KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
 TARGET_KERNEL_EXT_MODULE_ROOT := kernel/cubot/marlon-modules/source/vendor/mediatek/kernel_modules
