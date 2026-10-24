@@ -11,10 +11,13 @@ allow system_server sysfs_devfreq:file rw_file_perms;
 
 allow system_server sysfs_ged_tuning:dir search;
 allow system_server sysfs_ged_tuning:file rw_file_perms;
+allow system_server sysfs_ged:dir search;
+allow system_server sysfs_ged:file rw_file_perms;
 
 allow system_server proc_gpufreq:dir search;
 allow system_server proc_gpufreq:file rw_file_perms;
 
 allow system_server proc_sched:file rw_file_perms;
+allow system_server proc_sched_migration_cost_ns:file rw_file_perms;
 allow system_server proc_drop_caches:file rw_file_perms;
 allow system_server proc_dirty:file rw_file_perms;
