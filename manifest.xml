@@ -30,11 +30,6 @@
         <fqname>@1.0::IGatekeeper/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>android.hardware.health</name>
-        <transport>hwbinder</transport>
-        <fqname>@2.1::IHealth/default</fqname>
-    </hal>
-    <hal format="hidl">
         <name>android.hardware.gnss</name>
         <transport>hwbinder</transport>
         <fqname>@1.1::IGnss/default</fqname>
@@ -243,14 +238,6 @@
         <version>1.2</version>
         <interface>
             <name>IMediaCasService</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="aidl">
-        <name>vendor.cubot.hardware.encore</name>
-        <version>1</version>
-        <interface>
-            <name>IEncore</name>
             <instance>default</instance>
         </interface>
     </hal>
