@@ -52,16 +52,11 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM_IAS=1 \
     KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
-# Out-of-tree MediaTek connectivity & MET kernel modules load order
+# In-tree kernel modules loaded during early kernel build tasks
+# (Out-of-tree connectivity and met modules are staged and added to modules.load by build scripts)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     kheaders.ko \
-    trace_mmstat.ko \
-    wmt_drv.ko \
-    gps_drv.ko \
-    wmt_chrdev_wifi.ko \
-    bt_drv.ko \
-    wlan_drv_gen4m.ko \
-    met.ko
+    trace_mmstat.ko
 
 # DTB & DTBO packaging configs for inline compilation (primary route)
 BOARD_DTB_CFG := $(DEVICE_PATH)/configs/dtb.cfg
