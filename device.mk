@@ -20,6 +20,11 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot-service.lineage \
     fastbootd
 
+# Health (HIDL 2.1)
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.1-impl \
+    android.hardware.health@2.1-service
+
 # Lights (AIDL)
 PRODUCT_PACKAGES += \
     android.hardware.lights-service.lineage
