@@ -284,6 +284,16 @@ __attribute__((weak))
 int32_t _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE(
     const void* configs, void* halConfigs);
 
+void* call_modern_audioPortConfigsToHal(const void* configs, void* halConfigs) {
+    if (_ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE) {
+        _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE(
+            configs, halConfigs);
+    } else if (halConfigs) {
+        *reinterpret_cast<void**>(halConfigs) = nullptr;
+    }
+    return const_cast<void*>(halConfigs);
+}
+
 /*
  * Legacy function expected by proprietary MTK audio HAL:
  * std::unique_ptr<audio_port_config[]> HidlUtils::audioPortConfigsToHal(const hidl_vec<AudioPortConfig>& configs)
@@ -293,7 +303,7 @@ __attribute__((naked))
 void _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEE() {
     __asm__ volatile(
         "mov x1, x8\n"
-        "b _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE\n"
+        "b call_modern_audioPortConfigsToHal\n"
     );
 }
 #elif defined(__arm__)
@@ -304,7 +314,7 @@ void _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPort
         "mov r2, r0\n"
         "mov r0, r1\n"
         "mov r1, r2\n"
-        "bl _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE\n"
+        "bl call_modern_audioPortConfigsToHal\n"
         "pop {r0, pc}\n"
     );
 }
