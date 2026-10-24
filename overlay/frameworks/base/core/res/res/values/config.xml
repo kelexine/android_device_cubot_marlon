@@ -43,6 +43,14 @@
          device from the display on/off state. -->
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
 
+    <!-- Whether the device supports double tap to wake -->
+    <bool name="config_supportDoubleTapWake">true</bool>
+
+    <!-- Device key handler class list for off-screen hardware gestures -->
+    <string-array name="config_deviceKeyHandlerClasses" translatable="false">
+        <item>org.lineageos.settings.device.KeyHandler</item>
+    </string-array>
+
     <!-- Automatic brightness available -->
     <bool name="config_automatic_brightness_available">true</bool>
 

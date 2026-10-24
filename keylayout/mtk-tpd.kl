@@ -1,0 +1,39 @@
+#
+# Copyright (C) 2026 The LineageOS Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# mtk-tpd.kl - MediaTek touchpanel driver keylayout
+# Maps off-screen gestures and double-tap-to-wake events.
+#
+
+# Double tap to wake
+key 143   WAKEUP            WAKE
+key 116   POWER             WAKE
+
+# Off-screen swipe gestures
+key 103   DPAD_UP           WAKE
+key 108   DPAD_DOWN         WAKE
+key 105   DPAD_LEFT         WAKE
+key 106   DPAD_RIGHT        WAKE
+
+# Off-screen letter gestures
+key 46    C                 WAKE
+key 18    E                 WAKE
+key 50    M                 WAKE
+key 24    O                 WAKE
+key 31    S                 WAKE
+key 47    V                 WAKE
+key 17    W                 WAKE
+key 44    Z                 WAKE
+key 33    F                 WAKE

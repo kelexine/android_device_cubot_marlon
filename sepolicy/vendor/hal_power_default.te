@@ -63,3 +63,7 @@ allow hal_power_default sysfs_fbt_fteh:file rw_file_perms;
 # GED tuning (gpu_block_boost, dvfs_margin_value, gx_force_cpu_boost)
 allow hal_power_default sysfs_ged:dir r_dir_perms;
 allow hal_power_default sysfs_ged:file rw_file_perms;
+
+# Double-tap-to-wake control node
+allow hal_power_default sysfs_touchpanel:dir r_dir_perms;
+allow hal_power_default sysfs_touchpanel:file rw_file_perms;
