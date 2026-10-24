@@ -224,3 +224,16 @@ PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/lights-mtk-default.rc, $(PRO
 PRODUCT_PACKAGES := $(filter-out vibrator-mtk-default.xml, $(PRODUCT_PACKAGES))
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vibrator-mtk-default.rc, $(PRODUCT_COPY_FILES))
 
+# USB Stack (AOSP basic HAL, filter out legacy MTK HIDL USB daemon)
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.adb.nonblocking_ffs=0 \
+    ro.adb.nonblocking_ffs=0
+
+PRODUCT_PACKAGES := $(filter-out android.hardware.usb@1.1-service-mediatekv2, $(PRODUCT_PACKAGES))
+PRODUCT_PACKAGES += \
+    android.hardware.usb@1.3-service.basic \
+    android.hardware.usb@1.0.vendor:64
+
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.usb@1.1-service-mediatekv2.rc, $(PRODUCT_COPY_FILES))
+
+
