@@ -50,29 +50,17 @@ TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM=1 \
     LLVM_IAS=1 \
-    CONFIG_MTK_PLATFORM=mt6765 \
-    CONFIG_MTK_COMBO_CHIP='"CONSYS_6765"' \
-    CONFIG_MTK_MET_PLF=m \
     KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
-# Out-of-tree MediaTek connectivity & MET kernel modules built inline
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/cubot/marlon-modules/source/vendor/mediatek/kernel_modules
-TARGET_KERNEL_EXT_MODULES := \
-    connectivity/common \
-    connectivity/gps \
-    connectivity/bt/mt66xx/legacy \
-    connectivity/wlan/adaptor \
-    connectivity/wlan/core/gen4m \
-    met_drv_v2
-
-# Kernel modules load order (strictly ordered by dependency chain: wmt_drv -> wmt_chrdev_wifi -> wlan_drv_gen4m)
+BOARD_VENDOR_KERNEL_MODULES += $(wildcard $(PRODUCT_OUT)/obj/KERNEL_MODULES_OOT/*.ko)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     wmt_drv.ko \
-    wmt_chrdev_wifi.ko \
     bt_drv.ko \
     gps_drv.ko \
+    wmt_chrdev_wifi.ko \
     wlan_drv_gen4m.ko \
     met.ko \
+    ax_dragonite.ko \
     trace_mmstat.ko \
     kheaders.ko
 
