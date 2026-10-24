@@ -41,6 +41,7 @@ static constexpr size_t PACKET_OFFSET = 4;
 static constexpr uint8_t HCI_EVT_CMD_COMPLETE = 0x0E;
 static constexpr uint8_t HCI_EVT_CMD_STATUS = 0x0F;
 static constexpr uint16_t HCI_CMD_READ_ERRONEOUS_DATA_REPORTING = 0x0C5A;
+static constexpr uint16_t HCI_CMD_WRITE_ERRONEOUS_DATA_REPORTING = 0x0C5B;
 static constexpr uint8_t HCI_STATUS_SUCCESS = 0x00;
 static constexpr uint8_t HCI_ERRONEOUS_DATA_DISABLED = 0x00;
 
@@ -101,6 +102,32 @@ extern "C" const void* _ZNK7android8hardware9bluetooth3hci13HciPacketizer9GetPac
 
             ALOGI("Intercepted Status (0x0F) for READ_DEFAULT_ERRONEOUS_DATA_REPORTING (0x0C5A), rewritten to Complete (0x0E) credits=%u", credits);
             return &s_rewritten_vec;
+        } else if (opcode == HCI_CMD_WRITE_ERRONEOUS_DATA_REPORTING) {
+            static uint8_t s_fixed_write_complete[6];
+            static HidlVecRaw s_rewritten_write_vec;
+
+            uint8_t credits = data[3];
+
+            // Build Command Complete Event for Write:
+            // [0] Event code: 0x0E (HCI_COMMAND_COMPLETE_EVENT)
+            // [1] Param len:  0x04 (credits + opcode(2) + status(1))
+            // [2] Num_Cmd:    credits
+            // [3] Opcode LSB: 0x5B
+            // [4] Opcode MSB: 0x0C
+            // [5] Status:     0x00 (HCI_SUCCESS)
+            s_fixed_write_complete[0] = HCI_EVT_CMD_COMPLETE;
+            s_fixed_write_complete[1] = 0x04;
+            s_fixed_write_complete[2] = credits;
+            s_fixed_write_complete[3] = static_cast<uint8_t>(HCI_CMD_WRITE_ERRONEOUS_DATA_REPORTING & 0xFF);
+            s_fixed_write_complete[4] = static_cast<uint8_t>((HCI_CMD_WRITE_ERRONEOUS_DATA_REPORTING >> 8) & 0xFF);
+            s_fixed_write_complete[5] = HCI_STATUS_SUCCESS;
+
+            s_rewritten_write_vec.mBuffer = s_fixed_write_complete;
+            s_rewritten_write_vec.mSize = sizeof(s_fixed_write_complete);
+            s_rewritten_write_vec.mOwnsBuffer = 0;
+
+            ALOGI("Intercepted Status (0x0F) for WRITE_DEFAULT_ERRONEOUS_DATA_REPORTING (0x0C5B), rewritten to Complete (0x0E) credits=%u", credits);
+            return &s_rewritten_write_vec;
         }
     }
 

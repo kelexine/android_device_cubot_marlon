@@ -36,6 +36,10 @@
     <!-- Automatic brightness available -->
     <bool name="config_automatic_brightness_available">true</bool>
 
+    <!-- When true use the linux /dev/input/event subsystem to detect the switch changes
+         on the headphone/microphone jack. When false use the older uevent framework. -->
+    <bool name="config_useDevInputEventForAudioJack">true</bool>
+
     <!-- Notification & Battery LED (Physical LED is Blue) -->
     <bool name="config_intrusiveNotificationLed">true</bool>
     <color name="config_defaultNotificationColor">#ff0000ff</color>

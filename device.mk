@@ -139,6 +139,7 @@ PRODUCT_PACKAGES += \
 # Keylayouts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/ACCDET.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ACCDET.kl \
+    $(LOCAL_PATH)/keylayout/ACCDET.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/mt63xx-accdet_Headset.kl \
     $(LOCAL_PATH)/keylayout/mtk-kpd.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/mtk-kpd.kl
 
 # AxionOS Kernel Manager
@@ -148,6 +149,7 @@ PRODUCT_COPY_FILES += \
 
 # Wi-Fi & P2P Supplicant Overlays (Enable 5GHz P2P / Quick Share)
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/wifi/wpa_supplicant.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant.conf \
     $(LOCAL_PATH)/configs/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf
 # MediaTek BesLoudness Audio Enhancement
@@ -192,6 +194,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
 
+# Speaker layout channel mask ABI compatibility for pre-15 QPR2 MTK Audio HAL
+$(call soong_config_set,android_hardware_audio,skip_speaker_layout_channel_mask_field,true)
+
 # Legacy MTK audio HAL (android.hardware.audio@6.0-impl-mediatek.so) links against the stock
 # Android 11 libaudiofoundation.so and android.hardware.audio.common@6.0-util.so (which provides
 # the 2-argument audioConfigFromHal symbol required by vendor blobs).
@@ -210,7 +215,7 @@ PRODUCT_PACKAGES += \
     wpa_cli \
     hostapd_cli \
     libwifi-hal-wrapper \
-    android.hardware.wifi-service-lazy
+    android.hardware.wifi-service
 
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.wifi@1.0-service-lazy.rc %vendor/etc/init/android.hardware.wifi.supplicant-service.rc, $(PRODUCT_COPY_FILES))
 
