@@ -50,13 +50,31 @@ TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM=1 \
     LLVM_IAS=1 \
+    CONFIG_MTK_PLATFORM=mt6765 \
+    CONFIG_MTK_COMBO_CHIP='"CONSYS_6765"' \
+    CONFIG_MTK_MET_PLF=m \
     KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
-# In-tree kernel modules loaded during early kernel build tasks
-# (Out-of-tree connectivity and met modules are staged and added to modules.load by build scripts)
+# Out-of-tree MediaTek connectivity & MET kernel modules built inline
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/cubot/marlon-modules/source/vendor/mediatek/kernel_modules
+TARGET_KERNEL_EXT_MODULES := \
+    connectivity/common \
+    connectivity/gps \
+    connectivity/bt/mt66xx/legacy \
+    connectivity/wlan/adaptor \
+    connectivity/wlan/core/gen4m \
+    met_drv_v2
+
+# Kernel modules load order (strictly ordered by dependency chain: wmt_drv -> wmt_chrdev_wifi -> wlan_drv_gen4m)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
-    kheaders.ko \
-    trace_mmstat.ko
+    wmt_drv.ko \
+    wmt_chrdev_wifi.ko \
+    bt_drv.ko \
+    gps_drv.ko \
+    wlan_drv_gen4m.ko \
+    met.ko \
+    trace_mmstat.ko \
+    kheaders.ko
 
 # DTB & DTBO packaging configs for inline compilation (primary route)
 BOARD_DTB_CFG := $(DEVICE_PATH)/configs/dtb.cfg
