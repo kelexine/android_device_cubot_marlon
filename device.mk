@@ -73,7 +73,6 @@ PRODUCT_PACKAGES += \
     init.modem.rc \
     init.mt6762.rc \
     init.mt6765.rc \
-    init.mt6765.usb.rc \
     init.project.rc \
     init.sensor_1_0.rc \
     init.stnfc.rc \
@@ -102,7 +101,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6765:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6765 \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6762:$(TARGET_COPY_OUT_RAMDISK)/fstab.mt6762 \
-    $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap
+    $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap \
+    $(LOCAL_PATH)/rootdir/etc/init.mt6765.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mt6765.usb.rc
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
