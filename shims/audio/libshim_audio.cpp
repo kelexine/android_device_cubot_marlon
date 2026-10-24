@@ -254,4 +254,94 @@ bool _ZN7android16deviceFromStringERKNSt3__112basic_stringIcNS0_11char_traitsIcE
     return true;
 }
 
+/*
+ * Modern 3-argument function in android.hardware.audio.common@6.0-util.so:
+ * status_t HidlUtils::audioConfigFromHal(const audio_config& halConfig, bool isInput, AudioConfig* config)
+ */
+__attribute__((weak))
+int32_t _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils18audioConfigFromHalERK12audio_configbPNS3_11AudioConfigE(
+    const void* halConfig, bool isInput, void* config);
+
+/*
+ * Legacy 2-argument function expected by proprietary MTK audio HAL:
+ * status_t HidlUtils::audioConfigFromHal(const audio_config& halConfig, AudioConfig* config)
+ */
+int32_t _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils18audioConfigFromHalERK12audio_configPNS3_11AudioConfigE(
+    const void* halConfig, void* config)
+{
+    if (_ZN7android8hardware5audio6common4V6_014implementation9HidlUtils18audioConfigFromHalERK12audio_configbPNS3_11AudioConfigE) {
+        return _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils18audioConfigFromHalERK12audio_configbPNS3_11AudioConfigE(
+            halConfig, false /* isInput */, config);
+    }
+    return 0; // OK
+}
+
+/*
+ * Modern 2-argument function in android.hardware.audio.common@6.0-util.so:
+ * status_t HidlUtils::audioPortConfigsToHal(const hidl_vec<AudioPortConfig>& configs, std::unique_ptr<audio_port_config[]>* halConfigs)
+ */
+__attribute__((weak))
+int32_t _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE(
+    const void* configs, void* halConfigs);
+
+/*
+ * Legacy function expected by proprietary MTK audio HAL:
+ * std::unique_ptr<audio_port_config[]> HidlUtils::audioPortConfigsToHal(const hidl_vec<AudioPortConfig>& configs)
+ */
+#if defined(__aarch64__)
+__attribute__((naked))
+void _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEE() {
+    __asm__ volatile(
+        "mov x1, x8\n"
+        "b _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE\n"
+    );
+}
+#elif defined(__arm__)
+__attribute__((naked))
+void _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEE() {
+    __asm__ volatile(
+        "push {r0, lr}\n"
+        "mov r2, r0\n"
+        "mov r0, r1\n"
+        "mov r1, r2\n"
+        "bl _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils21audioPortConfigsToHalERKNS0_8hidl_vecINS3_15AudioPortConfigEEEPNSt3__110unique_ptrIA_17audio_port_configNSB_14default_deleteISE_EEEE\n"
+        "pop {r0, pc}\n"
+    );
+}
+#endif
+
+/*
+ * Modern functions in UuidUtils (android.hardware.audio.common@6.0-util.so):
+ * void UuidUtils::uuidFromHal(const audio_uuid_s&, Uuid*)
+ * void UuidUtils::uuidToHal(const Uuid&, audio_uuid_s*)
+ */
+__attribute__((weak))
+void _ZN7android8hardware5audio6common4V6_014implementation9UuidUtils11uuidFromHalERK12audio_uuid_sPNS3_4UuidE(
+    const void* halUuid, void* uuid);
+
+__attribute__((weak))
+void _ZN7android8hardware5audio6common4V6_014implementation9UuidUtils9uuidToHalERKNS3_4UuidEP12audio_uuid_s(
+    const void* uuid, void* halUuid);
+
+/*
+ * Legacy functions in HidlUtils (expected by android.hardware.audio.effect@6.0-impl.so):
+ * void HidlUtils::uuidFromHal(const audio_uuid_s&, Uuid*)
+ * void HidlUtils::uuidToHal(const Uuid&, audio_uuid_s*)
+ */
+void _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils11uuidFromHalERK12audio_uuid_sPNS3_4UuidE(
+    const void* halUuid, void* uuid)
+{
+    if (_ZN7android8hardware5audio6common4V6_014implementation9UuidUtils11uuidFromHalERK12audio_uuid_sPNS3_4UuidE) {
+        _ZN7android8hardware5audio6common4V6_014implementation9UuidUtils11uuidFromHalERK12audio_uuid_sPNS3_4UuidE(halUuid, uuid);
+    }
+}
+
+void _ZN7android8hardware5audio6common4V6_014implementation9HidlUtils9uuidToHalERKNS3_4UuidEP12audio_uuid_s(
+    const void* uuid, void* halUuid)
+{
+    if (_ZN7android8hardware5audio6common4V6_014implementation9UuidUtils9uuidToHalERKNS3_4UuidEP12audio_uuid_s) {
+        _ZN7android8hardware5audio6common4V6_014implementation9UuidUtils9uuidToHalERKNS3_4UuidEP12audio_uuid_s(uuid, halUuid);
+    }
+}
+
 } // extern "C"

@@ -22,6 +22,10 @@ blob_fixups: blob_fixups_user_type = {
     # Audio HAL and effect shims
     ('vendor/lib/hw/audio.primary.mt6765.so',
      'vendor/lib64/hw/audio.primary.mt6765.so',
+     'vendor/lib/hw/android.hardware.audio@6.0-impl-mediatek.so',
+     'vendor/lib64/hw/android.hardware.audio@6.0-impl-mediatek.so',
+     'vendor/lib/hw/android.hardware.audio.effect@6.0-impl.so',
+     'vendor/lib64/hw/android.hardware.audio.effect@6.0-impl.so',
      'vendor/lib/libaudiofoundation.so',
      'vendor/lib64/libaudiofoundation.so',
      'vendor/lib/libnbaio_mono.so',
