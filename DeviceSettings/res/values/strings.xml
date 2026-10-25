@@ -130,7 +130,7 @@
     <string name="telemetry_label_gpu">PowerVR GE8320 GPU</string>
     <string name="telemetry_label_thermal">Thermal Zone 0</string>
     <string name="telemetry_active_profile_default">Active Profile: Balanced</string>
-    <string name="telemetry_active_profile_format">Active Profile: %s%s</string>
+    <string name="telemetry_active_profile_format">Active Profile: %1$s%2$s</string>
 
     <string name="encore_profile_category">Operating Profile</string>
     <string name="encore_profile_title">Performance profile</string>
