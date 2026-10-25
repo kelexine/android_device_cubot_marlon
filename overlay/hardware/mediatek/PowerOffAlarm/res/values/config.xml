@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    SPDX-FileCopyrightText: 2023 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+
+    <!--
+        List of enabled PowerOffAlarm drivers, initialization is attempted in this order.
+
+        - alarm: /dev/alarm legacy driver with MTK modifications (preferred for MT6765 stock LK)
+        - rtc: MTK modern userspace ioctl
+        - timerfd: exists, but sets logo flag in MTK kernel which disrupts stock LK ALARM_BOOT
+    -->
+    <string name="config_powerOffAlarmDrivers" translatable="false">alarm,rtc,timerfd</string>
+</resources>

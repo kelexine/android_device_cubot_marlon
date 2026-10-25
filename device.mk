@@ -83,6 +83,7 @@ PRODUCT_PACKAGES += \
     meta_init.rc \
     multi_init.rc \
     pwroff_alarm \
+    PowerOffAlarm \
     boot_kmsg \
     libshim_base \
     libshim_audio \
