@@ -1,0 +1,73 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arindam Bhattacharjee <abhattacharjee717@gmail.com>
+Date: Fri, 30 May 2025 03:14:24 +0900
+Subject: [PATCH] BluetoothPowerStatsCollector: Handle
+ onBluetoothActivityEnergyInfoError gracefully
+
+Avoids crashing or logging unhandled exceptions when the Bluetooth energy info
+callback returns an error. This ensures the stats collection proceeds even if
+BluetoothActivityEnergyInfo is unavailable or fails.
+
+2025-04-30 14:18:53.751  1524-1745  BluetoothP...sCollector system_server
+E  Cannot acquire BluetoothActivityEnergyInfo
+java.util.concurrent.ExecutionException: java.lang.RuntimeException: error: 9
+    at java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:372)
+    at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2072)
+    at com.android.server.power.stats.BluetoothPowerStatsCollector.collectBluetoothActivityInfo(BluetoothPowerStatsCollector.java:181)
+    at com.android.server.power.stats.BluetoothPowerStatsCollector.collectStats(BluetoothPowerStatsCollector.java:149)
+    at com.android.server.power.stats.PowerStatsCollector.collectAndDeliverStats(PowerStatsCollector.java:176)
+    at com.android.server.power.stats.PowerStatsCollector$$ExternalSyntheticLambda0.run(R8$$SyntheticClass:0)
+    at android.os.Handler.handleCallback(Handler.java:991)
+    at android.os.Handler.dispatchMessage(Handler.java:102)
+    at android.os.Looper.loopOnce(Looper.java:232)
+    at android.os.Looper.loop(Looper.java:317)
+    at android.os.HandlerThread.run(HandlerThread.java:85)
+Caused by: java.lang.RuntimeException: error: 9
+    at com.android.server.power.stats.BluetoothPowerStatsCollector$1.onBluetoothActivityEnergyInfoError(BluetoothPowerStatsCollector.java:170)
+    at android.bluetooth.BluetoothAdapter$OnBluetoothActivityEnergyInfoProxy.lambda$onError$2(BluetoothAdapter.java:1063)
+    at android.bluetooth.BluetoothAdapter$OnBluetoothActivityEnergyInfoProxy$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+    at android.bluetooth.BluetoothUtils.lambda$executeFromBinder$0(BluetoothUtils.java:343)
+    at android.bluetooth.BluetoothUtils$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+    at com.android.server.SystemServerInitThreadPool$$ExternalSyntheticLambda0.execute(R8$$SyntheticClass:0)
+    at android.bluetooth.BluetoothUtils.executeFromBinder(BluetoothUtils.java:343)
+    at android.bluetooth.BluetoothAdapter$OnBluetoothActivityEnergyInfoProxy.onError(BluetoothAdapter.java:1062)
+    at android.bluetooth.BluetoothAdapter.requestControllerActivityEnergyInfo(BluetoothAdapter.java:2769)
+    at com.android.server.power.stats.BatteryStatsImpl$BluetoothStatsRetrieverImpl.requestControllerActivityEnergyInfo(BatteryStatsImpl.java:401)
+    at com.android.server.power.stats.BluetoothPowerStatsCollector.collectBluetoothActivityInfo(BluetoothPowerStatsCollector.java:159)
+    at com.android.server.power.stats.BluetoothPowerStatsCollector.collectStats(BluetoothPowerStatsCollector.java:149)
+    at android.os.Handler.handleCallback(Handler.java:991)
+    at android.os.Handler.dispatchMessage(Handler.java:102)
+    at android.os.Looper.loopOnce(Looper.java:232)
+    at android.os.Looper.loop(Looper.java:317)
+    at android.os.HandlerThread.run(HandlerThread.java:85)
+
+Change-Id: I143e701db08ab514c9f161445d515542c6a6cf71
+Signed-off-by: Arindam Bhattacharjee <abhattacharjee717@gmail.com>
+---
+ .../server/power/stats/BluetoothPowerStatsCollector.java    | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/services/core/java/com/android/server/power/stats/BluetoothPowerStatsCollector.java b/services/core/java/com/android/server/power/stats/BluetoothPowerStatsCollector.java
+index c12ae63140c9..74f364aee76b 100644
+--- a/services/core/java/com/android/server/power/stats/BluetoothPowerStatsCollector.java
++++ b/services/core/java/com/android/server/power/stats/BluetoothPowerStatsCollector.java
+@@ -178,8 +178,8 @@ public class BluetoothPowerStatsCollector extends PowerStatsCollector {
+ 
+                     @Override
+                     public void onBluetoothActivityEnergyInfoError(int error) {
+-                        immediateFuture.completeExceptionally(
+-                                new RuntimeException("error: " + error));
++                        Slog.w(TAG, "BluetoothActivityEnergyInfo request failed with error code: " + error);
++                        immediateFuture.complete(null);
+                     }
+                 });
+ 
+@@ -192,7 +192,7 @@ public class BluetoothPowerStatsCollector extends PowerStatsCollector {
+             activityInfo = immediateFuture.get(BLUETOOTH_ACTIVITY_REQUEST_TIMEOUT,
+                     TimeUnit.MILLISECONDS);
+         } catch (Exception e) {
+-            Slog.e(TAG, "Cannot acquire BluetoothActivityEnergyInfo", e);
++            Slog.w(TAG, "BluetoothActivityEnergyInfo unavailable, skipping stats collection", e);
+             activityInfo = null;
+         }
+ 
