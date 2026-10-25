@@ -198,7 +198,10 @@ TARGET_LD_SHIM_LIBS += \
     /vendor/lib/hw/android.hardware.bluetooth@1.0-impl-mediatek.so|libshim_bt.so \
     /vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so|libshim_bt.so \
     /vendor/lib/hw/audio.bluetooth.default.so|android.hardware.bluetooth.audio-impl-mediatek.so \
-    /vendor/lib64/hw/audio.bluetooth.default.so|android.hardware.bluetooth.audio-impl-mediatek.so
+    /vendor/lib64/hw/audio.bluetooth.default.so|android.hardware.bluetooth.audio-impl-mediatek.so \
+    /vendor/lib/libMtkOmxVdecEx.so|libshim_graphics.so \
+    /vendor/lib/libMtkOmxVenc.so|libshim_graphics.so \
+    /vendor/lib/libstagefright_softomx.so|libshim_graphics.so
 
 # Build broken flags
 BUILD_BROKEN_PREBUILT_ELF_FILES := true

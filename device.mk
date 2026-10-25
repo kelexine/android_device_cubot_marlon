@@ -241,5 +241,24 @@ PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.bluetooth.a
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml
 
+# Media & Codec Configurations (Optimized MT6765 Codec2/OMX pipeline)
+PRODUCT_PACKAGES += \
+    libavservices_minijail.vendor
+
+PRODUCT_COPY_FILES := $(filter-out \
+    %vendor/etc/media_codecs.xml \
+    %vendor/etc/media_codecs_c2.xml \
+    %vendor/etc/media_codecs_google_audio.xml \
+    %vendor/etc/media_codecs_google_video_le.xml \
+    %vendor/etc/media_codecs_mediatek_audio.xml \
+    %vendor/etc/media_codecs_mediatek_video.xml \
+    %vendor/etc/media_codecs_performance.xml \
+    %vendor/etc/media_profiles_V1_0.xml, \
+    $(PRODUCT_COPY_FILES))
+
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
+
+
 
 

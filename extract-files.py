@@ -109,6 +109,7 @@ blob_fixups: blob_fixups_user_type = {
 
     # GraphicBufferMapper lock/unlock OMX shims
     ('vendor/lib/libMtkOmxVdecEx.so',
+     'vendor/lib/libMtkOmxVenc.so',
      'vendor/lib/libstagefright_softomx.so'): blob_fixup()
         .add_needed('libshim_graphics.so'),
 
