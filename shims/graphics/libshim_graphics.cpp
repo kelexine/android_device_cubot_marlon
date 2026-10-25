@@ -27,10 +27,9 @@ extern "C" {
  */
 status_t _ZN7android19GraphicBufferMapper4lockEPK13native_handlejRKNS_4RectEPPvPiS9_(
         void* thisptr, buffer_handle_t handle, uint32_t usage, const Rect& bounds, void** vaddr,
-        int32_t* outBytesPerPixel, int32_t* outBytesPerStride) {
+        int32_t* /*outBytesPerPixel*/, int32_t* /*outBytesPerStride*/) {
     auto* gpm = static_cast<android::GraphicBufferMapper*>(thisptr);
-    return gpm->lock(handle, static_cast<uint64_t>(usage), bounds, vaddr,
-                     outBytesPerPixel, outBytesPerStride);
+    return gpm->lock(handle, usage, bounds, vaddr);
 }
 
 /*
