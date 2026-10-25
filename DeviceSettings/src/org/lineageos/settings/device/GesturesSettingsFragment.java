@@ -15,6 +15,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import org.lineageos.settings.device.gestures.DoubleTapToWakeController;
+import org.lineageos.settings.device.gestures.GestureAction;
 import org.lineageos.settings.device.gestures.GestureActionSettingsStore;
 import org.lineageos.settings.device.gestures.GestureInfo;
 import org.lineageos.settings.device.gestures.GestureNodeController;
@@ -52,8 +53,9 @@ public class GesturesSettingsFragment extends PreferenceFragmentCompat
             return;
         }
         if (!DoubleTapToWakeController.isSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "DT2W control node not found, hiding preference");
+            pref.setEnabled(false);
+            pref.setSummary(R.string.feature_not_supported_summary);
+            Log.i(TAG, "DT2W control node not found");
             return;
         }
         pref.setChecked(DoubleTapToWakeController.isEnabled());
@@ -67,17 +69,15 @@ public class GesturesSettingsFragment extends PreferenceFragmentCompat
         }
 
         if (!GestureNodeController.isSupported(gesture)) {
-            // No usable control node on this kernel/driver build -- hide
-            // both the toggle and its action picker rather than show
-            // controls that silently do nothing.
-            pref.setVisible(false);
+            pref.setEnabled(false);
+            pref.setSummary(R.string.feature_not_supported_summary);
             if (gesture.configurableAction) {
                 Preference actionPref = findPreference(gesture.actionPreferenceKey());
                 if (actionPref != null) {
-                    actionPref.setVisible(false);
+                    actionPref.setEnabled(false);
                 }
             }
-            Log.i(TAG, "No control node for " + gesture.preferenceKey + ", hiding");
+            Log.i(TAG, "No control node for " + gesture.preferenceKey);
             return;
         }
 
@@ -90,11 +90,25 @@ public class GesturesSettingsFragment extends PreferenceFragmentCompat
         if (pref == null) {
             return;
         }
-        // Route through Settings.System instead of this app's private
-        // SharedPreferences -- KeyHandler reads this from system_server,
-        // a different UID, which cannot reliably read our private prefs
-        // file. See GestureActionSettingsStore for the full rationale.
         pref.setPreferenceDataStore(mActionStore);
+        String currentVal = mActionStore.getString(pref.getKey(), gesture.defaultAction.name());
+        pref.setValue(currentVal);
+        updateActionSummary(pref, currentVal);
+        pref.setOnPreferenceChangeListener(this);
+    }
+
+    private void updateActionSummary(ListPreference pref, String actionValue) {
+        CharSequence[] entries = pref.getEntries();
+        CharSequence[] values = pref.getEntryValues();
+        if (entries != null && values != null) {
+            for (int i = 0; i < values.length; i++) {
+                if (values[i].toString().equals(actionValue)) {
+                    pref.setSummary(getString(R.string.gesture_action_summary_format, entries[i]));
+                    return;
+                }
+            }
+        }
+        pref.setSummary(actionValue);
     }
 
     @Override
@@ -118,6 +132,11 @@ public class GesturesSettingsFragment extends PreferenceFragmentCompat
                     Log.w(TAG, "Failed to apply " + key + "=" + enabled);
                 }
                 return applied;
+            } else if (gesture.actionPreferenceKey().equals(key)) {
+                String actionVal = (String) newValue;
+                mActionStore.putString(key, actionVal);
+                updateActionSummary((ListPreference) preference, actionVal);
+                return true;
             }
         }
 

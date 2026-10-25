@@ -4,6 +4,12 @@
     <string name="device_extras_title">Device Extras</string>
     <string name="device_extras_summary">Screen gestures, Encore performance profiles, and kernel tuning</string>
 
+    <!-- Device Header Banner -->
+    <string name="device_header_title">Cubot P50</string>
+    <string name="device_header_soc">MediaTek Helio P35 (MT6765) • Octa-Core</string>
+    <string name="device_header_kernel">Linux 4.19.127 • AxionOS 2.9</string>
+
+    <!-- Gestures -->
     <string name="gestures_category_wake_title">Wake gestures</string>
     <string name="double_tap_to_wake_title">Double-tap to wake</string>
     <string name="double_tap_to_wake_summary">Double-tap the screen while it\'s off to wake the device</string>
@@ -29,7 +35,8 @@
     <string name="gesture_letter_z_title">Draw \'Z\'</string>
     <string name="gesture_letter_f_title">Draw \'F\'</string>
 
-    <string name="gesture_action_title">Action</string>
+    <string name="gesture_action_title">Gesture Action</string>
+    <string name="gesture_action_summary_format">Action: %s</string>
     <string-array name="gesture_action_entries">
         <item>None</item>
         <item>Open camera</item>
@@ -47,7 +54,7 @@
 
     <!-- Categories -->
     <string name="category_display_gestures">Display &amp; Gestures</string>
-    <string name="category_performance">Performance Profile</string>
+    <string name="category_performance">Performance &amp; Hardware</string>
     <string name="category_kernel_tuning">Kernel &amp; Storage</string>
 
     <!-- Navigation -->
@@ -112,8 +119,19 @@
     <string name="encore_settings_title">Encore Performance &amp; Gaming</string>
     <string name="encore_settings_summary">Hardware performance profiles, GPU turbo, and touch boost</string>
     <string name="encore_telemetry_category">Live Hardware Telemetry</string>
-    <string name="encore_stats_title">MT6762 System Clocks &amp; Thermal</string>
+    <string name="encore_stats_title">MT6762 / MT6765 Telemetry</string>
     <string name="encore_stats_loading">Connecting to Encore daemon...</string>
+    <string name="encore_status_connecting">Connecting...</string>
+    <string name="encore_status_connected">Daemon Connected</string>
+    <string name="encore_status_direct">Live Sysfs Telemetry</string>
+
+    <string name="telemetry_label_cpu_little">CPU Little (Cortex-A53)</string>
+    <string name="telemetry_label_cpu_big">CPU Big (Cortex-A53)</string>
+    <string name="telemetry_label_gpu">PowerVR GE8320 GPU</string>
+    <string name="telemetry_label_thermal">Thermal Zone 0</string>
+    <string name="telemetry_active_profile_default">Active Profile: Balanced</string>
+    <string name="telemetry_active_profile_format">Active Profile: %s%s</string>
+
     <string name="encore_profile_category">Operating Profile</string>
     <string name="encore_profile_title">Performance profile</string>
     <string name="encore_gaming_mode_title">Gaming Turbo mode</string>
@@ -134,4 +152,6 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string name="feature_not_supported_summary">Not supported on current kernel build</string>
 </resources>

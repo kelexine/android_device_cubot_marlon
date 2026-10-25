@@ -10,8 +10,11 @@ package org.lineageos.settings.device;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -35,6 +38,10 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
     private static final String KEY_SCREEN_GESTURES = "key_screen_gestures";
     private static final String KEY_ENCORE_SETTINGS = "key_encore_settings";
 
+    private TextView mChipCpuGov;
+    private TextView mChipIoSched;
+    private TextView mChipTcpCc;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.device_settings, rootKey);
@@ -50,14 +57,41 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         setUpProactiveCompaction();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bindHeaderChips(view);
+        updateHeaderChips();
+    }
+
+    private void bindHeaderChips(View rootView) {
+        if (rootView == null) return;
+        mChipCpuGov = rootView.findViewById(R.id.chip_cpu_gov);
+        mChipIoSched = rootView.findViewById(R.id.chip_io_sched);
+        mChipTcpCc = rootView.findViewById(R.id.chip_tcp_cc);
+    }
+
+    private void updateHeaderChips() {
+        if (mChipCpuGov != null) {
+            mChipCpuGov.setText("CPU: " + CpuidleController.getCurrentGovernor());
+        }
+        if (mChipIoSched != null) {
+            mChipIoSched.setText("I/O: " + IoSchedulerController.getCurrentScheduler());
+        }
+        if (mChipTcpCc != null) {
+            mChipTcpCc.setText("TCP: " + TcpCongestionController.getCurrentCongestion().toUpperCase());
+        }
+    }
+
     private void setUpDoubleTapToWake() {
         SwitchPreferenceCompat pref = findPreference(KEY_DOUBLE_TAP_TO_WAKE);
         if (pref == null) {
             return;
         }
         if (!DoubleTapToWakeController.isSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "DT2W control node not found, hiding preference");
+            pref.setEnabled(false);
+            pref.setSummary(R.string.feature_not_supported_summary);
+            Log.i(TAG, "DT2W control node not found");
             return;
         }
         pref.setChecked(DoubleTapToWakeController.isEnabled());
@@ -84,8 +118,9 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
             return;
         }
         if (!GamingModeController.isSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "Gaming mode nodes not found, hiding preference");
+            pref.setEnabled(false);
+            pref.setSummary(R.string.feature_not_supported_summary);
+            Log.i(TAG, "Gaming mode nodes not found");
             return;
         }
         pref.setChecked(GamingModeController.isGamingModeEnabled());
@@ -95,11 +130,6 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
     private void setUpCpuidleGovernor() {
         ListPreference pref = findPreference(CpuidleController.KEY_CPUIDLE_GOVERNOR);
         if (pref == null) {
-            return;
-        }
-        if (!CpuidleController.isSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "CPUIdle governor node not found, hiding preference");
             return;
         }
         List<String> governors = CpuidleController.getAvailableGovernors();
@@ -117,11 +147,6 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         if (pref == null) {
             return;
         }
-        if (!IoSchedulerController.isSchedulerSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "I/O scheduler node not found, hiding preference");
-            return;
-        }
         List<String> schedulers = IoSchedulerController.getAvailableSchedulers();
         CharSequence[] entries = schedulers.toArray(new CharSequence[0]);
         pref.setEntries(entries);
@@ -137,11 +162,6 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         if (pref == null) {
             return;
         }
-        if (!IoSchedulerController.isReadaheadSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "Readahead node not found, hiding preference");
-            return;
-        }
         String currentKb = IoSchedulerController.getCurrentReadaheadKb();
         pref.setValue(currentKb);
         pref.setSummary(currentKb + " KB");
@@ -153,11 +173,10 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         if (pref == null) {
             return;
         }
-        if (!TcpCongestionController.isSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "TCP congestion control node not found, hiding preference");
-            return;
-        }
+        List<String> algos = TcpCongestionController.getAvailableCongestionAlgorithms();
+        CharSequence[] entries = algos.toArray(new CharSequence[0]);
+        pref.setEntries(entries);
+        pref.setEntryValues(entries);
         String currentCc = TcpCongestionController.getCurrentCongestion();
         pref.setValue(currentCc);
         pref.setSummary(currentCc);
@@ -167,11 +186,6 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
     private void setUpProactiveCompaction() {
         ListPreference pref = findPreference(CompactionController.KEY_PROACTIVE_COMPACTION);
         if (pref == null) {
-            return;
-        }
-        if (!CompactionController.isSupported()) {
-            pref.setVisible(false);
-            Log.i(TAG, "Proactive compaction node not found, hiding preference");
             return;
         }
         String currentVal = CompactionController.getProactiveness();
@@ -185,14 +199,14 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
         if (KEY_SCREEN_GESTURES.equals(preference.getKey())) {
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content_frame, new GesturesSettingsFragment())
+                    .replace(com.android.settingslib.collapsingtoolbar.R.id.content_frame, new GesturesSettingsFragment())
                     .addToBackStack(null)
                     .commit();
             return true;
         } else if (KEY_ENCORE_SETTINGS.equals(preference.getKey())) {
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content_frame, new org.lineageos.settings.device.encore.EncoreSettingsFragment())
+                    .replace(com.android.settingslib.collapsingtoolbar.R.id.content_frame, new org.lineageos.settings.device.encore.EncoreSettingsFragment())
                     .addToBackStack(null)
                     .commit();
             return true;
@@ -215,6 +229,7 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
             boolean applied = CpuidleController.setGovernor(gov);
             if (applied) {
                 preference.setSummary(gov);
+                updateHeaderChips();
             }
             return applied;
         } else if (IoSchedulerController.KEY_IO_SCHEDULER.equals(key)) {
@@ -222,6 +237,7 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
             boolean applied = IoSchedulerController.setScheduler(sched);
             if (applied) {
                 preference.setSummary(sched);
+                updateHeaderChips();
             }
             return applied;
         } else if (IoSchedulerController.KEY_READ_AHEAD.equals(key)) {
@@ -236,6 +252,7 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
             boolean applied = TcpCongestionController.setCongestion(cc);
             if (applied) {
                 preference.setSummary(cc);
+                updateHeaderChips();
             }
             return applied;
         } else if (CompactionController.KEY_PROACTIVE_COMPACTION.equals(key)) {

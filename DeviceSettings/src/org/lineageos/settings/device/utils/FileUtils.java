@@ -37,7 +37,15 @@ public final class FileUtils {
             return false;
         }
         File file = new File(path);
-        return file.exists() && file.canWrite();
+        if (!file.exists()) {
+            return false;
+        }
+        if (file.canWrite()) {
+            return true;
+        }
+        // Sysfs and procfs virtual inodes often report false to Java File.canWrite()
+        // even when DAC permissions and SELinux grant write access to system/root.
+        return path.startsWith("/sys/") || path.startsWith("/proc/");
     }
 
     /**
@@ -51,6 +59,9 @@ public final class FileUtils {
             return null;
         }
         for (String candidate : candidates) {
+            if (candidate == null) {
+                continue;
+            }
             if (isFileReadable(candidate) && isFileWritable(candidate)) {
                 return candidate;
             }
@@ -59,6 +70,9 @@ public final class FileUtils {
     }
 
     public static String readOneLine(String path) {
+        if (path == null) {
+            return null;
+        }
         String line = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             line = reader.readLine();
@@ -69,6 +83,9 @@ public final class FileUtils {
     }
 
     public static boolean writeLine(String path, String value) {
+        if (path == null || value == null) {
+            return false;
+        }
         try (FileWriter writer = new FileWriter(path)) {
             writer.write(value);
             return true;

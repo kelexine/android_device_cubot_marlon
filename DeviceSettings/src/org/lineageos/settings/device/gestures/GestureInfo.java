@@ -47,6 +47,10 @@ public final class GestureInfo {
         return "/proc/touchpanel/" + nodeName;
     }
 
+    public String ilitekNodePath() {
+        return "/proc/ilitek/" + nodeName;
+    }
+
     public String sysfsNodePath() {
         return "/sys/android_touch/" + nodeName;
     }

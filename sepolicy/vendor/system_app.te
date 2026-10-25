@@ -11,3 +11,18 @@ set_prop(system_app, vendor_pwroff_alarm_prop)
 # Touchpanel / gesture node access for DeviceSettings
 allow system_app sysfs_touchpanel:dir r_dir_perms;
 allow system_app sysfs_touchpanel:file rw_file_perms;
+
+# Custom kernel control surface access for DeviceSettings
+allow system_app sysfs_cpuidle:dir r_dir_perms;
+allow system_app sysfs_cpuidle:file rw_file_perms;
+allow system_app sysfs_scheduler:file rw_file_perms;
+allow system_app proc_tcp_cc:file rw_file_perms;
+allow system_app proc_compaction:file rw_file_perms;
+allow system_app sysfs_ged_tuning:file rw_file_perms;
+allow system_app sysfs_devices_system_cpu:file r_file_perms;
+allow system_app sysfs_thermal:dir r_dir_perms;
+allow system_app sysfs_thermal:file r_file_perms;
+
+# Encore hardware daemon IPC
+allow system_app hal_encore_service:service_manager find;
+binder_call(system_app, vendor_encore)

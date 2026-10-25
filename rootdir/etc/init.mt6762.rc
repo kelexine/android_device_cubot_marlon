@@ -766,6 +766,71 @@ on boot
     chown system system /sys/kernel/fpsgo/common/fpsgo_enable
     chmod 0664 /sys/kernel/fpsgo/common/fpsgo_enable
 
+    # Touchpanel / off-screen gestures control nodes
+    chown system system /proc/touchpanel/double_tap_enable
+    chmod 0660 /proc/touchpanel/double_tap_enable
+    chown system system /proc/touchpanel/single_swipe_up_enable
+    chmod 0660 /proc/touchpanel/single_swipe_up_enable
+    chown system system /proc/touchpanel/single_swipe_down_enable
+    chmod 0660 /proc/touchpanel/single_swipe_down_enable
+    chown system system /proc/touchpanel/single_swipe_left_enable
+    chmod 0660 /proc/touchpanel/single_swipe_left_enable
+    chown system system /proc/touchpanel/single_swipe_right_enable
+    chmod 0660 /proc/touchpanel/single_swipe_right_enable
+    chown system system /proc/touchpanel/double_swipe_enable
+    chmod 0660 /proc/touchpanel/double_swipe_enable
+    chown system system /proc/touchpanel/letter_c_enable
+    chmod 0660 /proc/touchpanel/letter_c_enable
+    chown system system /proc/touchpanel/letter_e_enable
+    chmod 0660 /proc/touchpanel/letter_e_enable
+    chown system system /proc/touchpanel/letter_m_enable
+    chmod 0660 /proc/touchpanel/letter_m_enable
+    chown system system /proc/touchpanel/letter_o_enable
+    chmod 0660 /proc/touchpanel/letter_o_enable
+    chown system system /proc/touchpanel/letter_s_enable
+    chmod 0660 /proc/touchpanel/letter_s_enable
+    chown system system /proc/touchpanel/letter_v_enable
+    chmod 0660 /proc/touchpanel/letter_v_enable
+    chown system system /proc/touchpanel/letter_w_enable
+    chmod 0660 /proc/touchpanel/letter_w_enable
+    chown system system /proc/touchpanel/letter_z_enable
+    chmod 0660 /proc/touchpanel/letter_z_enable
+    chown system system /proc/touchpanel/letter_f_enable
+    chmod 0660 /proc/touchpanel/letter_f_enable
+    chown system system /proc/touchpanel/game_mode
+    chmod 0660 /proc/touchpanel/game_mode
+
+    chown system system /sys/android_touch/double_tap_enable
+    chmod 0660 /sys/android_touch/double_tap_enable
+    chown system system /sys/android_touch/single_swipe_up_enable
+    chmod 0660 /sys/android_touch/single_swipe_up_enable
+    chown system system /sys/android_touch/single_swipe_down_enable
+    chmod 0660 /sys/android_touch/single_swipe_down_enable
+    chown system system /sys/android_touch/single_swipe_left_enable
+    chmod 0660 /sys/android_touch/single_swipe_left_enable
+    chown system system /sys/android_touch/single_swipe_right_enable
+    chmod 0660 /sys/android_touch/single_swipe_right_enable
+    chown system system /sys/android_touch/double_swipe_enable
+    chmod 0660 /sys/android_touch/double_swipe_enable
+    chown system system /sys/android_touch/letter_c_enable
+    chmod 0660 /sys/android_touch/letter_c_enable
+    chown system system /sys/android_touch/letter_e_enable
+    chmod 0660 /sys/android_touch/letter_e_enable
+    chown system system /sys/android_touch/letter_m_enable
+    chmod 0660 /sys/android_touch/letter_m_enable
+    chown system system /sys/android_touch/letter_o_enable
+    chmod 0660 /sys/android_touch/letter_o_enable
+    chown system system /sys/android_touch/letter_s_enable
+    chmod 0660 /sys/android_touch/letter_s_enable
+    chown system system /sys/android_touch/letter_v_enable
+    chmod 0660 /sys/android_touch/letter_v_enable
+    chown system system /sys/android_touch/letter_w_enable
+    chmod 0660 /sys/android_touch/letter_w_enable
+    chown system system /sys/android_touch/letter_z_enable
+    chmod 0660 /sys/android_touch/letter_z_enable
+    chown system system /sys/android_touch/letter_f_enable
+    chmod 0660 /sys/android_touch/letter_f_enable
+
 # HMP CPU hotplug strategy
     chown system system /proc/hps/num_base_perf_serv
     chmod 0660 /proc/hps/num_base_perf_serv

@@ -1,85 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    SPDX-FileCopyrightText: The LineageOS Project
-    Author: Onogwu Franklin Kelechi (kelexine) <https://github.com/kelexine>
-    Date: 2026-09-18
-    Purpose: Main preference screen layout for device settings and kernel tunables.
-    SPDX-License-Identifier: Apache-2.0
--->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/category_display_gestures">
+    <Preference
+        android:key="key_device_header"
+        android:layout="@layout/card_device_header"
+        android:selectable="false"
+        app:iconSpaceReserved="false" />
+
+    <PreferenceCategory
+        android:title="@string/category_display_gestures">
         <SwitchPreferenceCompat
             android:key="double_tap_to_wake"
+            android:icon="@drawable/ic_gesture_touch"
             android:title="@string/double_tap_to_wake_title"
             android:summary="@string/double_tap_to_wake_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="false" />
 
         <Preference
             android:key="key_screen_gestures"
+            android:icon="@drawable/ic_gesture_touch"
             android:title="@string/screen_gestures_title"
-            android:summary="@string/screen_gestures_summary"
-            app:iconSpaceReserved="false" />
+            android:summary="@string/screen_gestures_summary" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/category_performance">
+    <PreferenceCategory
+        android:title="@string/category_performance">
         <Preference
             android:key="key_encore_settings"
+            android:icon="@drawable/ic_performance_speed"
             android:title="@string/encore_settings_title"
-            android:summary="@string/encore_settings_summary"
-            app:iconSpaceReserved="false" />
+            android:summary="@string/encore_settings_summary" />
 
         <SwitchPreferenceCompat
             android:key="kernel_gaming_mode"
+            android:icon="@drawable/ic_touch_boost"
             android:title="@string/gaming_mode_title"
             android:summary="@string/gaming_mode_summary"
-            android:defaultValue="false"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/category_kernel_tuning">
+    <PreferenceCategory
+        android:title="@string/category_kernel_tuning">
         <ListPreference
             android:key="kernel_cpuidle_governor"
+            android:icon="@drawable/ic_cpu_tuning"
             android:title="@string/cpuidle_governor_title"
             android:summary="@string/cpuidle_governor_summary"
-            android:defaultValue="teo"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="teo" />
 
         <ListPreference
             android:key="kernel_io_scheduler"
+            android:icon="@drawable/ic_storage_disk"
             android:title="@string/io_scheduler_title"
             android:summary="@string/io_scheduler_summary"
-            android:defaultValue="bfq"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="bfq" />
 
         <ListPreference
             android:key="kernel_read_ahead_kb"
+            android:icon="@drawable/ic_storage_disk"
             android:title="@string/read_ahead_title"
             android:summary="@string/read_ahead_summary"
             android:entries="@array/read_ahead_entries"
             android:entryValues="@array/read_ahead_values"
-            android:defaultValue="512"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="512" />
 
         <ListPreference
             android:key="kernel_tcp_congestion"
+            android:icon="@drawable/ic_network_tcp"
             android:title="@string/tcp_congestion_title"
             android:summary="@string/tcp_congestion_summary"
             android:entries="@array/tcp_congestion_entries"
             android:entryValues="@array/tcp_congestion_values"
-            android:defaultValue="bbr"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="bbr" />
 
         <ListPreference
             android:key="kernel_proactive_compaction"
+            android:icon="@drawable/ic_memory_ram"
             android:title="@string/proactive_compaction_title"
             android:summary="@string/proactive_compaction_summary"
             android:entries="@array/proactive_compaction_entries"
             android:entryValues="@array/proactive_compaction_values"
-            android:defaultValue="20"
-            app:iconSpaceReserved="false" />
+            android:defaultValue="20" />
     </PreferenceCategory>
 
 </PreferenceScreen>

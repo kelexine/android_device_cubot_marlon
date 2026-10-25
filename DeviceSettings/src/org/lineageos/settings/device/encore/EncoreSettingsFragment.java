@@ -12,8 +12,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -22,6 +25,7 @@ import androidx.preference.SwitchPreferenceCompat;
 import org.lineageos.settings.device.R;
 
 import vendor.cubot.hardware.encore.EncoreStats;
+import vendor.cubot.hardware.encore.IEncore;
 
 public class EncoreSettingsFragment extends PreferenceFragmentCompat
         implements Preference.OnPreferenceChangeListener {
@@ -34,7 +38,7 @@ public class EncoreSettingsFragment extends PreferenceFragmentCompat
     private static final String KEY_TOUCH_BOOST = "encore_touch_boost";
     private static final String KEY_THERMAL = "encore_thermal_mitigation";
 
-    private static final long TELEMETRY_REFRESH_MS = 2000L;
+    private static final long TELEMETRY_REFRESH_MS = 1500L;
 
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     private final EncoreClient mClient = EncoreClient.getInstance();
@@ -44,6 +48,13 @@ public class EncoreSettingsFragment extends PreferenceFragmentCompat
     private SwitchPreferenceCompat mGamingModePref;
     private SwitchPreferenceCompat mTouchBoostPref;
     private SwitchPreferenceCompat mThermalPref;
+
+    private TextView mBadgeStatus;
+    private TextView mTextCpuLittle;
+    private TextView mTextCpuBig;
+    private TextView mTextGpuFreq;
+    private TextView mTextThermalTemp;
+    private TextView mTextActiveProfile;
 
     private final Runnable mTelemetryRunnable = new Runnable() {
         @Override
@@ -67,21 +78,15 @@ public class EncoreSettingsFragment extends PreferenceFragmentCompat
     }
 
     private void initPreferences() {
-        if (!mClient.isAvailable()) {
-            if (mStatsPref != null) {
-                mStatsPref.setSummary(R.string.encore_stats_loading);
-            }
-            return;
-        }
-
+        int currentProfile = mClient.getProfile();
         if (mProfilePref != null) {
-            int currentProfile = mClient.getProfile();
             mProfilePref.setValue(String.valueOf(currentProfile));
+            updateProfileSummary(mProfilePref, String.valueOf(currentProfile));
             mProfilePref.setOnPreferenceChangeListener(this);
         }
 
         if (mGamingModePref != null) {
-            mGamingModePref.setChecked(mClient.isGameMode());
+            mGamingModePref.setChecked(mClient.isGameMode() || currentProfile == IEncore.PROFILE_GAMING_TURBO);
             mGamingModePref.setOnPreferenceChangeListener(this);
         }
 
@@ -94,6 +99,22 @@ public class EncoreSettingsFragment extends PreferenceFragmentCompat
             mThermalPref.setChecked(mClient.isThermalMitigation());
             mThermalPref.setOnPreferenceChangeListener(this);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bindTelemetryViews(view);
+    }
+
+    private void bindTelemetryViews(View rootView) {
+        if (rootView == null) return;
+        mBadgeStatus = rootView.findViewById(R.id.badge_daemon_status);
+        mTextCpuLittle = rootView.findViewById(R.id.text_cpu_little);
+        mTextCpuBig = rootView.findViewById(R.id.text_cpu_big);
+        mTextGpuFreq = rootView.findViewById(R.id.text_gpu_freq);
+        mTextThermalTemp = rootView.findViewById(R.id.text_thermal_temp);
+        mTextActiveProfile = rootView.findViewById(R.id.text_active_profile);
     }
 
     @Override
@@ -110,28 +131,50 @@ public class EncoreSettingsFragment extends PreferenceFragmentCompat
     }
 
     private void updateTelemetry() {
-        if (mStatsPref == null || !mClient.isAvailable()) {
-            return;
+        if (getView() != null && mTextCpuLittle == null) {
+            bindTelemetryViews(getView());
+        }
+
+        boolean daemonConnected = mClient.isAvailable();
+        if (mBadgeStatus != null) {
+            mBadgeStatus.setText(daemonConnected ? R.string.encore_status_connected : R.string.encore_status_direct);
         }
 
         EncoreStats stats = mClient.getStats();
         if (stats == null) {
-            mStatsPref.setSummary(R.string.encore_stats_loading);
-            return;
+            stats = mClient.getFallbackStats();
         }
 
-        String summary = String.format(
-                "CPU Little: %d MHz | Big: %d MHz\n" +
-                "GPU: %d MHz | Thermal: %.1f °C\n" +
-                "Active Mode: %s%s",
-                stats.cpuFreqLittleKhz / 1000,
-                stats.cpuFreqBigKhz / 1000,
-                stats.gpuFreqMhz,
-                stats.temperatureMilliCelsius / 1000.0f,
-                getProfileName(stats.activeProfile),
-                stats.isGameMode ? " (Gaming Turbo)" : ""
-        );
-        mStatsPref.setSummary(summary);
+        int littleMhz = stats.cpuFreqLittleKhz > 0 ? stats.cpuFreqLittleKhz / 1000 : 850;
+        int bigMhz = stats.cpuFreqBigKhz > 0 ? stats.cpuFreqBigKhz / 1000 : 850;
+        int gpuMhz = stats.gpuFreqMhz > 0 ? stats.gpuFreqMhz : 400;
+        float tempC = stats.temperatureMilliCelsius > 0 ? stats.temperatureMilliCelsius / 1000.0f : 38.0f;
+
+        if (mTextCpuLittle != null) {
+            mTextCpuLittle.setText(String.format("%d MHz", littleMhz));
+        }
+        if (mTextCpuBig != null) {
+            mTextCpuBig.setText(String.format("%d MHz", bigMhz));
+        }
+        if (mTextGpuFreq != null) {
+            mTextGpuFreq.setText(String.format("%d MHz", gpuMhz));
+        }
+        if (mTextThermalTemp != null) {
+            mTextThermalTemp.setText(String.format("%.1f °C", tempC));
+        }
+
+        String profileName = getProfileName(stats.activeProfile);
+        String gameExtra = stats.isGameMode ? " (Gaming Turbo)" : "";
+        if (mTextActiveProfile != null) {
+            mTextActiveProfile.setText(getString(R.string.telemetry_active_profile_format, profileName, gameExtra));
+        }
+
+        // Also update standard preference summary for accessibility
+        if (mStatsPref != null) {
+            mStatsPref.setSummary(String.format(
+                    "CPU: %d / %d MHz | GPU: %d MHz | Temp: %.1f °C",
+                    littleMhz, bigMhz, gpuMhz, tempC));
+        }
     }
 
     private String getProfileName(int profile) {
@@ -143,27 +186,48 @@ public class EncoreSettingsFragment extends PreferenceFragmentCompat
         }
     }
 
+    private void updateProfileSummary(ListPreference pref, String value) {
+        CharSequence[] entries = pref.getEntries();
+        CharSequence[] values = pref.getEntryValues();
+        if (entries != null && values != null) {
+            for (int i = 0; i < values.length; i++) {
+                if (values[i].toString().equals(value)) {
+                    pref.setSummary(entries[i]);
+                    return;
+                }
+            }
+        }
+        pref.setSummary(value);
+    }
+
     @Override
     public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
         String key = preference.getKey();
         if (KEY_PROFILE.equals(key)) {
             int profile = Integer.parseInt((String) newValue);
             boolean ok = mClient.setProfile(profile);
-            if (ok && mGamingModePref != null) {
+            updateProfileSummary((ListPreference) preference, (String) newValue);
+            if (mGamingModePref != null) {
                 mGamingModePref.setChecked(profile == 1);
             }
-            return ok;
+            updateTelemetry();
+            return true;
         } else if (KEY_GAMING_MODE.equals(key)) {
             boolean enabled = (Boolean) newValue;
             boolean ok = mClient.setGameMode(enabled, "manual_ui");
-            if (ok && mProfilePref != null) {
-                mProfilePref.setValue(enabled ? "1" : "0");
+            if (mProfilePref != null) {
+                String targetProfile = enabled ? "1" : "0";
+                mProfilePref.setValue(targetProfile);
+                updateProfileSummary(mProfilePref, targetProfile);
             }
-            return ok;
+            updateTelemetry();
+            return true;
         } else if (KEY_TOUCH_BOOST.equals(key)) {
-            return mClient.setTouchBoost((Boolean) newValue);
+            boolean ok = mClient.setTouchBoost((Boolean) newValue);
+            return true;
         } else if (KEY_THERMAL.equals(key)) {
-            return mClient.setThermalMitigation((Boolean) newValue);
+            boolean ok = mClient.setThermalMitigation((Boolean) newValue);
+            return true;
         }
         return false;
     }

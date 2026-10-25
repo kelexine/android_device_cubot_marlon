@@ -49,7 +49,7 @@ public final class GestureNodeController {
             return sResolvedNodes.get(gesture.preferenceKey);
         }
         String resolved = FileUtils.firstUsablePath(
-                gesture.procNodePath(), gesture.sysfsNodePath());
+                gesture.procNodePath(), gesture.sysfsNodePath(), gesture.ilitekNodePath());
         sResolvedNodes.put(gesture.preferenceKey, resolved);
         return resolved;
     }
