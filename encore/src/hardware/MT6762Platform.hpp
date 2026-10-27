@@ -11,18 +11,18 @@
 
 namespace vendor::cubot::encore::platform {
 
-// Cluster Indices in MTK PPM
-inline constexpr int CLUSTER_LITTLE = 0;
-inline constexpr int CLUSTER_BIG = 1;
+// Cluster Indices in MTK PPM (policy0 / cpu0-3 = MT_CPU_DVFS_L = Big, policy4 / cpu4-7 = MT_CPU_DVFS_LL = Little)
+inline constexpr int CLUSTER_BIG = 0;
+inline constexpr int CLUSTER_LITTLE = 1;
 
-// Helio P22 / P35 Frequency Limits (kHz)
-inline constexpr int LITTLE_FREQ_MIN = 850000;
-inline constexpr int LITTLE_FREQ_MID = 1500000;
+// Helio P22 / P35 Frequency Limits (kHz) matching kernel OPP tables
+inline constexpr int LITTLE_FREQ_MIN = 400000;
+inline constexpr int LITTLE_FREQ_MID = 1314000;
 inline constexpr int LITTLE_FREQ_MAX = 1800000;
 
-inline constexpr int BIG_FREQ_MIN = 850000;
-inline constexpr int BIG_FREQ_MID = 1800000;
-inline constexpr int BIG_FREQ_MAX = 2300000;
+inline constexpr int BIG_FREQ_MIN = 900000;
+inline constexpr int BIG_FREQ_MID = 1750000;
+inline constexpr int BIG_FREQ_MAX = 2301000;
 
 // MTK PPM Sysfs Nodes
 inline constexpr std::string_view PPM_USERLIMIT_MAX = "/proc/ppm/policy/hard_userlimit_max_cpu_freq";
@@ -48,9 +48,9 @@ inline constexpr std::string_view BATOC_THROTTLING_STOP = "/proc/mtk_batoc_throt
 // Touchscreen Game Mode Sampling Rate
 inline constexpr std::string_view TOUCH_GAME_MODE = "/proc/touchpanel/game_mode";
 
-// Telemetry Nodes
-inline constexpr std::string_view CPU_LITTLE_CUR_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq";
-inline constexpr std::string_view CPU_BIG_CUR_FREQ = "/sys/devices/system/cpu/cpu4/cpufreq/scaling_cur_freq";
+// Telemetry Nodes (cpu0-3 = Big cluster policy0, cpu4-7 = Little cluster policy4)
+inline constexpr std::string_view CPU_BIG_CUR_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq";
+inline constexpr std::string_view CPU_LITTLE_CUR_FREQ = "/sys/devices/system/cpu/cpu4/cpufreq/scaling_cur_freq";
 inline constexpr std::string_view THERMAL_ZONE_TEMP = "/sys/class/thermal/thermal_zone0/temp";
 
 } // namespace vendor::cubot::encore::platform

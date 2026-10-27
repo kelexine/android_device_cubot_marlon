@@ -29,8 +29,8 @@ int HardwareMonitor::readIntFromFile(std::string_view path, int fallback) {
 
 TelemetrySnapshot HardwareMonitor::readSnapshot() {
     TelemetrySnapshot snapshot;
-    snapshot.cpuFreqLittleKhz = readIntFromFile(CPU_LITTLE_CUR_FREQ, 850000);
-    snapshot.cpuFreqBigKhz = readIntFromFile(CPU_BIG_CUR_FREQ, 850000);
+    snapshot.cpuFreqLittleKhz = readIntFromFile(CPU_LITTLE_CUR_FREQ, LITTLE_FREQ_MIN);
+    snapshot.cpuFreqBigKhz = readIntFromFile(CPU_BIG_CUR_FREQ, BIG_FREQ_MIN);
     snapshot.temperatureMilliCelsius = readIntFromFile(THERMAL_ZONE_TEMP, 35000);
 
     // Read DVFSRC current interconnect clock as proxy for GPU/memory workload

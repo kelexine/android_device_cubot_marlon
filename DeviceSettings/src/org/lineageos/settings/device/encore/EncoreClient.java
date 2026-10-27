@@ -195,24 +195,24 @@ public final class EncoreClient {
 
     public EncoreStats getFallbackStats() {
         EncoreStats stats = new EncoreStats();
-        // Little cluster (cpu0)
-        String freqLittle = FileUtils.readOneLine("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
+        // Little cluster (cpu4 / policy4: 400 MHz - 1.8 GHz)
+        String freqLittle = FileUtils.readOneLine("/sys/devices/system/cpu/cpu4/cpufreq/scaling_cur_freq");
         if (freqLittle != null) {
             try {
                 stats.cpuFreqLittleKhz = Integer.parseInt(freqLittle.trim());
             } catch (Exception ignored) {}
         } else {
-            stats.cpuFreqLittleKhz = 1500000;
+            stats.cpuFreqLittleKhz = 1800000;
         }
 
-        // Big cluster (cpu4)
-        String freqBig = FileUtils.readOneLine("/sys/devices/system/cpu/cpu4/cpufreq/scaling_cur_freq");
+        // Big cluster (cpu0 / policy0: 900 MHz - 2.3 GHz)
+        String freqBig = FileUtils.readOneLine("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq");
         if (freqBig != null) {
             try {
                 stats.cpuFreqBigKhz = Integer.parseInt(freqBig.trim());
             } catch (Exception ignored) {}
         } else {
-            stats.cpuFreqBigKhz = 1800000;
+            stats.cpuFreqBigKhz = 2301000;
         }
 
         // Thermal zone 0

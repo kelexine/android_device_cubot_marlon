@@ -94,8 +94,8 @@ bool MT6762Tuner::applyProfile(int profile) {
         return true;
 
     case 2: // BATTERY_SAVER
-        setCpuClusterLimits(CLUSTER_LITTLE, LITTLE_FREQ_MIN, 1200000);
-        setCpuClusterLimits(CLUSTER_BIG, BIG_FREQ_MIN, 1500000);
+        setCpuClusterLimits(CLUSTER_LITTLE, LITTLE_FREQ_MIN, 1226000);
+        setCpuClusterLimits(CLUSTER_BIG, BIG_FREQ_MIN, 1484000);
         setThermalPpmPolicy(true);
         setDvfsrcFloor(800000);
         setGedGpuBoost(0);
