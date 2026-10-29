@@ -33,6 +33,7 @@ constexpr int kMaxSupportedLightId = 6;
 constexpr int kMaxKnownLightType = 10;
 constexpr int kTriggerWaitRetries = 10;
 constexpr int kTriggerWaitDelayMs = 5;
+constexpr int kMinBacklight = 10;
 constexpr int kFullBrightness = 255;
 
 int writeInt(const char* path, int value) {
@@ -126,6 +127,9 @@ Lights::Lights() {
 
 int Lights::setBacklightLocked(const HwLightState& state) {
     int brightness = rgbToBrightness(state);
+    if ((state.color & 0x00ffffff) != 0 && brightness < kMinBacklight) {
+        brightness = kMinBacklight;
+    }
     if (access(kMt6370BledFile, W_OK) == 0) {
         writeInt(kMt6370BledFile, brightness);
     }

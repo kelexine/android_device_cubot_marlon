@@ -24,11 +24,12 @@
     <integer name="config_screenBrightnessSettingDefault">102</integer>
     <integer name="config_screenBrightnessDim">10</integer>
     <integer name="config_screenBrightnessDark">1</integer>
-    <integer name="config_screenBrightnessDoze">1</integer>
+    <integer name="config_screenBrightnessDoze">0</integer>
 
     <!-- Float brightness equivalents (for modern Android DisplayPowerController) -->
     <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.05</item>
-    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.0</item>
+    <item name="config_screenBrightnessDozeFloat" format="float" type="dimen">0.0</item>
+    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.039215686</item>
     <item name="config_screenBrightnessSettingMaximumFloat" format="float" type="dimen">1.0</item>
     <item name="config_screenBrightnessSettingDefaultFloat" format="float" type="dimen">0.4</item>
 
@@ -37,7 +38,11 @@
 
     <!-- If true, the doze component is not started until after the screen has been
          turned off and the screen off animation has been performed. -->
-    <bool name="config_dozeAfterScreenOffByDefault">true</bool>
+    <bool name="config_dozeAfterScreenOffByDefault">false</bool>
+
+    <!-- Doze / Ambient Display: Cubot P50 is an LCD panel, not OLED. Disable AOD/Doze on screen off. -->
+    <bool name="config_dozeAlwaysOnDisplayAvailable">false</bool>
+    <bool name="config_dozeAlwaysOnEnabled">false</bool>
 
     <!-- Power Management: Specifies whether to decouple the auto-suspend state of the
          device from the display on/off state. -->
@@ -138,8 +143,8 @@
     <!-- Array of desired screen brightness in nits corresponding to config_autoBrightnessLevels.
          Size must be size(config_autoBrightnessLevels) + 1 = 16. -->
     <array name="config_autoBrightnessDisplayValuesNits">
-        <item>2.0487</item>
-        <item>4.8394</item>
+        <item>11.6607</item>
+        <item>11.6607</item>
         <item>17.2619</item>
         <item>39.2619</item>
         <item>50.671</item>
@@ -158,15 +163,6 @@
 
     <!-- Screen backlight steps corresponding to config_screenBrightnessNits -->
     <integer-array name="config_screenBrightnessBacklight">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
         <item>10</item>
         <item>11</item>
         <item>12</item>
@@ -230,17 +226,8 @@
         <item>255</item>
     </integer-array>
 
-    <!-- Screen brightness in nits corresponding to config_screenBrightnessBacklight (length 70) -->
+    <!-- Screen brightness in nits corresponding to config_screenBrightnessBacklight (length 61) -->
     <array name="config_screenBrightnessNits">
-        <item>2.0482</item>
-        <item>2.543</item>
-        <item>3.0253</item>
-        <item>3.5077</item>
-        <item>4.0824</item>
-        <item>4.4748</item>
-        <item>5.08</item>
-        <item>6.4233</item>
-        <item>8.0848</item>
         <item>11.6607</item>
         <item>13.2347</item>
         <item>15.0676</item>

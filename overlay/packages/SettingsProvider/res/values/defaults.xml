@@ -19,4 +19,8 @@
 <resources>
     <!-- Default state for automatic screen brightness (on by default) -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
+
+    <!-- Cubot P50 (LCD): Disable ambient display/screensaver dreaming on sleep -->
+    <bool name="def_screensaver_enabled">false</bool>
+    <bool name="def_doze_always_on">false</bool>
 </resources>
