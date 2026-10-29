@@ -194,50 +194,6 @@ def check_services(root):
     return errors
 
 
-def check_logging_contract(root):
-    errors = []
-    sections, _ = parse_rc(_read(root, RC_REL))
-    svc = next((s for s in sections if s["kind"] == "service" and s["name"] == "earlylog"), None)
-    if svc is None:
-        return ["rc: no earlylog service"]
-    command = svc["header"]
-    f = re.search(r"-f\s+(/\S+)/[^/\s]+", command)
-    r = re.search(r"-r\s+(\d+)", command)
-    n = re.search(r"-n\s+(\d+)", command)
-    if not (f and r and n):
-        return ["rc: earlylog needs -f <dir>/<name>, -r <KiB> and -n <count>"]
-    log_dir = f.group(1)
-
-    mkdirs = [line.split()[1] for s in sections for line in s["lines"] if line.startswith("mkdir ")]
-    if log_dir not in mkdirs:
-        errors.append(f"rc: log dir {log_dir} is not created by any 'mkdir'")
-
-    entries = context_entries(root, ["sepolicy/system_ext/private/file_contexts"])
-    owners = [t for pattern, t in entries if re.fullmatch(pattern, log_dir)]
-    if not owners:
-        errors.append(f"file_contexts: {log_dir} has no label")
-    for t in owners:
-        if t not in declared_types(root):
-            errors.append(f"sepolicy: data type {t} is not declared")
-
-    total = (int(n.group(1)) + 1) * int(r.group(1))  # logcat keeps file + n rotated
-    if total > MAX_LOG_KIB:
-        errors.append(f"rc: log cap {total} KiB exceeds budget {MAX_LOG_KIB} KiB")
-
-    if "kernel" in command.split("-b", 1)[1].split()[0]:
-        prop = (root / "system_ext.prop").read_text()
-        if not re.search(r"^ro\.logd\.kernel=true\s*$", prop, re.M):
-            errors.append("system_ext.prop: ro.logd.kernel=true required for -b kernel")
-
-    mk_actions = [s for s in sections if s["kind"] == "on" and s["name"] == "init"
-                  and any(line == "start earlylog" for line in s["lines"])]
-    if not mk_actions:
-        errors.append("rc: nothing starts earlylog on init (after logd)")
-    if "disabled" not in svc["lines"]:
-        errors.append("rc: earlylog must be 'disabled' so only the init action starts it")
-    return errors
-
-
 def check_install_wiring(root):
     errors = []
     etc = dict(soong_blocks(root, "prebuilt_etc"))
@@ -263,7 +219,7 @@ def check_install_wiring(root):
 
 
 CHECKS = (check_rc_syntax, check_alarm_contract, check_services,
-          check_logging_contract, check_install_wiring)
+          check_install_wiring)
 
 
 def check_all(root):

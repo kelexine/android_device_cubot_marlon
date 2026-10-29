@@ -7,4 +7,3 @@
 #
 
 attribute mtk_misc_block_device_type;
-attribute mtk_earlylog_dir_type;

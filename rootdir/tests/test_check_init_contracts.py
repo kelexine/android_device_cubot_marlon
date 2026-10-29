@@ -99,52 +99,14 @@ class ContractTests(unittest.TestCase):
 
     # --- services --------------------------------------------------------
     def test_service_seclabel_type_must_exist(self):
-        self.mutate(RC, "seclabel u:r:earlylog:s0", "seclabel u:r:earlylogx:s0")
-        self.assertCaught("seclabel type earlylogx is not declared")
+        self.mutate(RC, "seclabel u:r:boot_kmsg:s0", "seclabel u:r:boot_kmsgx:s0")
+        self.assertCaught("seclabel type boot_kmsgx is not declared")
 
     def test_service_requires_seclabel_user_group(self):
-        self.mutate(RC, "    seclabel u:r:earlylog:s0\n", "")
+        self.mutate(RC, "    seclabel u:r:boot_kmsg:s0\n", "")
         self.assertCaught("missing 'seclabel'")
-        self.mutate(RC, "    user logd\n", "")
+        self.mutate(RC, "    user root\n", "")
         self.assertCaught("missing 'user'")
-
-    # --- logging ---------------------------------------------------------
-    def test_log_dir_must_be_created(self):
-        self.mutate(RC, "mkdir /metadata/earlylog 0770", "mkdir /metadata/earlylogs 0770")
-        self.assertCaught("is not created by any 'mkdir'")
-
-    def test_log_dir_must_be_labelled(self):
-        self.mutate("sepolicy/system_ext/private/file_contexts",
-                    "/metadata/earlylog(/.*)?", "/metadata/somethingelse(/.*)?")
-        self.assertCaught("/metadata/earlylog has no label")
-
-    def test_log_data_type_must_be_declared(self):
-        self.mutate("sepolicy/system_ext/private/earlylog.te",
-                    "type earlylog_data_file, file_type;", "")
-        self.assertCaught("data type earlylog_data_file is not declared")
-
-    def test_log_cap_is_enforced(self):
-        self.mutate(RC, "-r 1024 -n 4", "-r 1024 -n 40")
-        self.assertCaught("exceeds budget")
-
-    def test_cap_counts_the_live_file(self):
-        # (n + 1) files: n=5 at 1024 KiB is exactly the 6144 KiB budget, n=6 is over.
-        self.mutate(RC, "-r 1024 -n 4", "-r 1024 -n 5")
-        self.assertEqual(cic.check_logging_contract(self.root), [])
-        self.mutate(RC, "-r 1024 -n 5", "-r 1024 -n 6")
-        self.assertCaught("exceeds budget")
-
-    def test_kernel_buffer_needs_logd_property(self):
-        self.mutate("system_ext.prop", "ro.logd.kernel=true", "")
-        self.assertCaught("ro.logd.kernel=true required")
-
-    def test_earlylog_must_start_on_init(self):
-        self.mutate(RC, "    start earlylog\n", "")
-        self.assertCaught("nothing starts earlylog on init")
-
-    def test_earlylog_must_be_disabled(self):
-        self.mutate(RC, "    disabled\n", "")
-        self.assertCaught("must be 'disabled'")
 
     # --- install wiring --------------------------------------------------
     def test_rc_must_install_to_auto_parsed_dir(self):

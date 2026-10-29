@@ -2,5 +2,5 @@
 persist.vendor.pms_removable=1
 
 
-# Logging: let logd read the kernel ring buffer (earlylog captures it)
+# Logging: let logd read the kernel ring buffer
 ro.logd.kernel=true
