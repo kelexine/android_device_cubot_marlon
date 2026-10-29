@@ -441,3 +441,6 @@ ro.vendor.wlan.gen=gen4m
 vendor.connsys.driver.ready=no
 vendor.mtk.vdec.waitkeyframeforplay=9
 
+# Disable fdsan aborts for vendor media services
+debug.fdsan=disabled
+

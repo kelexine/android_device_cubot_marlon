@@ -2,7 +2,7 @@
  * File: libshim_graphics.cpp
  * Author: kelexine <https://github.com/kelexine>
  * Date: 2026-10-11
- * Purpose: GraphicBufferMapper lock/unlock/lockYCbCr, GraphicBuffer, and Fence compatibility shims for MediaTek OMX.
+ * Purpose: GraphicBufferMapper lock/unlock/lockYCbCr, GraphicBuffer, Fence, and fdsan compatibility shims for MediaTek OMX.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,7 +13,19 @@
 #include <ui/GraphicBuffer.h>
 #include <ui/GraphicBufferMapper.h>
 #include <ui/Rect.h>
+#include <unistd.h>
 #include <utils/Errors.h>
+
+#if __has_include(<android/fdsan.h>)
+#include <android/fdsan.h>
+#else
+enum android_fdsan_error_level {
+    ANDROID_FDSAN_ERROR_LEVEL_DISABLED,
+    ANDROID_FDSAN_ERROR_LEVEL_WARN_ONCE,
+    ANDROID_FDSAN_ERROR_LEVEL_WARN_ALWAYS,
+    ANDROID_FDSAN_ERROR_LEVEL_FATAL,
+};
+#endif
 
 using android::Rect;
 using android::status_t;
@@ -94,6 +106,28 @@ status_t _ZN7android5Fence4waitEi(void* thisptr, int timeout) {
  * Fence destructor (no-op, = default in newer AOSP)
  */
 void _ZN7android5FenceD1Ev() {
+}
+
+enum android_fdsan_error_level android_fdsan_set_error_level(
+        enum android_fdsan_error_level new_level) __attribute__((weak));
+
+/*
+ * Legacy MediaTek OMX decoders (libMtkOmxVdecEx.so) and encoders (libMtkOmxVenc.so)
+ * reset unowned sync fence descriptors (or fd 0 / stdin) inside MtkOmxVdec::WaitFence().
+ * Intercept android_fdsan_close_with_tag to guard fd <= 0 and prevent fatal fdsan aborts.
+ */
+int android_fdsan_close_with_tag(int fd, uint64_t /*tag*/) {
+    if (fd <= 0) {
+        return 0;
+    }
+    return close(fd);
+}
+
+__attribute__((constructor))
+static void libshim_graphics_init() {
+    if (android_fdsan_set_error_level) {
+        android_fdsan_set_error_level(ANDROID_FDSAN_ERROR_LEVEL_DISABLED);
+    }
 }
 
 } // extern "C"
