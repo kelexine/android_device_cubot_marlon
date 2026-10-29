@@ -32,6 +32,8 @@ int main(int argc, char** argv) {
     config->batteryTemperaturePath = "/sys/class/power_supply/battery/temp";
     config->batteryTechnologyPath = "/sys/class/power_supply/battery/technology";
     config->batteryCurrentNowPath = "/sys/class/power_supply/battery/current_now";
+    config->batteryCurrentAvgPath = "/sys/class/power_supply/battery/current_avg";
+    config->batteryChargeCounterPath = "/sys/class/power_supply/battery/charge_counter";
     config->batteryCycleCountPath = "/sys/class/power_supply/battery/cycle_count";
     config->batteryFullChargePath = "/sys/class/power_supply/battery/charge_full";
     config->batteryDesignCapacityPath = "/sys/class/power_supply/battery/charge_full_design";
