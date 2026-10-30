@@ -52,15 +52,6 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM_IAS=1 \
     KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
 
-TARGET_KERNEL_EXT_MODULE_ROOT := kernel/cubot/marlon-modules/source/vendor/mediatek/kernel_modules
-TARGET_KERNEL_EXT_MODULES := \
-    connectivity/common:kbuild \
-    connectivity/gps:kbuild \
-    connectivity/bt/mt66xx/legacy:kbuild \
-    connectivity/wlan/adaptor:kbuild \
-    connectivity/wlan/core/gen4m:kbuild \
-    met_drv_v2:kbuild
-
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     wmt_drv.ko \
     bt_drv.ko \
