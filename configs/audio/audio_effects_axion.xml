@@ -26,6 +26,10 @@
         <library name="pre_processing" path="libaudiopreprocessing_mtk.so"/>
         <!-- AxionFx DSP Audio Enhancement Suite -->
         <library name="axionfx" path="libaxionfx_legacy.so"/>
+        <!-- Dolby Atmos Audio Processing -->
+        <library name="dap" path="libswdap.so"/>
+        <library name="gamedap" path="libswgamedap.so"/>
+        <library name="vqe" path="libswvqe.so"/>
     </libraries>
 
     <effects>
@@ -46,7 +50,46 @@
         <effect name="agc" library="pre_processing" uuid="3387eb70-9896-4338-90f5-b2de883864c9"/>
         <!-- AxionFx Effect Node -->
         <effect name="axionfx" library="axionfx" uuid="f35cb927-a887-4f3d-847f-770634486d53"/>
+        <!-- Dolby Effect Nodes -->
+        <effect name="dap" library="dap" uuid="9d4921da-8225-4f29-aefa-39537a04bcaa"/>
+        <effect name="gamedap" library="gamedap" uuid="3783c334-d3a0-4d13-874f-0032e5fb80e2"/>
+        <effect name="vqe" library="vqe" uuid="64a0f614-7fa4-48b8-b081-d59dc954616f"/>
     </effects>
+
+    <postprocess>
+        <stream type="music">
+        </stream>
+        <stream type="ring">
+        </stream>
+        <stream type="alarm">
+        </stream>
+        <stream type="system">
+        </stream>
+        <stream type="voice_call">
+        </stream>
+        <stream type="notification">
+        </stream>
+        <stream type="bluetooth_sco">
+        </stream>
+        <stream type="dtmf">
+        </stream>
+        <stream type="enforced_audible">
+        </stream>
+        <stream type="accessibility">
+        </stream>
+        <stream type="tts">
+        </stream>
+        <stream type="assistant">
+        </stream>
+        <stream type="call_assistant">
+        </stream>
+        <stream type="patch">
+            <apply effect="gamedap"/>
+        </stream>
+        <stream type="rerouting">
+            <apply effect="gamedap"/>
+        </stream>
+    </postprocess>
 
     <preprocess>
         <stream type="voice_communication">

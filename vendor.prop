@@ -50,6 +50,13 @@ debug.stagefright.ccodec=4
 debug.stagefright.omx_default_rank=1000
 media.stagefright.thumbnail.prefer_hw_codecs=true
 
+# Dolby Atmos
+ro.vendor.dolby.dax.version=DAX3_3.7.0.8_r1
+ro.vendor.audio.dolby.dax.support=true
+ro.vendor.audio.dolby.surround.enable=true
+vendor.audio.dolby.ds2.enabled=false
+vendor.audio.dolby.ds2.hardbypass=false
+
 # DRM
 drm.service.enabled=true
 

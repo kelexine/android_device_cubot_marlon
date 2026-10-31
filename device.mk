@@ -107,6 +107,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap \
     $(LOCAL_PATH)/rootdir/etc/init.mt6765.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mt6765.usb.rc
 
+# Dolby Atmos
+TARGET_EXCLUDES_AUDIOFX := true
+
+PRODUCT_PACKAGES += \
+    LunarisDolby \
+    libstagefright_foundation-v33
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \

@@ -131,6 +131,10 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b': blob_fixup()
         .add_needed('libshim_c2.so')
         .replace_needed('libavservices_minijail_vendor.so', 'libavservices_minijail.so'),
+
+    # Dolby Mobile Service stagefright foundation v33 shim
+    'vendor/bin/hw/vendor.dolby.hardware.dms@2.0-service': blob_fixup()
+        .add_needed('libstagefright_foundation-v33.so'),
 }
 
 module = ExtractUtilsModule(
