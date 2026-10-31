@@ -385,6 +385,12 @@ on post-fs-data
     #insmod /vendor/lib/modules/vcodec_kernel_driver.ko
     chmod 0666 /dev/Vcodec
     chown mediacodec system /dev/Vcodec
+    chmod 0666 /dev/video0
+    chown mediacodec system /dev/video0
+    chmod 0666 /dev/video1
+    chown mediacodec system /dev/video1
+    chmod 0666 /dev/video2
+    chown mediacodec system /dev/video2
 
     #MJC
     #insmod /vendor/lib/modules/mjc_kernel_driver.ko
@@ -1098,6 +1104,9 @@ on property:sys.boot_completed=1
     write /sys/block/mmcblk0/queue/scheduler mq-deadline
     write /proc/sys/net/core/default_qdisc fq
     write /proc/sys/net/ipv4/tcp_congestion_control bbr
+
+    # MediaTek Codec2 HAL
+    restart android-hardware-media-c2-hal-1-2
     write /proc/sys/vm/compaction_proactiveness 20
 
     # System hardening defaults

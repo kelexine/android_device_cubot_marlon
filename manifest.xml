@@ -191,14 +191,14 @@
         <fqname>@1.5::IMms/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>vendor.mediatek.hardware.mtkcodecservice</name>
+        <name>android.hardware.media.c2</name>
         <transport>hwbinder</transport>
-        <version>1.1</version>
+        <version>1.2</version>
         <interface>
-            <name>IMtkCodecService</name>
+            <name>IComponentStore</name>
             <instance>default</instance>
         </interface>
-        <fqname>@1.1::IMtkCodecService/default</fqname>
+        <fqname>@1.2::IComponentStore/default</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.mediatek.hardware.mtkpower</name>

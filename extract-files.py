@@ -126,6 +126,11 @@ blob_fixups: blob_fixups_user_type = {
     ('vendor/lib/libmtk-ril.so',
      'vendor/lib64/libmtk-ril.so'): blob_fixup()
         .add_needed('libshim_ril.so'),
+
+    # MediaTek Codec2 HAL Fence and minijail shims
+    'vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b': blob_fixup()
+        .add_needed('libshim_c2.so')
+        .replace_needed('libavservices_minijail_vendor.so', 'libavservices_minijail.so'),
 }
 
 module = ExtractUtilsModule(

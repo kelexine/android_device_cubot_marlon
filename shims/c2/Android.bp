@@ -1,0 +1,17 @@
+//
+// File: shims/c2/Android.bp
+// Author: kelexine <https://github.com/kelexine>
+// Date: 2026-10-31
+// Purpose: Build definition for libshim_c2.
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "libshim_c2",
+    srcs: ["libshim_c2.cpp"],
+    shared_libs: [
+        "libsync",
+    ],
+    vendor: true,
+    compile_multilib: "64",
+}
