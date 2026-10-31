@@ -33,8 +33,8 @@
     <!-- Disable WPA2 to WPA3 auto-upgrade (legacy MTK driver compatibility) -->
     <bool translatable="false" name="config_wifiSaeUpgradeEnabled">false</bool>
 
-    <!-- Boolean indicating whether WPA3 SAE is supported for SoftAP (set to false for legacy MTK drivers) -->
-    <bool translatable="false" name="config_wifi_softap_sae_supported">false</bool>
+    <!-- Boolean indicating whether WPA3 SAE is supported for SoftAP -->
+    <bool translatable="false" name="config_wifi_softap_sae_supported">true</bool>
 
     <!-- Set to false if driver does not support nl80211 reg changed event -->
     <bool translatable="false" name="config_wifiDriverSupportedNl80211RegChangedEvent">false</bool>
