@@ -1,0 +1,8 @@
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Torch strength control
+allow cameraserver vendor_torch_sysfs:file rw_file_perms;
+allow cameraserver vendor_torch_sysfs:dir r_dir_perms;

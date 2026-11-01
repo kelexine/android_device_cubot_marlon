@@ -11,3 +11,7 @@ type proc_compaction, proc_type, fs_type;
 type sysfs_ged_tuning, sysfs_type, fs_type;
 type sysfs_devfreq, sysfs_type, fs_type;
 type proc_gpufreq, proc_type, fs_type;
+
+# Torch
+type vendor_torch_sysfs, fs_type, sysfs_type;
+

@@ -16,4 +16,6 @@
     <!-- Allow devices to enforce the H265 encoder for screen recordings -->
     <bool name="config_useNewScreenRecEncoder">false</bool>
 
+    <!-- Set AVC profile level to 3 (Baseline / 720p 30fps) for hardware encoder stability -->
+    <integer name="config_screenRecorderAVCProfileLevel">3</integer>
 </resources>

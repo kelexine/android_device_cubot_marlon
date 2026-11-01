@@ -136,13 +136,14 @@ BOARD_INCLUDE_RECOVERY_DTBO := true
 TARGET_USERIMAGES_USE_EXT4 := true
 
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_RECOVERY_UI_BLANK_UNBLANK_ON_INIT := true
 
 # Security patch level
 VENDOR_SECURITY_PATCH := 2022-08-05
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
 ifneq ($(wildcard vendor/lineage-priv/keys/avb.pem),)
 BOARD_AVB_RECOVERY_KEY_PATH := vendor/lineage-priv/keys/avb.pem
 else

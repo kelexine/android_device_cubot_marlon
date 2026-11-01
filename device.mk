@@ -15,7 +15,11 @@ PRODUCT_SHIPPING_API_LEVEL := 30
 # Page size compatibility (4KB native MT6765 kernel)
 PRODUCT_MAX_PAGE_SIZE_SUPPORTED := 4096
 
+DEVICE_PATH ?= device/cubot/marlon
+
 # fastbootd
+$(call soong_config_set_bool,fastbootd,bypass_lock_state,true)
+
 PRODUCT_PACKAGES += \
     android.hardware.fastboot-service.lineage \
     fastbootd
@@ -107,12 +111,16 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.enableswap:$(TARGET_COPY_OUT_RAMDISK)/fstab.enableswap \
     $(LOCAL_PATH)/rootdir/etc/init.mt6765.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mt6765.usb.rc
 
-# Dolby Atmos
+# Audio & Dolby Atmos
+$(call soong_config_set_bool,android_hardware_audio,skip_speaker_layout_channel_mask_field,true)
 TARGET_EXCLUDES_AUDIOFX := true
 
 PRODUCT_PACKAGES += \
     LunarisDolby \
     libstagefright_foundation-v33
+
+# Camera
+$(call soong_config_set,libcameraservice,ext_lib,//$(DEVICE_PATH):libcameraservice_extension.marlon)
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -135,7 +143,8 @@ PRODUCT_PACKAGES += \
     FpsInfoOverlay \
     WifiOverlay \
     TetheringOverlay \
-    ScreenRecordOverlay
+    ScreenRecordOverlay \
+    SimpleDeviceConfig
 
 # DeviceSettings
 PRODUCT_PACKAGES += \

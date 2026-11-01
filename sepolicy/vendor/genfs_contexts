@@ -24,3 +24,8 @@ genfscon proc /gpufreq u:object_r:proc_gpufreq:s0
 genfscon proc /mtk_batoc_throttling u:object_r:proc_ppm:s0
 genfscon sysfs /class/devfreq u:object_r:sysfs_devfreq:s0
 
+# Torch
+genfscon sysfs /devices/platform/flashlights-mt6370/torch_brightness u:object_r:vendor_torch_sysfs:s0
+genfscon sysfs /class/flashlight/flashlights-mt6370/torch_brightness u:object_r:vendor_torch_sysfs:s0
+
+

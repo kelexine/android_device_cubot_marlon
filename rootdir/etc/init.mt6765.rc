@@ -1114,6 +1114,7 @@ on property:sys.boot_completed=1
     write /proc/sys/fs/protected_hardlinks 1
     write /proc/sys/kernel/perf_event_paranoid 3
     write /proc/sys/kernel/dmesg_restrict 1
+    chmod 440 /proc/net/unix
 
 # start EAS+
 on property:sys.boot_completed=1
