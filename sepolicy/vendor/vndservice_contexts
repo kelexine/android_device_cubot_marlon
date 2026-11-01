@@ -1,3 +1,8 @@
-manager                 u:object_r:service_manager_vndservice:s0
-*                       u:object_r:default_android_vndservice:s0
-android.IRemosaicDaemon u:object_r:remosaic_daemon_service:s0
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+# Note: manager, *, and android.IRemosaicDaemon are already defined in
+# system/sepolicy and device/mediatek/sepolicy_vndr/base/vendor/vndservice_contexts.
+# Only declare device-specific vendor-binder services here if needed.
+#

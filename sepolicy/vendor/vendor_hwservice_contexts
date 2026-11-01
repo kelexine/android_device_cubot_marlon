@@ -29,7 +29,6 @@ vendor.mediatek.hardware.aee::IAee u:object_r:mtk_hal_aee_hwservice:s0
 vendor.mediatek.hardware.bluetooth.audio::IBluetoothAudioProvidersFactory u:object_r:mtk_hal_bluetooth_audio_hwservice:s0
 vendor.mediatek.hardware.camera.advcam::IAdvCamControl u:object_r:hal_camera_hwservice:s0
 vendor.mediatek.hardware.wfo::IWifiOffload u:object_r:mtk_hal_wfo_hwservice:s0
-vendor.mediatek.hardware.camera.lomoeffect::ILomoEffect u:object_r:hal_camera_hwservice:s0
 vendor.mediatek.hardware.keyinstall::IKeyinstall u:object_r:mtk_hal_keyinstall_hwservice:s0
 vendor.mediatek.hardware.videotelephony::IVideoTelephony u:object_r:mtk_hal_videotelephony_hwservice:s0
 vendor.mediatek.hardware.presence::IPresence u:object_r:volte_uce_ua_hwservice:s0
@@ -37,7 +36,6 @@ vendor.mediatek.hardware.mtkcodecservice::IMtkCodecService u:object_r:hal_mtkcod
 vendor.mediatek.hardware.netdagent::INetdagent u:object_r:mtk_hal_netdagent_hwservice:s0
 vendor.mediatek.hardware.rcs::IRcs u:object_r:volte_rcs_ua_hwservice:s0
 vendor.mediatek.hardware.camera.callbackclient::IMtkCallbackClient u:object_r:hal_camera_hwservice:s0
-vendor.mediatek.hardware.camera.ccap::ICCAPControl u:object_r:hal_camera_hwservice:s0
 vendor.mediatek.hardware.dfps::IFpsPolicyService u:object_r:mtk_hal_dfps_hwservice:s0
 vendor.mediatek.hardware.dplanner::IDPlanner u:object_r:mtk_hal_dplanner_hwservice:s0
 vendor.mediatek.hardware.keymanage::IKeymanage u:object_r:mtk_hal_keymanage_hwservice:s0
