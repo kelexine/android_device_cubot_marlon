@@ -18,3 +18,7 @@ allow hal_dms_default vendor_dolby_file:file create_file_perms;
 # Allow find and add operations for hal_dms_default on dms_hwservice
 allow hal_dms_default hal_dms_hwservice:hwservice_manager find;
 allow hal_dms_default hal_dms_hwservice:hwservice_manager add;
+
+# Allow hal_dms_default to set audio scenario and vendor properties
+set_prop(hal_dms_default, vendor_mtk_audiohal_prop)
+set_prop(hal_dms_default, vendor_default_prop)

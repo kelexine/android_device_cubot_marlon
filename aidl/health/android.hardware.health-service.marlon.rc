@@ -4,6 +4,7 @@ service vendor.health-default /vendor/bin/hw/android.hardware.health-service.mar
     group system
     capabilities WAKE_ALARM BLOCK_SUSPEND
     file /dev/kmsg w
+    interface aidl android.hardware.health.IHealth/default
 
 service vendor.charger /vendor/bin/hw/android.hardware.health-service.marlon --charger
     class charger

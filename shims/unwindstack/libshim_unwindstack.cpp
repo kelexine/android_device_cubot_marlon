@@ -49,4 +49,9 @@ bool _ZN11unwindstack9RegsArm644ReadEPv(void* /*this_ptr*/, void* /*data*/) {
     return false;
 }
 
+/*
+ * MediaTek AEE (Android Exception Engine) global secret symbol
+ */
+uint8_t ae_db_xx_secret[256] = {0};
+
 } // extern "C"
