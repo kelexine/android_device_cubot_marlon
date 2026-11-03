@@ -107,6 +107,7 @@ TARGET_COPY_OUT_VENDOR := vendor
 TARGET_BOARD_PLATFORM := mt6765
 BOARD_USES_MTK_HARDWARE := true
 TARGET_PROVIDES_MTK_PROPRIETARY := true
+ENABLE_VENDOR_RIL_SERVICE := true
 
 # SELinux
 include device/mediatek/sepolicy_vndr/SEPolicy.mk

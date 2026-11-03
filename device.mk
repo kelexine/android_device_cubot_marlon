@@ -255,6 +255,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES := $(filter-out android.hardware.bluetooth.audio@2.0-service, $(PRODUCT_PACKAGES))
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/android.hardware.bluetooth.audio@2.0-service.rc, $(PRODUCT_COPY_FILES))
 
+# Telephony / RIL (use MediaTek mtkfusionrild daemon, drop AOSP rild)
+PRODUCT_PACKAGES := $(filter-out rild, $(PRODUCT_PACKAGES))
+PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/rild.rc, $(PRODUCT_COPY_FILES))
+
 # Audio Policy Configuration
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml

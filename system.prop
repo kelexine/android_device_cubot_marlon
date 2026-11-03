@@ -46,6 +46,4 @@ ro.vz_hall_support=0
 ro.zygote.preload.enable=0
 sys.ipo.disable=1
 sys.ipo.pwrdncap=2
-vendor.rild.libargs=-d /dev/ttyC0
-vendor.rild.libpath=libmtk-ril.so
 
