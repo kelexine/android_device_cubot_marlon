@@ -50,7 +50,7 @@ TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     LLVM=1 \
     LLVM_IAS=1 \
-    KCFLAGS="-Wno-error -Wno-unused-command-line-argument"
+    KCFLAGS="-Wno-error -Wno-unused-command-line-argument -Wno-default-const-init-field-unsafe -Wno-default-const-init-var-unsafe"
 
 BOARD_VENDOR_KERNEL_MODULES_LOAD := \
     wmt_drv.ko \
