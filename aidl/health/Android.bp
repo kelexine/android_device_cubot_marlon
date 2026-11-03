@@ -11,7 +11,7 @@ cc_binary {
     init_rc: ["android.hardware.health-service.marlon.rc"],
     vintf_fragments: ["android.hardware.health-service.marlon.xml"],
     defaults: [
-        "libhealth_aidl_charger_defaults",
+        "libhealth_aidl_impl_user",
     ],
     static_libs: [
         "libhealth_aidl_impl",
