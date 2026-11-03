@@ -9,10 +9,13 @@
 #include <android-base/logging.h>
 #include <android/binder_manager.h>
 #include <android/binder_process.h>
+#include <health-impl/ChargerUtils.h>
 #include <health/utils.h>
 
 using aidl::android::hardware::health::HalHealthLoop;
 using aidl::android::hardware::health::MarlonHealth;
+using aidl::android::hardware::health::charger::ChargerCallback;
+using aidl::android::hardware::health::charger::ChargerModeMain;
 
 static constexpr const char* gInstanceName = "default";
 static constexpr const char* gChargerArg = "--charger";
@@ -36,7 +39,7 @@ int main(int argc, char** argv) {
     config->batteryChargeCounterPath = "/sys/class/power_supply/battery/charge_counter";
     config->batteryCycleCountPath = "/sys/class/power_supply/battery/cycle_count";
     config->batteryFullChargePath = "/sys/class/power_supply/battery/charge_full";
-    config->batteryDesignCapacityPath = "/sys/class/power_supply/battery/charge_full_design";
+    config->batteryFullChargeDesignCapacityUahPath = "/sys/class/power_supply/battery/charge_full_design";
 
     auto binder = ndk::SharedRefBase::make<MarlonHealth>(gInstanceName, std::move(config));
 

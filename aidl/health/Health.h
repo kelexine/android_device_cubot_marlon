@@ -17,7 +17,8 @@ class MarlonHealth : public Health {
   public:
     MarlonHealth(const std::string& instance_name, std::unique_ptr<struct healthd_config>&& config);
 
-    ndk::ScopedAStatus getHealthInfo(HealthInfo* health_info) override;
+  protected:
+    void UpdateHealthInfo(HealthInfo* health_info) override;
 };
 
 }  // namespace health

@@ -18,11 +18,8 @@ MarlonHealth::MarlonHealth(const std::string& instance_name,
                            std::unique_ptr<struct healthd_config>&& config)
     : Health(instance_name, std::move(config)) {}
 
-ndk::ScopedAStatus MarlonHealth::getHealthInfo(HealthInfo* health_info) {
-    ndk::ScopedAStatus status = Health::getHealthInfo(health_info);
-    if (!status.isOk()) {
-        return status;
-    }
+void MarlonHealth::UpdateHealthInfo(HealthInfo* health_info) {
+    Health::UpdateHealthInfo(health_info);
 
     // Cubot P50 (MT6765): Ensure battery status is accurately reflected if kernel driver
     // reports discharging or not charging when charger is detached.
@@ -39,8 +36,6 @@ ndk::ScopedAStatus MarlonHealth::getHealthInfo(HealthInfo* health_info) {
             health_info->batteryStatus = BatteryStatus::FULL;
         }
     }
-
-    return ndk::ScopedAStatus::ok();
 }
 
 }  // namespace health
