@@ -17,3 +17,12 @@
 /data/vendor/dolby(/.*)?                                                               u:object_r:vendor_dolby_file:s0
 /(vendor|system/vendor)/bin/hw/vendor\.dolby\.hardware\.dms@2\.0-service               u:object_r:hal_dms_default_exec:s0
 
+# AIDL Health HAL
+/(vendor|system/vendor)/bin/hw/android\.hardware\.health-service\.marlon               u:object_r:hal_health_default_exec:s0
+
+# Encore daemon
+/(vendor|system/vendor)/bin/encored                                                    u:object_r:vendor_encore_exec:s0
+
+# TrustKernel TEE
+/(vendor|system/vendor)/bin/tee_check_keybox                                           u:object_r:tee_exec:s0
+
