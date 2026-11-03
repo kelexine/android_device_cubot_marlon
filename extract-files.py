@@ -135,6 +135,8 @@ blob_fixups: blob_fixups_user_type = {
     # Dolby Mobile Service stagefright foundation v33 shim
     'vendor/bin/hw/vendor.dolby.hardware.dms@2.0-service': blob_fixup()
         .add_needed('libstagefright_foundation-v33.so'),
+    ('vendor/lib64/libdlbdsservice.so', 'vendor/lib64/libdlbpreg.so', 'vendor/lib64/soundfx/libswdap.so'): blob_fixup()
+        .replace_needed('libstagefright_foundation.so', 'libstagefright_foundation-v33.so'),
 }
 
 module = ExtractUtilsModule(
