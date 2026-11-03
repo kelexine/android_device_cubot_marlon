@@ -1,0 +1,7 @@
+#
+# SPDX-FileCopyrightText: The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Allow misctrl and kcmdlinectrl to access MTK para partition via bridged attribute
+allow { kcmdlinectrl misctrl } mtk_misc_block_device_type:blk_file rw_file_perms;
