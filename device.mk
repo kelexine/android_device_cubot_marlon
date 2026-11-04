@@ -94,7 +94,6 @@ PRODUCT_PACKAGES += \
     libshim_base \
     libshim_audio \
     libshim_bt \
-    libshim_c2 \
     android.hardware.bluetooth.audio-impl-mediatek \
     libshim_binder \
     libshim_camera \
@@ -285,10 +284,6 @@ PRODUCT_COPY_FILES := $(filter-out \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
 
-# Seccomp
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/seccomp/android.hardware.media.c2@1.2-extended-seccomp-policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/android.hardware.media.c2@1.2-extended-seccomp-policy \
-    $(LOCAL_PATH)/configs/seccomp/android.hardware.media.c2@1.2-mediatek-seccomp-policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/android.hardware.media.c2@1.2-mediatek-seccomp-policy
 
 # Audio Effects Configuration (AxionFx + Dolby Atmos)
 PRODUCT_COPY_FILES := $(filter-out %vendor/etc/audio_effects.xml,$(PRODUCT_COPY_FILES))

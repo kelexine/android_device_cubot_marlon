@@ -93,25 +93,35 @@ void _ZN7android13GraphicBufferC1EjjijNSt3__112basic_stringIcNS1_11char_traitsIc
 }
 
 /*
- * Legacy Fence constructor:
- * Fence::Fence(int fenceFd)
+ * Legacy 8-byte Fence layout expected by MediaTek 32-bit OMX blobs (libMtkOmxVdecEx / libMtkOmxVenc):
+ * offset 0: mutable std::atomic<int32_t> mCount (4 bytes)
+ * offset 4: int32_t mFenceFd (4 bytes)
+ * In modern AOSP, android::Fence has a vtable pointer at offset 0 (12 bytes total on 32-bit),
+ * which overflows MTK's 8-byte heap buffer and corrupts the vtable when MTK executes atomic inc/dec on offset 0.
  */
+struct LegacyFence {
+    int32_t mCount;
+    int32_t mFenceFd;
+};
+
 void _ZN7android5FenceC1Ei(void* thisptr, int fenceFd) {
-    new (thisptr) android::Fence(fenceFd);
+    auto* f = static_cast<LegacyFence*>(thisptr);
+    f->mCount = 0;
+    f->mFenceFd = fenceFd;
 }
 
-/*
- * Legacy Fence::wait:
- * status_t Fence::wait(int timeout)
- */
 status_t _ZN7android5Fence4waitEi(void* thisptr, int timeout) {
-    auto* fence = static_cast<android::Fence*>(thisptr);
-    return fence->wait(timeout);
+    auto* f = static_cast<LegacyFence*>(thisptr);
+    if (!f || f->mFenceFd < 0) {
+        return android::OK;
+    }
+    int err = sync_wait(f->mFenceFd, timeout);
+    if (err < 0) {
+        return -errno;
+    }
+    return android::OK;
 }
 
-/*
- * Fence destructor (no-op, = default in newer AOSP)
- */
 void _ZN7android5FenceD1Ev() {
 }
 

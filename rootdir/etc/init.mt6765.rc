@@ -385,12 +385,8 @@ on post-fs-data
     #insmod /vendor/lib/modules/vcodec_kernel_driver.ko
     chmod 0666 /dev/Vcodec
     chown mediacodec system /dev/Vcodec
-    chmod 0666 /dev/video0
-    chown mediacodec system /dev/video0
-    chmod 0666 /dev/video1
-    chown mediacodec system /dev/video1
-    chmod 0666 /dev/video2
-    chown mediacodec system /dev/video2
+    chmod 0666 /dev/Vcodec2
+    chown mediacodec system /dev/Vcodec2
 
     #MJC
     #insmod /vendor/lib/modules/mjc_kernel_driver.ko
