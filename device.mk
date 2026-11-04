@@ -6,6 +6,9 @@
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Enable project quotas and casefolding for emulated storage without sdcardfs
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
 # Setup Dalvik VM configs for 6GB RAM
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
@@ -201,8 +204,9 @@ PRODUCT_ENABLE_UFFD_GC := false
 AB_OTA_UPDATER := false
 PRODUCT_SOONG_NAMESPACES += bootable/deprecated-ota
 
-# Inherit the proprietary files
-$(call inherit-product, vendor/cubot/marlon/marlon-vendor.mk)
+# Include the proprietary files directly so subsequent $(filter-out ...) and
+# PRODUCT_COPY_FILES overrides take immediate effect before product expansion.
+include vendor/cubot/marlon/marlon-vendor.mk
 
 # MediaTek Hardware & Power HAL integration
 PRODUCT_PACKAGES := $(filter-out vendor.mediatek.hardware.mtkpower@1.0-service, $(PRODUCT_PACKAGES))

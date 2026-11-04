@@ -62,8 +62,13 @@ persist.vendor.audiohal.pcm_mixer_dump_on=0
 
 # Media
 debug.stagefright.ccodec=4
-debug.stagefright.omx_default_rank=1000
 media.stagefright.thumbnail.prefer_hw_codecs=true
+
+# Storage (use FUSE + lowerfs project quotas/casefold instead of legacy sdcardfs)
+ro.sys.sdcardfs=false
+external_storage.sdcardfs.enabled=0
+external_storage.projid.enabled=1
+external_storage.casefold.enabled=1
 
 # Dolby Atmos
 ro.vendor.dolby.dax.version=DAX3_3.7.0.8_r1

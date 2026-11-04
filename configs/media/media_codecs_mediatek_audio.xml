@@ -87,10 +87,11 @@ Only the three quirks included above are recognized at this point:
         <!--<MediaCodec name="OMX.MTK.AUDIO.DECODER.WMA" type="audio/x-ms-wma" />-->
         <MediaCodec name="OMX.MTK.AUDIO.DECODER.ADPCM.MS" type="audio/x-adpcm-ms" />
         <MediaCodec name="OMX.MTK.AUDIO.DECODER.ADPCM.DVI" type="audio/x-adpcm-dvi-ima" />
-        <MediaCodec name="OMX.MTK.AUDIO.DECODER.APE" type="audio/ape" >
+        <!-- Disabled because mtkcodecservice is disabled in init -->
+        <!--<MediaCodec name="OMX.MTK.AUDIO.DECODER.APE" type="audio/ape" >
             <Quirk name="decoder-lies-about-number-of-channels" />
             <Quirk name="supports-multiple-frames-per-input-buffer" />
-        </MediaCodec>
+        </MediaCodec>-->
         <MediaCodec name="OMX.MTK.AUDIO.DECODER.ALAC" type="audio/alac" />
     </Decoders>
 </Included>
