@@ -699,6 +699,11 @@ on boot
     chmod 0664 /sys/class/leds/blue/brightness
     chown system system /sys/class/leds/blue/brightness
 
+    chmod 0666 /sys/devices/platform/flashlights-mt6370/torch_brightness
+    chown system cameraserver /sys/devices/platform/flashlights-mt6370/torch_brightness
+    chmod 0666 /sys/devices/platform/flashlights_mt6370/torch_brightness
+    chown system cameraserver /sys/devices/platform/flashlights_mt6370/torch_brightness
+
     chown system system /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
     chmod 0660 /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
     chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
