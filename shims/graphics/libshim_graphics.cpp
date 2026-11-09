@@ -60,7 +60,12 @@ status_t _ZN7android19GraphicBufferMapper9lockYCbCrEPK13native_handlejRKNS_4Rect
         void* thisptr, buffer_handle_t handle, uint32_t usage, const Rect& bounds,
         android_ycbcr* ycbcr) {
     auto* gpm = static_cast<android::GraphicBufferMapper*>(thisptr);
-    return gpm->lockYCbCr(handle, static_cast<uint64_t>(usage), bounds, ycbcr);
+    auto result = gpm->lockYCbCr(handle, static_cast<int64_t>(usage), bounds);
+    if (!result.has_value()) {
+        return result.asStatus();
+    }
+    *ycbcr = result.value();
+    return android::OK;
 }
 
 /*

@@ -106,7 +106,7 @@
             <Limit name="bitrate" range="1-384000" />
             <Feature name="adaptive-playback" />
         </MediaCodec>
-        <MediaCodec name="c2.android.avc.decoder" type="video/avc" update="true">
+        <MediaCodec name="c2.android.avc.decoder" type="video/avc">
             <Alias name="OMX.google.h264.decoder" />
             <Limit name="alignment" value="2x2" />
             <Limit name="block-size" value="16x16" />
@@ -117,7 +117,7 @@
             <Limit name="bitrate" range="1-40000000" />
             <Feature name="adaptive-playback" />
         </MediaCodec>
-        <MediaCodec name="c2.android.hevc.decoder" type="video/hevc" update="true">
+        <MediaCodec name="c2.android.hevc.decoder" type="video/hevc">
             <Alias name="OMX.google.hevc.decoder" />
             <Limit name="alignment" value="2x2" />
             <Limit name="block-size" value="8x8" />
@@ -242,7 +242,7 @@
             <Limit name="bitrate" range="1-20000000" />
             <Feature name="bitrate-modes" value="VBR,CBR" />
         </MediaCodec>
-        <MediaCodec name="c2.android.hevc.encoder" type="video/hevc" update="true" enabled="false">
+        <MediaCodec name="c2.android.hevc.encoder" type="video/hevc" enabled="false">
             <!-- profiles and levels:  ProfileMain : MainTierLevel51 -->
             <Limit name="size" min="2x2" max="512x512" />
             <Limit name="alignment" value="2x2" />
@@ -255,7 +255,7 @@
             <Limit name="quality" range="0-100"  default="80" />
             <Feature name="bitrate-modes" value="VBR,CBR,CQ" />
         </MediaCodec>
-        <MediaCodec name="c2.android.vp9.encoder" type="video/x-vnd.on2.vp9" update="true" enabled="false">
+        <MediaCodec name="c2.android.vp9.encoder" type="video/x-vnd.on2.vp9" enabled="false">
             <Alias name="OMX.google.vp9.encoder" />
             <!-- profiles and levels:  ProfileMain : Level_Version0-3 -->
             <Limit name="size" min="2x2" max="2048x2048" />
