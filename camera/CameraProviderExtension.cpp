@@ -11,11 +11,13 @@
 #include <vector>
 
 static const std::vector<std::string> kTorchBrightnessPaths = {
+    "/sys/devices/platform/flashlights_mt6370/torch_brightness",
     "/sys/devices/platform/flashlights-mt6370/torch_brightness",
     "/sys/class/flashlight/flashlights-mt6370/torch_brightness",
-    "/sys/devices/platform/flashlights_mt6370/torch_brightness",
     "/sys/devices/platform/flashlights_mt6360/torchbrightness",
 };
+
+static int32_t sTorchStrength = 3;
 
 static std::string getTorchPath() {
     for (const auto& path : kTorchBrightnessPaths) {
@@ -54,12 +56,16 @@ int32_t getTorchMaxStrengthLevelExt() {
 
 int32_t getTorchStrengthLevelExt() {
     std::string path = getTorchPath();
-    if (path.empty()) return 0;
-    return readValue(path, 0);
+    if (path.empty()) return getTorchDefaultStrengthLevelExt();
+    int32_t val = readValue(path, sTorchStrength);
+    return (val > 0) ? val : sTorchStrength;
 }
 
 void setTorchStrengthLevelExt(int32_t torchStrength, bool enabled) {
     std::string path = getTorchPath();
     if (path.empty()) return;
-    writeValue(path, (enabled && torchStrength > 0) ? torchStrength : 0);
+    if (enabled && torchStrength > 0) {
+        sTorchStrength = torchStrength;
+    }
+    writeValue(path, enabled ? sTorchStrength : 0);
 }
