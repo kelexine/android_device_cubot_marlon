@@ -121,6 +121,11 @@ PRODUCT_PACKAGES += \
     LunarisDolby \
     libstagefright_foundation-v33
 
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm-service.clearkey \
+    libmockdrmcryptoplugin
+
 # Camera
 $(call soong_config_set,libcameraservice,ext_lib,//$(DEVICE_PATH):libcameraservice_extension.marlon)
 
