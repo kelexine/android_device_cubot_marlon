@@ -41,8 +41,6 @@ vendor.debug.camera.3dnr.enable=1
 vendor.debug.3dnr.sl2e.enable=1
 vendor.mediatek.hdr.ltm=1
 vendor.camprovider.enable_hidden=1
-vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.google.android.GoogleCamera.Urnyx,com.google.android.apps.cameralite,com.google.camera,com.agc.cam,com.shamim.cam,net.sourceforge.opencamera
-ro.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.google.android.GoogleCamera.Urnyx,com.google.android.apps.cameralite,com.google.camera,com.agc.cam,com.shamim.cam,net.sourceforge.opencamera
 
 # Display
 debug.sf.enable_gl_backpressure=1
