@@ -25,7 +25,8 @@ private:
     bool writeNode(std::string_view path, std::string_view value);
     bool setCpuClusterLimits(int cluster, int minFreqKhz, int maxFreqKhz);
     bool setThermalPpmPolicy(bool allowThrottling);
-    bool setDvfsrcFloor(int freqKhz);
+    bool setDramOppFloor(int oppIndex);
+    int resolveLowestGpuLevel();
     bool setGedGpuBoost(int level);
     bool setFpsgoState(bool turbo);
 };

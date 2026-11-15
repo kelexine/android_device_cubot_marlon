@@ -29,6 +29,10 @@ allow vendor_encore proc_ppm:file rw_file_perms;
 allow vendor_encore sysfs_fpsgo:dir r_dir_perms;
 allow vendor_encore sysfs_fpsgo:file rw_file_perms;
 
+# Perfmgr DRAM boost control
+allow vendor_encore proc_perfmgr:dir r_dir_perms;
+allow vendor_encore proc_perfmgr:file rw_file_perms;
+
 # DVFSRC / Devfreq control
 allow vendor_encore sysfs_devfreq:dir r_dir_perms;
 allow vendor_encore sysfs_devfreq:file rw_file_perms;

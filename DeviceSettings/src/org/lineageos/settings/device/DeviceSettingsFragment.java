@@ -220,7 +220,7 @@ public class DeviceSettingsFragment extends PreferenceFragmentCompat
 
         if (KEY_DOUBLE_TAP_TO_WAKE.equals(key)) {
             boolean enabled = (Boolean) newValue;
-            return DoubleTapToWakeController.setEnabled(enabled);
+            return DoubleTapToWakeController.setEnabled(requireContext(), enabled);
         } else if (GamingModeController.KEY_GAMING_MODE.equals(key)) {
             boolean enabled = (Boolean) newValue;
             return GamingModeController.setGamingMode(enabled);

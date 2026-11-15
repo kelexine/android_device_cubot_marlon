@@ -35,14 +35,14 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        restoreGestures(prefs);
+        restoreGestures(context, prefs);
         restoreKernelSettings(prefs);
     }
 
-    private void restoreGestures(SharedPreferences prefs) {
+    private void restoreGestures(Context context, SharedPreferences prefs) {
         if (DoubleTapToWakeController.isSupported()) {
-            boolean wantEnabled = prefs.getBoolean(KEY_DOUBLE_TAP_TO_WAKE, false);
-            boolean applied = DoubleTapToWakeController.setEnabled(wantEnabled);
+            boolean wantEnabled = DoubleTapToWakeController.resolveDesiredState(context, prefs);
+            boolean applied = DoubleTapToWakeController.setEnabled(context, wantEnabled);
             if (!applied) {
                 Log.w(TAG, "Failed to restore double_tap_to_wake=" + wantEnabled + " on boot");
             }

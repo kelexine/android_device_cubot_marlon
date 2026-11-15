@@ -11,8 +11,11 @@
 #include <android-base/file.h>
 #include <android-base/logging.h>
 #include <android-base/strings.h>
+#include <algorithm>
+#include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <unistd.h>
 
 namespace vendor::cubot::encore {
 
@@ -55,50 +58,67 @@ bool MT6762Tuner::setThermalPpmPolicy(bool allowThrottling) {
     return true;
 }
 
-bool MT6762Tuner::setDvfsrcFloor(int freqKhz) {
-    return writeNode(DVFSRC_MIN_FREQ, std::to_string(freqKhz));
+bool MT6762Tuner::setDramOppFloor(int oppIndex) {
+    return writeNode(DRAM_BOOST_DDR, std::to_string(oppIndex));
+}
+
+int MT6762Tuner::resolveLowestGpuLevel() {
+    std::string content;
+    if (!android::base::ReadFileToString(std::string(GED_TOTAL_LEVELS), &content)) {
+        return GED_DEFAULT_MAX_LEVEL;
+    }
+    content = android::base::Trim(content);
+    char* end = nullptr;
+    long levelCount = std::strtol(content.c_str(), &end, 10);
+    if (end == content.c_str() || levelCount <= 0) {
+        return GED_DEFAULT_MAX_LEVEL;
+    }
+    return std::max(0, static_cast<int>(levelCount) - 1);
 }
 
 bool MT6762Tuner::setGedGpuBoost(int level) {
+    // GED OPP indices are inverted: 0 is highest freq (650 MHz), total_levels-1 is lowest/unboosted
     return writeNode(GED_BOOST_GPU, std::to_string(level));
 }
 
 bool MT6762Tuner::setFpsgoState(bool turbo) {
-    bool ok1 = writeNode(FPSGO_FORCE_ONOFF, turbo ? "1" : "0");
-    bool ok2 = writeNode(FPSGO_FSTB_LEVEL, turbo ? "2" : "0");
-    return ok1 && ok2;
+    return writeNode(FPSGO_FORCE_ONOFF, turbo ? FPSGO_FORCE_ON : FPSGO_FREE);
 }
 
 bool MT6762Tuner::setTouchBoost(bool enabled) {
     LOG(INFO) << "Setting touch game mode: " << (enabled ? "enabled" : "disabled");
+    std::string path(TOUCH_GAME_MODE);
+    if (access(path.c_str(), W_OK) != 0) {
+        return true;
+    }
     return writeNode(TOUCH_GAME_MODE, enabled ? "1" : "0");
 }
 
 bool MT6762Tuner::setThermalMitigation(bool enabled) {
     LOG(INFO) << "Setting thermal mitigation: " << (enabled ? "enabled" : "disabled");
-    writeNode(BATOC_THROTTLING_STOP, enabled ? "stop 1" : "stop 0");
     return setThermalPpmPolicy(!enabled);
 }
 
 bool MT6762Tuner::applyProfile(int profile) {
     LOG(INFO) << "Applying hardware profile: " << profile;
+    const int lowestGpuLevel = resolveLowestGpuLevel();
     switch (profile) {
     case 1: // GAMING_TURBO
         setCpuClusterLimits(CLUSTER_LITTLE, LITTLE_FREQ_MID, LITTLE_FREQ_MAX);
         setCpuClusterLimits(CLUSTER_BIG, BIG_FREQ_MID, BIG_FREQ_MAX);
         setThermalPpmPolicy(false);
-        setDvfsrcFloor(1800000);
-        setGedGpuBoost(100);
+        setDramOppFloor(DRAM_OPP_TURBO);
+        setGedGpuBoost(GED_TURBO_BOOST_LEVEL);
         setFpsgoState(true);
         setTouchBoost(true);
         return true;
 
     case 2: // BATTERY_SAVER
-        setCpuClusterLimits(CLUSTER_LITTLE, LITTLE_FREQ_MIN, 1226000);
-        setCpuClusterLimits(CLUSTER_BIG, BIG_FREQ_MIN, 1484000);
+        setCpuClusterLimits(CLUSTER_LITTLE, LITTLE_FREQ_MIN, LITTLE_FREQ_SAVER_MAX);
+        setCpuClusterLimits(CLUSTER_BIG, BIG_FREQ_MIN, BIG_FREQ_SAVER_MAX);
         setThermalPpmPolicy(true);
-        setDvfsrcFloor(800000);
-        setGedGpuBoost(0);
+        setDramOppFloor(DRAM_OPP_UNBOOSTED);
+        setGedGpuBoost(lowestGpuLevel);
         setFpsgoState(false);
         setTouchBoost(false);
         return true;
@@ -108,8 +128,8 @@ bool MT6762Tuner::applyProfile(int profile) {
         setCpuClusterLimits(CLUSTER_LITTLE, LITTLE_FREQ_MIN, LITTLE_FREQ_MAX);
         setCpuClusterLimits(CLUSTER_BIG, BIG_FREQ_MIN, BIG_FREQ_MAX);
         setThermalPpmPolicy(true);
-        setDvfsrcFloor(1200000);
-        setGedGpuBoost(0);
+        setDramOppFloor(DRAM_OPP_UNBOOSTED);
+        setGedGpuBoost(lowestGpuLevel);
         setFpsgoState(false);
         setTouchBoost(false);
         return true;

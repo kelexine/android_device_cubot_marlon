@@ -153,9 +153,10 @@ PRODUCT_PACKAGES += \
     ScreenRecordOverlay \
     SimpleDeviceConfig
 
-# DeviceSettings
+# DeviceSettings & KeyHandler
 PRODUCT_PACKAGES += \
-    DeviceSettings
+    DeviceSettings \
+    MarlonKeyHandler
 
 # Encore Hardware Daemon & AIDL Interface
 PRODUCT_PACKAGES += \

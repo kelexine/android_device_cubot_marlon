@@ -1,10 +1,11 @@
-// KeyHandler library merged into services.jar via TARGET_KEY_HANDLER_LIBS in BoardConfig.mk
+// KeyHandler library loaded by PhoneWindowManager via overlay-lineage config_deviceKeyHandlerLibs
 java_library {
     name: "MarlonKeyHandler",
     srcs: [
         "src/**/*.java",
         ":marlon_gesture_utils_srcs",
     ],
-    installable: false,
+    installable: true,
+    system_ext_specific: true,
     platform_apis: true,
 }

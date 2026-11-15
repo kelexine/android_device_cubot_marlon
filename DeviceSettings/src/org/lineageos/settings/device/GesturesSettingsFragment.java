@@ -117,7 +117,7 @@ public class GesturesSettingsFragment extends PreferenceFragmentCompat
 
         if (KEY_DOUBLE_TAP_TO_WAKE.equals(key)) {
             boolean enabled = (Boolean) newValue;
-            boolean applied = DoubleTapToWakeController.setEnabled(enabled);
+            boolean applied = DoubleTapToWakeController.setEnabled(requireContext(), enabled);
             if (!applied) {
                 Log.w(TAG, "Failed to apply double_tap_to_wake=" + enabled);
             }

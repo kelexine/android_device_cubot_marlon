@@ -16,6 +16,16 @@ android_app {
     optimize: {
         enabled: false,
     },
+    required: [
+        "privapp-permissions-devicesettings.xml",
+    ],
+}
+
+prebuilt_etc {
+    name: "privapp-permissions-devicesettings.xml",
+    src: "privapp-permissions-devicesettings.xml",
+    sub_dir: "permissions",
+    system_ext_specific: true,
 }
 
 filegroup {

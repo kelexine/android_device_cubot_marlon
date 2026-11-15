@@ -764,8 +764,12 @@ on boot
     chmod 0664 /sys/module/ged/parameters/gx_tb_dvfs_margin
     chown system system /sys/module/ged/parameters/gpu_bottom_freq
     chmod 0664 /sys/module/ged/parameters/gpu_bottom_freq
+    chown system system /sys/kernel/ged/hal/current_freqency
+    chmod 0444 /sys/kernel/ged/hal/current_freqency
     chown system system /sys/kernel/fpsgo/common/fpsgo_enable
     chmod 0664 /sys/kernel/fpsgo/common/fpsgo_enable
+    chown system system /sys/kernel/fpsgo/common/force_onoff
+    chmod 0664 /sys/kernel/fpsgo/common/force_onoff
 
     # Touchpanel / off-screen gestures control nodes
     chown system system /proc/touchpanel/double_tap_enable
@@ -798,8 +802,6 @@ on boot
     chmod 0660 /proc/touchpanel/letter_z_enable
     chown system system /proc/touchpanel/letter_f_enable
     chmod 0660 /proc/touchpanel/letter_f_enable
-    chown system system /proc/touchpanel/game_mode
-    chmod 0660 /proc/touchpanel/game_mode
 
     chown system system /sys/android_touch/double_tap_enable
     chmod 0660 /sys/android_touch/double_tap_enable

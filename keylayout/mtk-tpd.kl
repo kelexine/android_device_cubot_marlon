@@ -37,3 +37,8 @@ key 47    V                 WAKE
 key 17    W                 WAKE
 key 44    Z                 WAKE
 key 33    F                 WAKE
+
+# Off-screen media swipe gestures
+key 163   MEDIA_NEXT        WAKE
+key 164   MEDIA_PLAY_PAUSE  WAKE
+key 165   MEDIA_PREVIOUS    WAKE

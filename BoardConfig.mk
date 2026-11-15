@@ -120,10 +120,6 @@ SELINUX_IGNORE_NEVERALLOWS := true
 BOARD_HARDWARE_CLASS += \
     $(DEVICE_PATH)/lineagehw
 
-# Gestures KeyHandler
-TARGET_KEY_HANDLER_LIBS := MarlonKeyHandler
-TARGET_KEY_HANDLER_CLASS := org.lineageos.settings.device.KeyHandler
-
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop

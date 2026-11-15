@@ -7,6 +7,7 @@ package org.lineageos.settings.device;
 
 import android.content.Context;
 import android.os.PowerManager;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.KeyEvent;
 
@@ -62,8 +63,10 @@ public class KeyHandler implements DeviceKeyHandler {
             return event;
         }
 
-        String stored = Settings.System.getString(
-                mContext.getContentResolver(), gesture.actionPreferenceKey());
+        String stored = Settings.System.getStringForUser(
+                mContext.getContentResolver(),
+                gesture.actionPreferenceKey(),
+                UserHandle.USER_CURRENT);
         GestureAction action = GestureAction.fromPreferenceValue(stored);
 
         ActionUtils.performAction(mContext, action);

@@ -13,6 +13,7 @@ aidl_interface {
         "vendor/cubot/hardware/encore/*.aidl",
     ],
     stability: "vintf",
+    frozen: true,
     backend: {
         cpp: {
             enabled: false,
@@ -25,4 +26,10 @@ aidl_interface {
             enabled: true,
         },
     },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
 }

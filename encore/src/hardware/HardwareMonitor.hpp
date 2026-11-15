@@ -27,6 +27,7 @@ public:
 
 private:
     int readIntFromFile(std::string_view path, int fallback = 0);
+    int readGpuFreqMhz();
 };
 
 } // namespace vendor::cubot::encore
