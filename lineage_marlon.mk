@@ -57,6 +57,10 @@ WITH_GMS := true
 TARGET_GAPPS_VARIANT := core
 TARGET_INCLUDE_GOOGLE_TELECOMM := false
 
+# AxionOS OTA Updater manifest endpoint ({variant} expands to GMS or VANILLA)
+PRODUCT_SYSTEM_PROPERTIES += \
+    lineage.updater.uri=https://raw.githubusercontent.com/kelexine/cubot-marlon-rom-releases/main/OTA/{variant}/axion.json
+
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
