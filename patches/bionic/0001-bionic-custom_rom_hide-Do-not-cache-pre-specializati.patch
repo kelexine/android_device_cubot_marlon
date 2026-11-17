@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: kelexine <frankiekelechi@gmail.com>
+Date: Tue, 17 Nov 2026 06:45:00 +0000
+Subject: [PATCH] bionic: custom_rom_hide: Do not cache pre-specialization cmdline
+
+Zygote/USAP children drop to the app UID in SpecializeCommon before
+Process.setArgV0 updates /proc/self/cmdline, causing is_allowlisted_process()
+to latch false while cmdline is still zygote64/usap64 and block
+org.lineageos.updater from opening /cache/recovery/uncrypt_file.
+Skip caching until cmdline holds a post-specialization process name.
+---
+libc/bionic/custom_rom_hide.cpp | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
+
+diff --git a/libc/bionic/custom_rom_hide.cpp b/libc/bionic/custom_rom_hide.cpp
+index 5f2e33436..074e825df 100644
+--- a/libc/bionic/custom_rom_hide.cpp
++++ b/libc/bionic/custom_rom_hide.cpp
+@@ -108,7 +108,21 @@ static const char* const kAllowlistedPackages[] = {
+     nullptr
+ };
+ 
+-static bool compute_allowlisted() {
++static bool is_preinit_cmdline(const char* cmdline) {
++    return cmdline[0] == '\0' ||
++           strcmp(cmdline, "<pre-initialized>") == 0 ||
++           strcmp(cmdline, "main") == 0 ||
++           strcmp(cmdline, "zygote") == 0 ||
++           strcmp(cmdline, "zygote64") == 0 ||
++           strcmp(cmdline, "usap32") == 0 ||
++           strcmp(cmdline, "usap64") == 0 ||
++           strcmp(cmdline, "app_process") == 0 ||
++           strcmp(cmdline, "app_process32") == 0 ||
++           strcmp(cmdline, "app_process64") == 0;
++}
++
++static bool compute_allowlisted(bool* finalized) {
++    *finalized = false;
+     int fd = raw_openat("/proc/self/cmdline", O_RDONLY);
+     if (fd < 0) return false;
+ 
+@@ -121,6 +135,12 @@ static bool compute_allowlisted() {
+     char* colon = strchr(cmdline, ':');
+     if (colon) *colon = '\0';
+ 
++    // Zygote/USAP children drop to the app UID inside SpecializeCommon before
++    // Process.setArgV0 updates /proc/self/cmdline; do not cache a negative
++    // result while the process still has a pre-specialization name.
++    if (is_preinit_cmdline(cmdline)) return false;
++
++    *finalized = true;
+     for (const char* const* p = kAllowlistedPackages; *p; ++p) {
+         if (strcmp(cmdline, *p) == 0) return true;
+     }
+@@ -131,10 +151,15 @@ static bool is_allowlisted_process() {
+     static pid_t cached_pid = -1;
+     static bool cached_value = false;
+     pid_t cur = getpid();
+-    if (cur == cached_pid) return cached_value;
+-    bool result = compute_allowlisted();
+-    cached_value = result;
+-    cached_pid = cur;
++    if (__atomic_load_n(&cached_pid, __ATOMIC_ACQUIRE) == cur) {
++        return __atomic_load_n(&cached_value, __ATOMIC_RELAXED);
++    }
++    bool finalized = false;
++    bool result = compute_allowlisted(&finalized);
++    if (finalized) {
++        __atomic_store_n(&cached_value, result, __ATOMIC_RELAXED);
++        __atomic_store_n(&cached_pid, cur, __ATOMIC_RELEASE);
++    }
+     return result;
+ }
+ 

@@ -1,0 +1,74 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: kelexine <frankiekelechi@gmail.com>
+Date: Tue, 17 Nov 2026 06:45:00 +0000
+Subject: [PATCH] updater: Wait for dm device node when mapping logical partitions
+
+Recovery maps logical partitions non-blocking (timeout_ms = 0), so
+MapPartitionOnDeviceMapper() sees DmDeviceState::ACTIVE and returns
+/dev/block/dm-N before ueventd finishes creating the node.
+Wait for the resolved /dev/block/dm-N node via fs_mgr::WaitForFile().
+---
+updater/updater_runtime_dynamic_partitions.cpp | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
+
+diff --git a/updater/updater_runtime_dynamic_partitions.cpp b/updater/updater_runtime_dynamic_partitions.cpp
+index e671a30..16e3a8c 100644
+--- a/updater/updater_runtime_dynamic_partitions.cpp
++++ b/updater/updater_runtime_dynamic_partitions.cpp
+@@ -28,6 +28,7 @@
+ #include <android-base/parseint.h>
+ #include <android-base/strings.h>
+ #include <fs_mgr.h>
++#include <fs_mgr/file_wait.h>
+ #include <fs_mgr_dm_linear.h>
+ #include <libdm/dm.h>
+ #include <liblp/builder.h>
+@@ -43,8 +44,9 @@ using android::fs_mgr::Partition;
+ using android::fs_mgr::PartitionOpener;
+ using android::fs_mgr::ReadFromImageBlob;
+ using android::fs_mgr::SlotNumberForSlotSuffix;
++using android::fs_mgr::WaitForFile;
+ 
+-static constexpr std::chrono::milliseconds kMapTimeout{ 1000 };
++static constexpr std::chrono::milliseconds kMapTimeout{ 5000 };
+ 
+ static std::string GetSuperDevice() {
+   return "/dev/block/by-name/" + fs_mgr_get_super_partition_name();
+@@ -71,6 +73,7 @@ bool UpdaterRuntime::MapPartitionOnDeviceMapper(const std::string& partition_nam
+                                                 std::string* path) {
+   auto partition_name_suffix = AddSlotSuffix(partition_name);
+   auto state = DeviceMapper::Instance().GetState(partition_name_suffix);
++  bool mapped = false;
+   if (state == DmDeviceState::INVALID) {
+     CreateLogicalPartitionParams params = {
+       .block_device = GetSuperDevice(),
+@@ -83,15 +86,23 @@ bool UpdaterRuntime::MapPartitionOnDeviceMapper(const std::string& partition_nam
+       .force_writable = true,
+       .timeout_ms = kMapTimeout,
+     };
+-    return CreateLogicalPartition(params, path);
++    mapped = CreateLogicalPartition(params, path);
++  } else if (state == DmDeviceState::ACTIVE) {
++    mapped = DeviceMapper::Instance().GetDmDevicePathByName(partition_name_suffix, path);
++  } else {
++    LOG(ERROR) << "Unknown device mapper state: "
++               << static_cast<std::underlying_type_t<DmDeviceState>>(state);
++    return false;
+   }
+ 
+-  if (state == DmDeviceState::ACTIVE) {
+-    return DeviceMapper::Instance().GetDmDevicePathByName(partition_name_suffix, path);
++  if (!mapped) {
++    return false;
+   }
+-  LOG(ERROR) << "Unknown device mapper state: "
+-             << static_cast<std::underlying_type_t<DmDeviceState>>(state);
+-  return false;
++  if (!WaitForFile(*path, kMapTimeout)) {
++    LOG(ERROR) << "Timed out waiting for device mapper node: " << *path;
++    return false;
++  }
++  return true;
+ }
+ 
+ bool UpdaterRuntime::UnmapPartitionOnDeviceMapper(const std::string& partition_name) {

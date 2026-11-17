@@ -1,0 +1,91 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: kelexine <frankiekelechi@gmail.com>
+Date: Tue, 17 Nov 2026 06:55:00 +0000
+Subject: [PATCH] recovery: PublicVolume: Handle vfat/exfat mountpoint chown EPERM
+
+Mount vfat/exfat public volumes as AID_ROOT in recovery, treat EPERM from
+fs_prepare_dir() chown(0, 0) on vfat/exfat as non-fatal, detach stale mounts
+before mounting, and fall back to detached unmount in doUnmount() so
+detectMountable() never leaves /storage/<uuid> mounted.
+---
+volume_manager/PublicVolume.cpp | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
+
+diff --git a/volume_manager/PublicVolume.cpp b/volume_manager/PublicVolume.cpp
+index b04135fd..73147923 100644
+--- a/volume_manager/PublicVolume.cpp
++++ b/volume_manager/PublicVolume.cpp
+@@ -31,6 +31,7 @@
+ #include <cutils/fs.h>
+ #include <private/android_filesystem_config.h>
+ 
++#include <errno.h>
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <sys/mount.h>
+@@ -92,20 +93,42 @@ status_t PublicVolume::doDestroy() {
+     return DestroyDeviceNode(mDevPath);
+ }
+ 
++namespace {
++
++bool isMountPoint(const std::string& path) {
++    struct stat path_sb, parent_sb;
++    if (stat(path.c_str(), &path_sb) != 0) return false;
++    if (stat("/storage", &parent_sb) != 0) return false;
++    return path_sb.st_dev != parent_sb.st_dev;
++}
++
++}  // namespace
++
+ status_t PublicVolume::doMount() {
+     if (!IsFilesystemSupported(mFsType)) {
+         LOG(ERROR) << getId() << " unsupported filesystem " << mFsType;
+         return -EIO;
+     }
+ 
++    const bool is_fat_family = (mFsType == "vfat" || mFsType == "exfat");
+     if (fs_prepare_dir(getPath().c_str(), 0700, AID_ROOT, AID_ROOT)) {
+-        PLOG(ERROR) << getId() << " failed to create mount points";
+-        return -errno;
++        if (errno == EPERM && is_fat_family) {
++            PLOG(WARNING) << getId() << " ignoring EPERM preparing mount point " << getPath();
++        } else {
++            PLOG(ERROR) << getId() << " failed to create mount points";
++            return -errno;
++        }
++    }
++
++    if (isMountPoint(getPath())) {
++        LOG(WARNING) << getId() << " mount point " << getPath()
++                     << " is already mounted; detaching stale mount";
++        ForceUnmount(getPath(), true /* detach */);
+     }
+ 
+     int ret = 0;
+     if (mFsType == "exfat") {
+-        ret = exfat::Mount(mDevPath, getPath(), AID_MEDIA_RW, AID_MEDIA_RW, 0007);
++        ret = exfat::Mount(mDevPath, getPath(), AID_ROOT, AID_ROOT, 0007);
+     } else if (mFsType == "ext4") {
+         ret = ext4::Mount(mDevPath, getPath(), false, false, true, mMntOpts, false, true);
+     } else if (mFsType == "f2fs") {
+@@ -116,7 +139,7 @@ status_t PublicVolume::doMount() {
+         ret =
+             ntfs::Mount(mDevPath, getPath(), false, false, false, AID_MEDIA_RW, AID_MEDIA_RW, 0007);
+     } else if (mFsType == "vfat") {
+-        ret = vfat::Mount(mDevPath, getPath(), false, false, false, AID_MEDIA_RW, AID_MEDIA_RW,
++        ret = vfat::Mount(mDevPath, getPath(), false, false, false, AID_ROOT, AID_ROOT,
+                           0007, true);
+     } else {
+         ret = ::mount(mDevPath.c_str(), getPath().c_str(), mFsType.c_str(), 0, nullptr);
+@@ -130,7 +153,9 @@ status_t PublicVolume::doMount() {
+ }
+ 
+ status_t PublicVolume::doUnmount(bool detach /* = false */) {
+-    ForceUnmount(getPath(), detach);
++    if (ForceUnmount(getPath(), detach) != OK && !detach) {
++        ForceUnmount(getPath(), true /* detach */);
++    }
+ 
+     rmdir(getPath().c_str());
+ 

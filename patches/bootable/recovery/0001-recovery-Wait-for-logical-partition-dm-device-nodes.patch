@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: kelexine <frankiekelechi@gmail.com>
+Date: Tue, 17 Nov 2026 06:45:00 +0000
+Subject: [PATCH] recovery: Wait for logical partition dm device nodes after mapping
+
+CreateLogicalPartitions() creates dm targets with timeout_ms = 0.
+Wait for each active /dev/block/dm-N node to appear via WaitForFile()
+before recovery forks update-binary.
+---
+recovery_utils/roots.cpp | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/recovery_utils/roots.cpp b/recovery_utils/roots.cpp
+index aef1347e..a7c0e928 100644
+--- a/recovery_utils/roots.cpp
++++ b/recovery_utils/roots.cpp
+@@ -26,6 +26,7 @@
+ #include <unistd.h>
+ #include <sys/mount.h>
+ 
++#include <chrono>
+ #include <iostream>
+ #include <string>
+ #include <vector>
+@@ -38,6 +39,7 @@
+ #include <ext4_utils/ext4_utils.h>
+ #include <ext4_utils/wipe.h>
+ #include <fs_mgr.h>
++#include <fs_mgr/file_wait.h>
+ #include <fs_mgr/roots.h>
+ #include <fs_mgr_dm_linear.h>
+ #include <fstab/fstab.h>
+@@ -481,6 +483,17 @@ void map_logical_partitions() {
+       LOG(ERROR) << "Failed to map logical partitions";
+     } else {
+       logical_partitions_auto_mapped = true;
++      auto& dm = DeviceMapper::Instance();
++      std::vector<DeviceMapper::DmBlockDevice> devices;
++      if (dm.GetAvailableDevices(&devices)) {
++        for (const auto& dev : devices) {
++          std::string dm_path;
++          if (dm.GetDmDevicePathByName(dev.name(), &dm_path) &&
++              !android::fs_mgr::WaitForFile(dm_path, std::chrono::milliseconds(5000))) {
++            LOG(WARNING) << "Timed out waiting for logical device node: " << dm_path;
++          }
++        }
++      }
+     }
+   }
+ }

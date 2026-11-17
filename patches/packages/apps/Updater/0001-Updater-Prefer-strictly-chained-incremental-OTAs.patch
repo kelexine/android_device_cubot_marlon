@@ -1,0 +1,131 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: kelexine <frankiekelechi@gmail.com>
+Date: Tue, 17 Nov 2026 05:59:56 +0000
+Subject: [PATCH] Updater: Prefer strictly chained incremental OTAs
+
+Validate nested incremental OTA metadata against the currently running
+ro.build.date.utc / ro.build.version.incremental so Updater prefers the
+immediate next incremental step from GitHub Releases and prevents older
+builds from skipping intermediate incremental hops.
+---
+ .../java/org/lineageos/updater/misc/Utils.java     | 75 +++++++++++++++++++++-
+ 1 file changed, 74 insertions(+), 1 deletion(-)
+
+diff --git a/app/src/main/java/org/lineageos/updater/misc/Utils.java b/app/src/main/java/org/lineageos/updater/misc/Utils.java
+index 30cb55b..aef6c31 100644
+--- a/app/src/main/java/org/lineageos/updater/misc/Utils.java
++++ b/app/src/main/java/org/lineageos/updater/misc/Utils.java
+@@ -49,6 +49,7 @@ import java.io.File;
+ import java.io.FileReader;
+ import java.io.IOException;
+ import java.util.ArrayList;
++import java.util.Collections;
+ import java.util.Enumeration;
+ import java.util.HashSet;
+ import java.util.List;
+@@ -131,6 +132,48 @@ public class Utils {
+                         allowMajorUpgrades);
+     }
+ 
++    private static UpdateInfo parseIncrementalUpdate(JSONObject parentObject,
++            JSONObject incObject, long currentTimestamp, String currentIncremental)
++            throws JSONException {
++        if (incObject == null) {
++            return null;
++        }
++        String filename = incObject.optString("filename", "");
++        String id = incObject.optString("id", "");
++        String url = incObject.optString("url", "");
++        long size = incObject.optLong("size", 0L);
++        if (filename.isEmpty() || id.isEmpty() || url.isEmpty() || size <= 0L) {
++            return null;
++        }
++
++        long baseDatetime = incObject.optLong("base_datetime", -1L);
++        String baseIncremental = incObject.optString("base_incremental", "");
++        if (baseDatetime <= 0L && baseIncremental.isEmpty()) {
++            return null;
++        }
++
++        boolean baseMatches = (baseDatetime > 0L && currentTimestamp > 0L
++                && baseDatetime == currentTimestamp)
++                || (!baseIncremental.isEmpty() && baseIncremental.equals(currentIncremental));
++        if (!baseMatches) {
++            return null;
++        }
++
++        Update update = new Update();
++        update.setTimestamp(incObject.optLong("datetime", parentObject.getLong("datetime")));
++        update.setName(filename);
++        update.setDownloadId(id);
++        update.setType(incObject.optString("romtype", parentObject.getString("romtype")));
++        update.setFileSize(size);
++        update.setDownloadUrl(url);
++        update.setVersion(incObject.optString("version", parentObject.getString("version")));
++
++        if (baseDatetime > 0L && update.getTimestamp() <= baseDatetime) {
++            return null;
++        }
++        return isCompatible(update) ? update : null;
++    }
++
+     public static List<UpdateInfo> parseJson(File file, boolean compatibleOnly)
+             throws IOException, JSONException {
+         List<UpdateInfo> updates = new ArrayList<>();
+@@ -142,6 +185,10 @@ public class Utils {
+             }
+         }
+ 
++        long currentTimestamp = SystemProperties.getLong(Constants.PROP_BUILD_DATE, 0L);
++        String currentIncremental = SystemProperties.get(Constants.PROP_BUILD_VERSION_INCREMENTAL, "");
++        UpdateInfo bestIncremental = null;
++
+         JSONObject obj = new JSONObject(json.toString());
+         JSONArray updatesList = obj.getJSONArray("response");
+         for (int i = 0; i < updatesList.length(); i++) {
+@@ -149,9 +196,31 @@ public class Utils {
+                 continue;
+             }
+             try {
+-                UpdateInfo update = parseJsonUpdate(updatesList.getJSONObject(i));
++                JSONObject entryObj = updatesList.getJSONObject(i);
++                UpdateInfo update = parseJsonUpdate(entryObj);
+                 if (!compatibleOnly || isCompatible(update)) {
+                     updates.add(update);
++                    if (compatibleOnly) {
++                        UpdateInfo incCandidate = parseIncrementalUpdate(
++                                entryObj, entryObj.optJSONObject("incremental"),
++                                currentTimestamp, currentIncremental);
++                        if (incCandidate != null && (bestIncremental == null
++                                || incCandidate.getTimestamp() < bestIncremental.getTimestamp())) {
++                            bestIncremental = incCandidate;
++                        }
++                        JSONArray incList = entryObj.optJSONArray("incrementals");
++                        if (incList != null) {
++                            for (int j = 0; j < incList.length(); j++) {
++                                UpdateInfo arrayCandidate = parseIncrementalUpdate(
++                                        entryObj, incList.optJSONObject(j),
++                                        currentTimestamp, currentIncremental);
++                                if (arrayCandidate != null && (bestIncremental == null
++                                        || arrayCandidate.getTimestamp() < bestIncremental.getTimestamp())) {
++                                    bestIncremental = arrayCandidate;
++                                }
++                            }
++                        }
++                    }
+                 } else {
+                     Log.d(TAG, "Ignoring incompatible update " + update.getName());
+                 }
+@@ -160,6 +229,10 @@ public class Utils {
+             }
+         }
+ 
++        if (compatibleOnly && bestIncremental != null) {
++            return Collections.singletonList(bestIncremental);
++        }
++
+         return updates;
+     }
+ 
+-- 
+2.43.0
