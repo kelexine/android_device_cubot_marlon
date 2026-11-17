@@ -323,18 +323,6 @@
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 58,
-      "Value": "1800000"
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 58,
-      "Value": "2301000"
-    },
-    {
-      "PowerHint": "INTERACTION",
       "Node": "DRAMOppMin",
       "Duration": 58,
       "Value": "0"
@@ -365,12 +353,6 @@
     },
     {
       "PowerHint": "LAUNCH",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 1500,
-      "Value": "2301000"
-    },
-    {
-      "PowerHint": "LAUNCH",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 1500,
       "Value": "2301000"
@@ -378,12 +360,6 @@
     {
       "PowerHint": "LAUNCH",
       "Node": "CPULittleClusterMinFreq",
-      "Duration": 1500,
-      "Value": "1800000"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPULittleClusterMaxFreq",
       "Duration": 1500,
       "Value": "1800000"
     },

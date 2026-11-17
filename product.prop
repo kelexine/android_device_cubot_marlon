@@ -1,5 +1,5 @@
 # Miscellaneous
-persist.device_config.runtime_native.usap_pool_enabled=false
+persist.device_config.runtime_native.usap_pool_enabled=true
 persist.vendor.pms_removable=1
 ro.com.google.acsa=true
 ro.opa.eligible_device=true

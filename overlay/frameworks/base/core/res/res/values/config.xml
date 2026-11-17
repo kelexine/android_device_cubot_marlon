@@ -311,6 +311,15 @@
     <!-- Flag indicating whether the surface flinger has limited alpha compositing functionality in hardware. -->
     <bool name="config_sf_limitedAlpha">true</bool>
 
+    <!-- Enable ZRAM writeback to swap out idle compressed pages to backing storage -->
+    <bool name="config_zramWriteback">true</bool>
+
+    <!-- Disable high performance window transitions on mid-tier SoC -->
+    <bool name="config_deviceSupportsHighPerfTransitions">false</bool>
+
+    <!-- Run shell features off the main thread -->
+    <bool name="config_enableShellMainThread">true</bool>
+
     <!-- Framework SQLite acceleration -->
     <string name="db_default_journal_mode">MEMORY</string>
     <string name="db_default_sync_mode">OFF</string>

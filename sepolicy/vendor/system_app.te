@@ -26,3 +26,7 @@ allow system_app sysfs_thermal:file r_file_perms;
 # Encore hardware daemon IPC
 allow system_app hal_encore_service:service_manager find;
 binder_call(system_app, vendor_encore)
+
+# ZRAM status sysfs read access
+allow system_app sysfs_zram:dir search;
+allow system_app sysfs_zram:file r_file_perms;

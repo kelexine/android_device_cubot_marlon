@@ -43,15 +43,33 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
-# Graphics Composer 2.1 HIDL compat
+# Graphics Composer 2.1 HIDL compat & ConfigStore disable
 PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.1-service
+    android.hardware.graphics.composer@2.1-service \
+    disable_configstore
 
-# Memtrack 1.0 HIDL
+# Memtrack (AIDL)
 PRODUCT_PACKAGES += \
-    android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service
+    android.hardware.memtrack-service.mediatek
+
+# Thermal (AIDL)
+PRODUCT_PACKAGES += \
+    android.hardware.thermal-service.mediatek
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
+
+# Cgroups & Task Profiles
+PRODUCT_COPY_FILES += \
+    system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
+    system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+
+# Dexpreopt
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    SystemUI
+
+PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := verify
 
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
@@ -211,15 +229,33 @@ PRODUCT_SOONG_NAMESPACES += bootable/deprecated-ota
 # PRODUCT_COPY_FILES overrides take immediate effect before product expansion.
 include vendor/cubot/marlon/marlon-vendor.mk
 
-# MediaTek Hardware & Power HAL integration
-PRODUCT_PACKAGES := $(filter-out vendor.mediatek.hardware.mtkpower@1.0-service, $(PRODUCT_PACKAGES))
+# MediaTek Hardware, AEE stubs, Wi-Fi assistant, & Power HAL integration
+include hardware/mediatek/configs/properties/vendor_logtag.mk
+
+PRODUCT_PACKAGES := $(filter-out \
+    vendor.mediatek.hardware.mtkpower@1.0-service \
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service \
+    memtrack.mt6765 \
+    libmemtrack_GL \
+    android.hardware.thermal@1.0-impl \
+    android.hardware.thermal@2.0-impl \
+    android.hardware.thermal@2.0-service.mtk \
+    thermal.mt6765, \
+    $(PRODUCT_PACKAGES))
 PRODUCT_PACKAGES += \
     vendor.mediatek.hardware.mtkpower@1.2-service.stub \
     libmtkperf_client_vendor \
     libpowerhalwrap_vendor \
-    libaedv
+    libaedv \
+    libladder \
+    wlan_assistant
 
-PRODUCT_COPY_FILES := $(filter-out %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc, $(PRODUCT_COPY_FILES))
+PRODUCT_COPY_FILES := $(filter-out \
+    %vendor/etc/init/vendor.mediatek.hardware.mtkpower@1.0-service.rc \
+    %vendor/etc/init/android.hardware.memtrack@1.0-service.rc \
+    %vendor/etc/init/android.hardware.thermal@2.0-service.mtk.rc, \
+    $(PRODUCT_COPY_FILES))
 
 
 # Legacy MTK audio HAL (android.hardware.audio@6.0-impl-mediatek.so) links against the stock
