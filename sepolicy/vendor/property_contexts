@@ -3,3 +3,6 @@
 
 # Power-off alarm: next-alarm UTC epoch published by the framework app.
 vendor.pwroff_alarm.    u:object_r:vendor_pwroff_alarm_prop:s0
+
+# boot_kmsg collector: init flips this to "booted" on sys.boot_completed=1.
+vendor.boot_kmsg.       u:object_r:vendor_boot_kmsg_prop:s0

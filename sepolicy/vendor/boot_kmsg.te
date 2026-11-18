@@ -16,6 +16,15 @@ allow boot_kmsg kmsg_device:chr_file { read open getattr write };
 # Write log files in /cache and /metadata
 allow boot_kmsg cache_file:dir { create_dir_perms rw_dir_perms };
 allow boot_kmsg cache_file:file { create_file_perms rw_file_perms };
+# Size-based rotation (rename/unlink of older backups) in /cache and /metadata.
+allow boot_kmsg cache_file:dir { search add_name remove_name };
+allow boot_kmsg cache_file:file { rename unlink };
+allow boot_kmsg metadata_file:dir { search add_name remove_name };
+allow boot_kmsg metadata_file:file { rename unlink };
+
+# Boot phase: init sets vendor.boot_kmsg.phase=booted on sys.boot_completed=1.
+vendor_internal_prop(vendor_boot_kmsg_prop)
+get_prop(boot_kmsg, vendor_boot_kmsg_prop)
 
 allow boot_kmsg metadata_file:dir { create_dir_perms rw_dir_perms };
 allow boot_kmsg metadata_file:file { create_file_perms rw_file_perms };

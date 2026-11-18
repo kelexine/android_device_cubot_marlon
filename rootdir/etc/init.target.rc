@@ -8,6 +8,7 @@ on property:vendor.pwroff_alarm.epoch=*
 # boot_kmsg
 on post-fs
     mkdir /cache/bootlog 0775 system system
+    mkdir /cache/booted_logs 0775 system system
     start boot_kmsg
 
 on boot
@@ -16,12 +17,12 @@ on boot
     setprop sys.usb.configfs 1
 
 on property:sys.boot_completed=1
-    stop boot_kmsg
+    setprop vendor.boot_kmsg.phase booted
     setprop vendor.usb.controller musb-hdrc
     setprop sys.usb.controller musb-hdrc
     setprop sys.usb.configfs 1
 
-service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 0
+service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 0 /cache/booted_logs
     disabled
     user root
     group system log
