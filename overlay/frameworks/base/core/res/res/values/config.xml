@@ -19,17 +19,17 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Screen brightness settings -->
-    <integer name="config_screenBrightnessSettingMinimum">10</integer>
+    <integer name="config_screenBrightnessSettingMinimum">18</integer>
     <integer name="config_screenBrightnessSettingMaximum">255</integer>
     <integer name="config_screenBrightnessSettingDefault">102</integer>
-    <integer name="config_screenBrightnessDim">10</integer>
+    <integer name="config_screenBrightnessDim">15</integer>
     <integer name="config_screenBrightnessDark">1</integer>
     <integer name="config_screenBrightnessDoze">0</integer>
 
     <!-- Float brightness equivalents (for modern Android DisplayPowerController) -->
-    <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.05</item>
+    <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.05882353</item>
     <item name="config_screenBrightnessDozeFloat" format="float" type="dimen">0.0</item>
-    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.039215686</item>
+    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.070588235</item>
     <item name="config_screenBrightnessSettingMaximumFloat" format="float" type="dimen">1.0</item>
     <item name="config_screenBrightnessSettingDefaultFloat" format="float" type="dimen">0.4</item>
 
@@ -138,10 +138,10 @@
     <!-- Array of desired screen brightness in nits corresponding to config_autoBrightnessLevels.
          Size must be size(config_autoBrightnessLevels) + 1 = 16. -->
     <array name="config_autoBrightnessDisplayValuesNits">
-        <item>11.6607</item>
-        <item>11.6607</item>
-        <item>17.2619</item>
-        <item>39.2619</item>
+        <item>28.9571</item>
+        <item>28.9571</item>
+        <item>32.3535</item>
+        <item>42.366</item>
         <item>50.671</item>
         <item>92.3019</item>
         <item>94.2512</item>
