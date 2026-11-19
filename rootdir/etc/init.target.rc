@@ -17,7 +17,6 @@ on boot
     setprop sys.usb.configfs 1
 
 on property:sys.boot_completed=1
-    setprop vendor.boot_kmsg.phase booted
     setprop vendor.usb.controller musb-hdrc
     setprop sys.usb.controller musb-hdrc
     setprop sys.usb.configfs 1
@@ -25,5 +24,5 @@ on property:sys.boot_completed=1
 service boot_kmsg /vendor/bin/boot_kmsg /cache/bootlog/boot-kmsg.log 0 /cache/booted_logs
     disabled
     user root
-    group system log
+    group system cache log
     seclabel u:r:boot_kmsg:s0

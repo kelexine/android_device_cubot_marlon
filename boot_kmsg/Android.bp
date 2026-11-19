@@ -10,13 +10,7 @@ cc_binary {
         "-Werror",
         "-D_GNU_SOURCE",
     ],
-    srcs: [
-        "src/fsutil.c",
-        "src/logcat_proc.c",
-        "src/main.c",
-        "src/phase.c",
-        "src/rotating_file.c",
-    ],
+    srcs: ["src/main.c"],
     shared_libs: [
         "libcutils",
         "liblog",
