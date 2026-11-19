@@ -45,7 +45,7 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
 # Build AxionOS target
 source build/envsetup.sh
-lunch axion_marlon-userdebug
+lunch lineage_marlon-userdebug
 m bacon -j$(nproc)
 ```
 
@@ -53,9 +53,7 @@ m bacon -j$(nproc)
 
 | Branch | Target ROM | Android | Status |
 | :--- | :--- | :--- | :--- |
-| `axion` ⭐ | AxionOS | 16 | **Default — active development** |
-| `lineage-23.2` | LineageOS 23.2 | 16 | Active |
-| `lineage-19.1` | LineageOS 19.1 | 12L | Legacy baseline |
+| `axion` ⭐ | AxionOS / LineageOS | 16 | **Default — active development** |
 
 ## Contributing
 - Follow Conventional Commits: `<type>(<scope>): <summary>`
