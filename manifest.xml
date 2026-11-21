@@ -10,16 +10,6 @@
         <fqname>@6.0::IEffectsFactory/default</fqname>
     </hal>
     <hal format="hidl">
-        <name>android.hardware.bluetooth</name>
-        <transport>hwbinder</transport>
-        <fqname>@1.0::IBluetoothHci/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>android.hardware.bluetooth.audio</name>
-        <transport>hwbinder</transport>
-        <fqname>@2.0::IBluetoothAudioProvidersFactory/default</fqname>
-    </hal>
-    <hal format="hidl">
         <name>android.hardware.camera.provider</name>
         <transport>hwbinder</transport>
         <fqname>@2.6::ICameraProvider/internal/0</fqname>
@@ -123,11 +113,6 @@
         <name>vendor.mediatek.hardware.atci</name>
         <transport>hwbinder</transport>
         <fqname>@1.0::IAtcid/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.mediatek.hardware.bluetooth.audio</name>
-        <transport>hwbinder</transport>
-        <fqname>@2.1::IBluetoothAudioProvidersFactory/default</fqname>
     </hal>
     <hal format="hidl">
         <name>vendor.mediatek.hardware.camera.bgservice</name>

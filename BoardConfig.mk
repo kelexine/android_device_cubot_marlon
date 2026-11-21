@@ -186,10 +186,6 @@ TARGET_LD_SHIM_LIBS += \
     /vendor/lib64/hw/android.hardware.audio.effect@6.0-impl.so|libshim_audio.so \
     /vendor/lib64/libmtk-ril.so|libshim_base.so \
     /vendor/bin/hw/vendor.mediatek.hardware.pq@2.2-service|libshim_base.so \
-    /vendor/lib/hw/android.hardware.bluetooth@1.0-impl-mediatek.so|libshim_bt.so \
-    /vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-mediatek.so|libshim_bt.so \
-    /vendor/lib/hw/audio.bluetooth.default.so|android.hardware.bluetooth.audio-impl-mediatek.so \
-    /vendor/lib64/hw/audio.bluetooth.default.so|android.hardware.bluetooth.audio-impl-mediatek.so \
     /vendor/lib/libMtkOmxVdecEx.so|libshim_graphics.so \
     /vendor/lib/libMtkOmxVenc.so|libshim_graphics.so \
     /vendor/lib/libstagefright_softomx.so|libshim_graphics.so
