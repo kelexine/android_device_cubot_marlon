@@ -295,8 +295,8 @@ PRODUCT_PACKAGES += \
 # Bluetooth (AIDL HCI + AOSP BT Audio HAL)
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth-service.mediatek \
-    android.hardware.bluetooth.audio-impl:32 \
-    audio.bluetooth.default:32
+    android.hardware.bluetooth.audio-impl \
+    audio.bluetooth.default
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
