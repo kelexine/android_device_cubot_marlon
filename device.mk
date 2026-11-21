@@ -82,16 +82,12 @@ PRODUCT_CHARACTERISTICS := default
 
 # Rootdir
 PRODUCT_PACKAGES += \
-    install-recovery.sh \
-
-PRODUCT_PACKAGES += \
     fstab.mt6765 \
     fstab.mt6762 \
     fstab.enableswap \
     factory_init.connectivity.rc \
     factory_init.project.rc \
     factory_init.rc \
-    init.aee.rc \
     init.ago.rc \
     init.connectivity.rc \
     init.modem.rc \

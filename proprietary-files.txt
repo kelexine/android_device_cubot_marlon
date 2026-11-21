@@ -923,15 +923,10 @@ vendor/app/t6/b46325e6-5c90-8252-2eada8e32e5180d6.ta
 vendor/app/t6/cfg.ini
 vendor/bin/hw/power_native_test_v_1_0
 vendor/bin/hw/power_native_test_v_1_1
-vendor/bin/hw/vendor.mediatek.hardware.aee@1.0-service
 vendor/bin/hw/vendor.mediatek.hardware.dplanner@2.0-service
 vendor/bin/hw/vendor.mediatek.hardware.gpu@1.0-service
 vendor/bin/hw/vendor.mediatek.hardware.mtkcodecservice@1.1-service
 vendor/bin/STFlashTool
-vendor/bin/aee_aedv
-vendor/bin/aee_aedv64
-vendor/bin/aee_dumpstatev
-vendor/bin/aeev
 # vendor/bin/applypatch
 vendor/bin/atcid
 vendor/bin/audiocmdservice_atci
@@ -980,8 +975,6 @@ vendor/etc/.tp/thermal.off.conf
 vendor/etc/apdb/APDB_MT6765_S01__W2143
 vendor/etc/apdb/APDB_MT6765_S01__W2143_ENUM
 vendor/etc/aurisys_param/Speech_AudioParam.xml
-vendor/etc/init/aee_aedv.rc
-vendor/etc/init/aee_aedv64.rc
 vendor/etc/init/atcid.rc
 vendor/etc/init/audiocmdservice_atci.rc
 vendor/etc/init/bootperf.rc
@@ -1003,11 +996,9 @@ vendor/etc/init/muxreport.rc
 vendor/etc/init/netdagent.rc
 vendor/etc/init/networksetting.rc
 vendor/etc/init/trustkernel.rc
-vendor/etc/init/vendor.mediatek.hardware.aee@1.0-service.rc
 vendor/etc/init/vendor.mediatek.hardware.dplanner@2.0-service.rc
 vendor/etc/init/vendor.mediatek.hardware.gpu@1.0-service.rc
 vendor/etc/init/vendor.mediatek.hardware.mtkcodecservice@1.1-service.rc
-vendor/etc/init/vendor_flash_recovery.rc
 vendor/etc/init/vibrator-mtk-default.rc
 # vendor/etc/init/vndservicemanager.rc
 vendor/etc/ipsec/ipsec.d/cacerts/DigiCertGlobalRootCA.crt
@@ -1194,7 +1185,6 @@ vendor/etc/vintf/manifest/power-default.xml
 vendor/etc/vintf/manifest/vendor.mediatek.hardware.dplanner@2.0-service.xml
 vendor/etc/vintf/manifest/vibrator-mtk-default.xml
 vendor/etc/MNL_Config.xml
-vendor/etc/aee-config
 vendor/etc/audio_device.xml
 vendor/etc/audio_em.xml
 vendor/etc/audio_policy.conf
@@ -1235,7 +1225,6 @@ vendor/etc/powercontable.xml
 vendor/etc/powerscntbl.xml
 vendor/etc/product.yaml
 vendor/etc/public.libraries.txt
-vendor/etc/recovery.img
 vendor/etc/slp_conf
 vendor/etc/smsdbvisitor.xml
 vendor/etc/special_pws_channel.xml
@@ -1441,7 +1430,6 @@ vendor/lib64/libwapi.so
 vendor/lib64/libwifitest.so
 vendor/lib64/ov5670_mipi_raw_tuning.so
 vendor/lib64/s5k2t7sp_mipi_raw_tuning.so
-vendor/lib64/vendor.mediatek.hardware.aee@1.0.so
 vendor/lib64/vendor.mediatek.hardware.atci@1.0.so
 vendor/lib64/vendor.mediatek.hardware.dplanner@2.0.so
 vendor/lib64/vendor.mediatek.hardware.lbs@1.0.so

@@ -67,10 +67,8 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/mediadrm/libwvdrmengine.so'): blob_fixup()
         .add_needed('libshim_crypto.so'),
 
-    # AEE AEDV, libaedv, and UDF unwindstack shims
-    ('vendor/bin/aee_aedv',
-     'vendor/bin/aee_aedv64',
-     'vendor/lib/libaedv.so',
+    # libaedv and UDF unwindstack shims
+    ('vendor/lib/libaedv.so',
      'vendor/lib64/libaedv.so',
      'vendor/lib/libudf.so',
      'vendor/lib64/libudf.so'): blob_fixup()

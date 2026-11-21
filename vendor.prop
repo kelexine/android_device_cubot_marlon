@@ -190,7 +190,6 @@ ro.vendor.connsys.dedicated.log=1
 ro.vendor.enable.geo.fencing=1
 ro.vendor.faceunlock.direction=8
 ro.vendor.faceunlock.support=1
-ro.vendor.have_aeev_feature=1
 ro.vendor.init.sensor.rc=init.sensor_1_0.rc
 ro.vendor.md_auto_setup_ims=1
 ro.vendor.md_log_memdump_wait=15
