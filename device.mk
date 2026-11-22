@@ -158,6 +158,7 @@ PRODUCT_PACKAGES += \
     RoundedCornerSysUI \
     BatteryHealthOverlay \
     FpsInfoOverlay \
+    ApertureOverlay \
     WifiOverlay \
     TetheringOverlay \
     ScreenRecordOverlay \
