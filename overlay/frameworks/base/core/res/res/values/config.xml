@@ -18,18 +18,18 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Screen brightness settings -->
-    <integer name="config_screenBrightnessSettingMinimum">18</integer>
+    <!-- Screen brightness settings (stock Cubot P50 framework-res) -->
+    <integer name="config_screenBrightnessSettingMinimum">10</integer>
     <integer name="config_screenBrightnessSettingMaximum">255</integer>
     <integer name="config_screenBrightnessSettingDefault">102</integer>
-    <integer name="config_screenBrightnessDim">15</integer>
+    <integer name="config_screenBrightnessDim">10</integer>
     <integer name="config_screenBrightnessDark">1</integer>
-    <integer name="config_screenBrightnessDoze">0</integer>
+    <integer name="config_screenBrightnessDoze">1</integer>
 
     <!-- Float brightness equivalents (for modern Android DisplayPowerController) -->
-    <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.05882353</item>
+    <item name="config_screenBrightnessDimFloat" format="float" type="dimen">0.05</item>
     <item name="config_screenBrightnessDozeFloat" format="float" type="dimen">0.0</item>
-    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.070588235</item>
+    <item name="config_screenBrightnessSettingMinimumFloat" format="float" type="dimen">0.039215686</item>
     <item name="config_screenBrightnessSettingMaximumFloat" format="float" type="dimen">1.0</item>
     <item name="config_screenBrightnessSettingDefaultFloat" format="float" type="dimen">0.4</item>
 
@@ -56,235 +56,63 @@
 
     <!-- Stability requirements in milliseconds for accepting a new brightness level
          immediately, in the case where the new lux reading is greater or less than current lux. -->
-    <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>
-    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
+    <integer name="config_autoBrightnessBrighteningLightDebounce">4000</integer>
+    <integer name="config_autoBrightnessDarkeningLightDebounce">8000</integer>
 
-    <!-- Array of hysteresis constraint values for brightening, represented as tenths of a percent.
-         Length is one greater than config_ambientThresholdLevels. -->
+    <!-- Array of hysteresis constraint values for brightening, represented as tenths of a percent. -->
     <integer-array name="config_ambientBrighteningThresholds">
-        <item>9000</item>
-        <item>8000</item>
-        <item>7000</item>
-        <item>5000</item>
-        <item>3500</item>
-        <item>2500</item>
-        <item>2000</item>
-        <item>2000</item>
-        <item>2000</item>
-        <item>2000</item>
-        <item>2000</item>
-        <item>1500</item>
-        <item>1500</item>
-        <item>1000</item>
-        <item>1000</item>
+        <item>100</item>
     </integer-array>
 
     <!-- Array of hysteresis constraint values for darkening, represented as tenths of a percent. -->
     <integer-array name="config_ambientDarkeningThresholds">
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-    </integer-array>
-
-    <!-- Array of ambient lux threshold values for hysteresis calculation. -->
-    <integer-array name="config_ambientThresholdLevels">
-        <item>1</item>
-        <item>4</item>
-        <item>12</item>
-        <item>20</item>
-        <item>40</item>
-        <item>65</item>
-        <item>95</item>
-        <item>140</item>
         <item>200</item>
-        <item>350</item>
-        <item>650</item>
-        <item>1300</item>
-        <item>2000</item>
-        <item>3300</item>
     </integer-array>
 
-    <!-- Array of light sensor lux values to define levels for auto backlight brightness support. -->
+    <!-- Array of light sensor lux values to define levels for auto backlight brightness support
+         (stock Cubot P50 FrameworkResOverlay). -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>1</item>
-        <item>4</item>
-        <item>12</item>
-        <item>20</item>
-        <item>40</item>
-        <item>65</item>
-        <item>95</item>
-        <item>140</item>
-        <item>200</item>
-        <item>350</item>
-        <item>650</item>
-        <item>1300</item>
-        <item>2000</item>
-        <item>3300</item>
-        <item>6000</item>
+        <item>128</item>
+        <item>256</item>
+        <item>384</item>
+        <item>512</item>
+        <item>640</item>
+        <item>768</item>
+        <item>896</item>
+        <item>1024</item>
+        <item>2048</item>
+        <item>4096</item>
+        <item>6144</item>
+        <item>8192</item>
+        <item>10240</item>
+        <item>12288</item>
+        <item>14336</item>
+        <item>16384</item>
+        <item>18432</item>
     </integer-array>
 
-    <!-- Array of desired screen brightness in nits corresponding to config_autoBrightnessLevels.
-         Size must be size(config_autoBrightnessLevels) + 1 = 16. -->
-    <array name="config_autoBrightnessDisplayValuesNits">
-        <item>28.9571</item>
-        <item>28.9571</item>
-        <item>32.3535</item>
-        <item>42.366</item>
-        <item>50.671</item>
-        <item>92.3019</item>
-        <item>94.2512</item>
-        <item>98.37</item>
-        <item>100.152</item>
-        <item>105.297</item>
-        <item>120.385</item>
-        <item>142.064</item>
-        <item>226.5179</item>
-        <item>248.0267</item>
-        <item>353.2814</item>
-        <item>427.6287</item>
-    </array>
-
-    <!-- Screen backlight steps corresponding to config_screenBrightnessNits -->
-    <integer-array name="config_screenBrightnessBacklight">
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-        <item>30</item>
-        <item>35</item>
-        <item>40</item>
-        <item>45</item>
-        <item>50</item>
-        <item>55</item>
-        <item>60</item>
-        <item>70</item>
-        <item>100</item>
-        <item>105</item>
+    <!-- Array of desired screen brightness in range 0-255 corresponding to config_autoBrightnessLevels
+         (stock Cubot P50 FrameworkResOverlay, size = size(config_autoBrightnessLevels) + 1 = 18). -->
+    <integer-array name="config_autoBrightnessLcdBacklightValues">
+        <item>8</item>
+        <item>64</item>
+        <item>98</item>
+        <item>104</item>
         <item>110</item>
-        <item>115</item>
-        <item>120</item>
-        <item>125</item>
-        <item>130</item>
-        <item>135</item>
-        <item>140</item>
-        <item>145</item>
-        <item>150</item>
-        <item>155</item>
-        <item>160</item>
-        <item>165</item>
-        <item>170</item>
-        <item>175</item>
-        <item>180</item>
-        <item>185</item>
-        <item>190</item>
-        <item>195</item>
-        <item>200</item>
-        <item>205</item>
-        <item>210</item>
-        <item>215</item>
-        <item>220</item>
-        <item>225</item>
-        <item>230</item>
-        <item>235</item>
-        <item>240</item>
-        <item>245</item>
-        <item>250</item>
-        <item>251</item>
-        <item>252</item>
-        <item>253</item>
-        <item>254</item>
+        <item>116</item>
+        <item>122</item>
+        <item>128</item>
+        <item>134</item>
+        <item>182</item>
+        <item>255</item>
+        <item>255</item>
+        <item>255</item>
+        <item>255</item>
+        <item>255</item>
+        <item>255</item>
+        <item>255</item>
         <item>255</item>
     </integer-array>
-
-    <!-- Screen brightness in nits corresponding to config_screenBrightnessBacklight (length 61) -->
-    <array name="config_screenBrightnessNits">
-        <item>11.6607</item>
-        <item>13.2347</item>
-        <item>15.0676</item>
-        <item>16.8302</item>
-        <item>18.4261</item>
-        <item>20.3103</item>
-        <item>21.9042</item>
-        <item>23.5456</item>
-        <item>25.2137</item>
-        <item>27.1769</item>
-        <item>28.9571</item>
-        <item>30.5244</item>
-        <item>32.3535</item>
-        <item>34.0867</item>
-        <item>42.366</item>
-        <item>51.1309</item>
-        <item>59.52</item>
-        <item>67.744</item>
-        <item>75.9738</item>
-        <item>84.6332</item>
-        <item>94.1525</item>
-        <item>102.2207</item>
-        <item>110.4878</item>
-        <item>117.0405</item>
-        <item>124.3733</item>
-        <item>130.9928</item>
-        <item>140.4247</item>
-        <item>149.3156</item>
-        <item>157.1995</item>
-        <item>165.3651</item>
-        <item>173.2726</item>
-        <item>181.4272</item>
-        <item>189.1402</item>
-        <item>197.5334</item>
-        <item>205.6301</item>
-        <item>213.9381</item>
-        <item>222.2769</item>
-        <item>230.0891</item>
-        <item>238.6084</item>
-        <item>246.5399</item>
-        <item>255.6544</item>
-        <item>263.6221</item>
-        <item>271.9324</item>
-        <item>279.1449</item>
-        <item>288.5736</item>
-        <item>297.6628</item>
-        <item>306.1899</item>
-        <item>314.4511</item>
-        <item>322.1404</item>
-        <item>330.969</item>
-        <item>338.2251</item>
-        <item>346.2251</item>
-        <item>354.567</item>
-        <item>370.799</item>
-        <item>413.1738</item>
-        <item>415.6397</item>
-        <item>417.264</item>
-        <item>419.264</item>
-        <item>421.264</item>
-        <item>424.646</item>
-        <item>427.6287</item>
-    </array>
 
     <!-- When true use the linux /dev/input/event subsystem to detect the switch changes
          on the headphone/microphone jack. When false use the older uevent framework. -->
