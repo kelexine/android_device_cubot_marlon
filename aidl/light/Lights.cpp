@@ -37,13 +37,9 @@ constexpr int kMinBacklight = 10;
 constexpr int kFullBrightness = 255;
 
 int writeInt(const char* path, int value) {
-    static bool alreadyWarned = false;
     int fd = open(path, O_RDWR);
     if (fd < 0) {
-        if (!alreadyWarned) {
-            LOG(ERROR) << "write_int failed to open " << path << ": " << strerror(errno);
-            alreadyWarned = true;
-        }
+        LOG(ERROR) << "write_int failed to open " << path << ": " << strerror(errno);
         return -errno;
     }
 
@@ -55,13 +51,9 @@ int writeInt(const char* path, int value) {
 }
 
 int writeStr(const char* path, const char* str) {
-    static bool alreadyWarned = false;
     int fd = open(path, O_RDWR);
     if (fd < 0) {
-        if (!alreadyWarned) {
-            LOG(ERROR) << "write_str failed to open " << path << ": " << strerror(errno);
-            alreadyWarned = true;
-        }
+        LOG(ERROR) << "write_str failed to open " << path << ": " << strerror(errno);
         return -errno;
     }
 
@@ -224,18 +216,20 @@ ndk::ScopedAStatus Lights::setLightState(int id, const HwLightState& state) {
             return ndk::ScopedAStatus::ok();
         case static_cast<int>(LightType::BATTERY):
             mBattery = state;
-            setSpeakerLightLocked(mBattery);
-            if ((state.color & 0x00ffffff) == 0) {
+            if ((state.color & 0x00ffffff) == 0 &&
+                (mNotification.color & 0x00ffffff) != 0) {
                 setSpeakerLightLocked(mNotification);
+            } else {
                 setSpeakerLightLocked(mBattery);
             }
             return ndk::ScopedAStatus::ok();
         case static_cast<int>(LightType::NOTIFICATIONS):
             mNotification = state;
-            setSpeakerLightLocked(mNotification);
-            if ((state.color & 0x00ffffff) == 0) {
-                setSpeakerLightLocked(mNotification);
+            if ((state.color & 0x00ffffff) == 0 &&
+                (mBattery.color & 0x00ffffff) != 0) {
                 setSpeakerLightLocked(mBattery);
+            } else {
+                setSpeakerLightLocked(mNotification);
             }
             return ndk::ScopedAStatus::ok();
         case static_cast<int>(LightType::ATTENTION):
