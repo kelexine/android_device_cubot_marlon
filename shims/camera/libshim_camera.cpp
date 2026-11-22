@@ -6,9 +6,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <dlfcn.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <strings.h>
 
@@ -17,6 +19,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <log/log.h>
 #include <utils/String8.h>
 
 namespace android {
@@ -173,3 +176,77 @@ bool CgroupGetControllerPath(...) {
 }
 
 } // extern "C"
+
+namespace {
+
+constexpr uint32_t kTagRequestAvailableCapabilities = 0xc000c;
+constexpr uint8_t kCapabilityRaw = 3;
+
+struct alignas(16) MtkIEntryBuf {
+    uint8_t data[64]{};
+    // Non-trivial destructor forces AAPCS64 indirect result (x8) return ABI.
+    ~MtkIEntryBuf() {}
+};
+
+using UpdateRawCapabilityFn = void (*)(void* self, void* metadata);
+using EntryForFn = MtkIEntryBuf (*)(const void* metadata, uint32_t tag, int32_t index);
+using EntryCountFn = uint32_t (*)(const void* entry);
+using EntryItemAtU8Fn = uint8_t (*)(const void* entry, uint32_t index, uint8_t typeTag);
+using EntryPushBackU8Fn = void (*)(void* entry, const uint8_t* val, uint8_t typeTag);
+using MetadataUpdateFn = int (*)(void* metadata, uint32_t tag, const void* entry);
+using EntryDtorFn = void (*)(void* entry);
+
+} // namespace
+
+namespace android {
+namespace NSMetadataProvider {
+
+class MetadataProvider {
+  public:
+    void updateRawCapability(void* metadata);
+};
+
+void MetadataProvider::updateRawCapability(void* metadata) {
+    static auto realUpdateRawCapability = reinterpret_cast<UpdateRawCapabilityFn>(
+        dlsym(RTLD_NEXT,
+              "_ZN7android18NSMetadataProvider16MetadataProvider19updateRawCapabilityERN5NSCam9IMetadataE"));
+    static auto entryFor = reinterpret_cast<EntryForFn>(
+        dlsym(RTLD_DEFAULT, "_ZNK5NSCam9IMetadata8entryForEji"));
+    static auto entryCount = reinterpret_cast<EntryCountFn>(
+        dlsym(RTLD_DEFAULT, "_ZNK5NSCam9IMetadata6IEntry5countEv"));
+    static auto entryItemAt = reinterpret_cast<EntryItemAtU8Fn>(
+        dlsym(RTLD_DEFAULT, "_ZNK5NSCam9IMetadata6IEntry6itemAtEjNS_9Type2TypeIhEE"));
+    static auto entryPushBack = reinterpret_cast<EntryPushBackU8Fn>(
+        dlsym(RTLD_DEFAULT, "_ZN5NSCam9IMetadata6IEntry9push_backERKhNS_9Type2TypeIhEE"));
+    static auto metadataUpdate = reinterpret_cast<MetadataUpdateFn>(
+        dlsym(RTLD_DEFAULT, "_ZN5NSCam9IMetadata6updateEjRKNS0_6IEntryE"));
+    static auto entryDtor = reinterpret_cast<EntryDtorFn>(
+        dlsym(RTLD_DEFAULT, "_ZN5NSCam9IMetadata6IEntryD1Ev"));
+
+    if (metadata && entryFor && entryCount && entryItemAt && entryPushBack &&
+        metadataUpdate && entryDtor) {
+        MtkIEntryBuf entry = entryFor(metadata, kTagRequestAvailableCapabilities, 0);
+        uint32_t count = entryCount(&entry);
+        bool hasRaw = false;
+        for (uint32_t i = 0; i < count; ++i) {
+            if (entryItemAt(&entry, i, 0) == kCapabilityRaw) {
+                hasRaw = true;
+                break;
+            }
+        }
+        if (count > 0 && !hasRaw) {
+            uint8_t rawCap = kCapabilityRaw;
+            entryPushBack(&entry, &rawCap, 0);
+            metadataUpdate(metadata, kTagRequestAvailableCapabilities, &entry);
+            ALOGI("libshim_camera: injected RAW16 capability into ANDROID_REQUEST_AVAILABLE_CAPABILITIES");
+        }
+        entryDtor(&entry);
+    }
+
+    if (realUpdateRawCapability) {
+        realUpdateRawCapability(this, metadata);
+    }
+}
+
+} // namespace NSMetadataProvider
+} // namespace android

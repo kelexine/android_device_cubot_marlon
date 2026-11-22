@@ -10,6 +10,7 @@ cc_library_shared {
     name: "libshim_camera",
     srcs: ["libshim_camera.cpp"],
     shared_libs: [
+        "liblog",
         "libutils",
     ],
     vendor: true,
